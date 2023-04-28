@@ -1,0 +1,206 @@
+/* 商品分类数据库  goods_sort */
+规则:所有用户可读,仅创建者可读写
+
+[
+	{
+		sort_name:'分类名称',
+		quantity:0//数量
+	}
+]
+
+
+/* 商品数据库   goods */
+规则:
+{
+  "read": true,
+  "write": true
+}
+
+[
+	{
+		_id:'该商品的唯一标示,商品id',
+		goods_title:'商品标题',
+		goods_banner:[{商品横幅,image:''}],
+		goods_cover:'商品封面图,商品横幅的第一张图片作为封面图',
+		video_url:'短视频链接',
+		category:'所属分类',
+		goods_price:'商品价格',
+		stock:'库存',
+		sku:'true or false 是否有sku规格',
+		goods_details:[{商品详情图,image:''}],
+		sold:'商品已售多少',
+		shelves:'商品上架与否 true or false',
+		seckill:'该商品是否参与秒杀 true or false'
+	}
+],
+
+/* 数据库 sku_data */
+规则:
+{
+  "read": true,
+  "write": true
+}
+[
+	{
+		sku_id:'关联哪个商品的id',
+		sku:[{
+			att_data:[
+				{att_name: "口味", att_val: "微辣"},
+				{att_name: "颜色", att_val: "黑色"}
+			],
+			image: "图片链接",
+			price: 11,
+			stock: 200,
+			title: 1
+		}]
+	}
+]
+
+/* 横幅数据库 banner */
+规则:所有用户可读,仅创建者可读写
+[
+	{
+		banner_cover:'轮播封面图',
+		goods_id:'关联的商品id',
+		video_url:'视频链接'
+	}
+]
+
+/* 秒杀数据库 seckill */
+规则:所有用户可读,仅创建者可读写
+[
+	{
+		cover:'封面图',
+		title:'标题',
+		ori_price:'原价',
+		price_spike:'秒杀价',
+		seckill_time:{
+			start_Time:'开始时间:时间戳',
+			end_Time:'结束时间:时间戳'
+		},
+		goods_id:'关联的商品id',
+		video_url:'视频链接'
+	}
+]
+
+/* 短视频评论数据库 video_comment */
+规则:所有用户可读,仅创建者可读写
+[
+	{
+		avatarurl:'头像',
+		nickname:'昵称',
+		time:'评论时间',
+		content:'评论内容',
+		goods_id:'关联的商品id'
+	}
+]
+
+/* 用户信息数据库 user_infor */
+规则:仅创建者可读写
+[
+	{
+		avatarUrl:'头像',
+		nickName:'昵称',
+		pay:'用于支付时的监听',
+		watch_num:'用于支付时的监听'
+	}
+]
+
+/* 商品收藏数据库 collect_goods */
+规则:仅创建者可读写
+[
+	{
+		goods_id:'收藏的商品id'
+	}
+]
+
+/* 购物车数据库 sh_cart */
+规则:仅创建者可读写
+[
+	{
+		goods_id:'商品id',
+		goods_image:'商品图片',
+		goods_title:'商品标题',
+		goods_price:'商品价格',
+		buy_amount:'购买数量',
+		subtotal:'小计:单价*数量',
+		select:fasle,用于选中和取消选中,
+		specs:[
+			{
+				att_name:'口味',
+				att_val:'微辣'
+			}
+		],
+		SPECE_STR:'用于查询相同规格的'
+	}
+]
+
+/* 商品详情页评论数据库 goods_eva */
+规则:所有用户可读,仅创建者可读写
+[
+	{
+		avatarurl:'用户头像',
+		nickname:'用户昵称',
+		eav_text:'评论内容',
+		goods_id:'关联商品id',
+		eav_image:[
+			{image:'图片链接'}
+		],
+		time:'评论时间',
+		specs:[{
+			att_name:'口味',
+			att_val:'微辣'
+		}]
+	}
+]
+
+/* 收货地址数据库 re_address */
+规则:仅创建者可读写
+[
+	{
+		name:'姓名',
+		mobile:'手机号码',
+		district:'省市区',
+		address:'详细地址',
+		tacitly:false, '默认收货地址标示'
+	}
+]
+
+/* 订单数据库 order_data */
+规则:{//用户可读可写 && 商家可读可写
+  "read": "doc._openid == auth.openid || auth.openid in get(`database.men.0a4ec1f962726adf019b330e2409b344`)._openid",
+  "write": "doc._openid == auth.openid || auth.openid in get(`database.men.0a4ec1f962726adf019b330e2409b344`)._openid"
+},
+
+[
+	{
+		goods_id:'',//商品id
+		goods_image:'',//商品图片
+		goods_title:'',//商品标题
+		goods_price:0,//商品价格
+		buy_amount:0,//购买数量
+		specs:[],//规格
+		subtotal:0,//总价
+		select:false,//购物车是否选中
+		SPECE_STR:'',//用于查询相同规格的
+		order_number:'',//订单编号
+		address:[{name:'姓名',
+			mobile:'手机号码',
+			district:'省市区',
+			address:'详细地址',
+			tacitly:false, '默认收货地址标示',
+		}
+		],
+		order_time:'下单时间:年月日时分秒',
+		query_time:'用于商家查询当天的数据:年月日',
+		pay_success:'支付成功: success,待支付: not_pay,已取消订单: can_order',
+		deliver:'待发货: stay,已发货/待收货: already,已收货: rece_goods,退款中: ref_pro, 退款成功: ref_succ'
+		evaluate:'待评价:false,已评价:true',
+		waybill_No:'运单号',
+		payment:'统一下单返回的数据包',wx_pay
+		Re_reason:'退款原因',
+		out_trade_no:'商户订单号',wx_pay
+		out_refund_no:'商户退款单号'wx_pay
+	},
+	
+]

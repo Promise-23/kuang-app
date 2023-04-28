@@ -1,0 +1,5 @@
+课程里点击遮罩层不会触发，把所有弹窗的地方改为如下：
+@enter：进入时触发
+@clickoverlay：点击遮罩层触发，把show变为false，其他不一样的地方自行更换
+
+<page-container :show="show" position="bottom" @enter="onEnter" @clickoverlay="show = false">

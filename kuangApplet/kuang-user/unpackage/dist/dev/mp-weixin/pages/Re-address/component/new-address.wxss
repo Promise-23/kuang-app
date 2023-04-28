@@ -1,0 +1,43 @@
+
+.address-title.data-v-5ecbd6ac{
+	display: flex;
+}
+.address-title text.data-v-5ecbd6ac{
+	flex: 1;
+	text-align: center;
+	font-weight: bold;
+}
+.address-title icon.data-v-5ecbd6ac{
+	margin-left: auto;
+}
+/* 输入部分 */
+.address-input.data-v-5ecbd6ac{
+	display: flex;
+	align-items: center;
+	margin: 40rpx 0;
+	padding-bottom: 40rpx;
+	color: #b4b4b4;
+	border-bottom: 1rpx solid #e2e2e2;
+}
+.address-input image.data-v-5ecbd6ac{
+	width: 40rpx;
+	height: 40rpx;
+	display: block;
+}
+.address-input input.data-v-5ecbd6ac{
+	flex: 1;
+	padding: 0 20rpx;
+	color: #000000;
+}
+.flex-left.data-v-5ecbd6ac{
+	flex: 1;
+}
+.flex-left view.data-v-5ecbd6ac{
+	display: flex;
+	justify-content: space-between;
+}
+.flex-left text.data-v-5ecbd6ac{
+	padding: 0 20rpx;
+	color: #000000;
+}
+

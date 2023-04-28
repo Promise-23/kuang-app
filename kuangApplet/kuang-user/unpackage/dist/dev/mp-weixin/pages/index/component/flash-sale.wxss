@@ -1,0 +1,51 @@
+
+.flash-view.data-v-000992ed{
+	background: linear-gradient(to bottom, rgba(215, 0, 15, 0.5) 25%, #fff 70%);
+	border-radius: 20rpx;
+	padding: 20rpx 0;
+	margin: 30rpx 20rpx 0 20rpx;
+}
+.count-down.data-v-000992ed{
+	color: #FFFFFF;
+	padding-bottom: 15rpx;
+	padding-left: 20rpx;
+	font-style: oblique;
+	font-weight: bold;
+}
+/* 宫格布局 */
+.flex-view.data-v-000992ed{
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0 20rpx;
+}
+.commodity.data-v-000992ed{
+	width: calc(25% - 10rpx*2);
+	margin: 10rpx;
+}
+.commodity image.data-v-000992ed{
+	width: 100%;
+	height: 150rpx;
+	border-radius: 20rpx;
+}
+.commodity view.data-v-000992ed{
+	width: 90%;
+}
+.commodity view text.data-v-000992ed:nth-child(1){
+	margin: 10rpx 0;
+}
+.commodity view text.data-v-000992ed:nth-child(2){
+	color: #999999;
+	font-weight: bold;
+}
+.commodity view text.data-v-000992ed:nth-child(3){
+	text-decoration: line-through;
+	font-size: 25rpx;
+	color: #bfbfbf;
+	padding-left: 10rpx;
+}
+.overflow.data-v-000992ed{
+	-webkit-line-clamp: 1 !important;
+}
+.money.data-v-000992ed{
+	font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}

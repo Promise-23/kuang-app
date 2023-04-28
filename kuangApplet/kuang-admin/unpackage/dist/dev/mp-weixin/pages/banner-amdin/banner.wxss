@@ -1,0 +1,26 @@
+
+.modify-padding.data-v-16be800f{
+	padding-bottom: 60rpx !important;
+}
+.upload-cover.data-v-16be800f{
+	position: relative;
+}
+.upload-cover image.data-v-16be800f:nth-child(1){
+	width: 100%;
+	height: 380rpx;
+	display: block;
+}
+.upload-cover image.data-v-16be800f:nth-child(2){
+	width: 40rpx;
+	height: 40rpx;
+	position: absolute;
+	top: 6rpx;
+	right: 6rpx;
+}
+.relation-back.data-v-16be800f{
+	background-color: #f7f7f7 !important;
+	color: #000000 !important;
+}
+.over-text.data-v-16be800f{
+	color: #ed6b51 !important;
+}

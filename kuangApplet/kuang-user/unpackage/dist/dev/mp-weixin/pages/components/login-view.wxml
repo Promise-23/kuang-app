@@ -1,0 +1,1 @@
+<view wx:if="{{a}}" class="login-view data-v-1dd05679"><view class="login-button data-v-1dd05679"><button class="data-v-1dd05679" type="primary" bindtap="{{b}}">登陆</button><button class="data-v-1dd05679" type="default" bindtap="{{c}}">取消</button></view></view>
