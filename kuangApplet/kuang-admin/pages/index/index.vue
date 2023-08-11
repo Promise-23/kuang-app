@@ -140,10 +140,12 @@
 		let query_time = moment().utcOffset(8).format('YYYY-MM-DD')
 		// 计算累计收益
 		const profit = await BASE.collection('order_data').aggregate().group({_id: null,totalPrice: $.sum('$subtotal')}).end()
-		res.profit = profit.list[0].totalPrice === 0 ? '0.00' : profit.list[0].totalPrice
+		// console.log('计算累计收益', (profit.list[0]?.totalPrice ?? 0) === 0 ? '0.00' : profit.list[0]?.totalPrice)
+		res.profit = (profit.list[0]?.totalPrice ?? 0) === 0 ? '0.00' : profit.list[0]?.totalPrice
 		// 今日销售额
 		const sales = await BASE.collection('order_data').aggregate().match({query_time}).group({_id: null,totalPrice: $.sum('$subtotal')}).end()
-		res.sales = sales.list[0].totalPrice === 0 ? '0.00' : sales.list[0].totalPrice
+		// console.log('今日销售额', sales.list[0]?.totalPrice ?? 0 === 0 ? '0.00' : sales.list[0]?.totalPrice)
+		res.sales = (sales.list[0]?.totalPrice ?? 0) === 0 ? '0.00' : sales.list[0]?.totalPrice
 		// 今日订单数
 		const orders = await BASE.collection('order_data').where({query_time}).count()
 		res.orders = orders.total

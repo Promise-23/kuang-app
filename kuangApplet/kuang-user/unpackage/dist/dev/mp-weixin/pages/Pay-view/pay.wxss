@@ -34,6 +34,9 @@ page{
 .pay-address-name view text:nth-child(2){
 	color: #8b8b8d;
 }
+.placeholder-tip{
+	color: #8b8b8d;
+}
 /* 待支付商品 */
 .pay-goods{
 	background-color: #FFFFFF;

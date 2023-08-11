@@ -45,7 +45,7 @@ const _sfc_main = {
       AccConfig_answer.deci.value = "002";
     }
     async function setUp(id, index) {
-      let sto = [f];
+      let sto = [];
       data.address.forEach((item, index_a) => {
         if (item.tacitly) {
           sto.push({ index: index_a, id: item._id });

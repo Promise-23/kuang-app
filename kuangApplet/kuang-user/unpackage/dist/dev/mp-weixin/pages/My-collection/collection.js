@@ -16,6 +16,7 @@ const _sfc_main = {
     });
     async function getData(skip = 0) {
       const res = await common_vendor.wx$1.cloud.callFunction({ name: "my-collection", data: { skip } });
+      console.log("收藏", res);
       data.card = [...data.card, ...res.result];
     }
     let loading = common_vendor.ref(false);

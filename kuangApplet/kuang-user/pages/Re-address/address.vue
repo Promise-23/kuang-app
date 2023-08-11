@@ -83,7 +83,7 @@
 	
 	// 设置默认地址
 	async function setUp(id,index){
-		let sto = [f]
+		let sto = []
 		data.address.forEach((item,index_a)=>{
 			if(item.tacitly){
 				sto.push({index:index_a,id:item._id})

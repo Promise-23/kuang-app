@@ -3,9 +3,9 @@ let inIt = function(){
 		// 声明新的 cloud 实例
 		var res = new wx.cloud.Cloud({
 		  // 用户端 AppID
-		  resourceAppid: 'wx72a2b830a0d427a8',
+		  resourceAppid: 'wxf627a4c6489c75f5',
 		  // 用户端环境 ID
-		  resourceEnv: 'kuang-user-3gwx0hw999ca1b62',
+		  resourceEnv: 'kuang-user-6g2o2xcc9991491f',
 		})
 		
 		// 跨账号调用，必须等待 init 完成

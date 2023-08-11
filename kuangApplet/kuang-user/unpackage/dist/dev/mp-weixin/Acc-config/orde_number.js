@@ -1,6 +1,6 @@
 "use strict";
 let outTradeno = function() {
-  let chars = "ABCDEFGHIJKLMNUPQRSTUVWYZabcdefghijklmn2345678";
+  let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
   let maxPos = chars.length;
   let res = "";
   for (let i = 0; i < 32; i++) {
@@ -13,7 +13,7 @@ let coDe = function() {
   for (let i = 0; i < 6; i++) {
     code += Math.floor(Math.random() * 10);
   }
-  code = new Date().getTime() + code;
+  code = (/* @__PURE__ */ new Date()).getTime() + code;
   return code;
 };
 exports.coDe = coDe;

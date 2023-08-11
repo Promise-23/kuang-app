@@ -97,11 +97,12 @@ const _sfc_main = {
       const eav_data2 = db.collection("goods_eva").where({ goods_id: event.goods_id }).limit(3).get();
       const user = common_vendor.wx$1.getStorageSync("user_infor");
       Promise.all([goods2, collect, sku_data_a, seckill2, nu_sh_cart, eav_num2, eav_data2]).then(async (res) => {
+        var _a, _b, _c, _d;
         await common_vendor.nextTick$1();
         console.log(res);
         result.goods = res[0].data;
-        result.collection = user ? res[1].data.length : 0;
-        result.login_coll = res[1].data.length;
+        result.collection = user ? (_a = res[1].data) == null ? void 0 : _a.length : 0;
+        result.login_coll = (_b = res[1].data) == null ? void 0 : _b.length;
         result.sku_data = res[2].data;
         result.seckill = res[3].data;
         AccConfig_placeOrder.ORDER.nu_sh_cart = user ? res[4].total : 0;
@@ -111,7 +112,7 @@ const _sfc_main = {
         AccConfig_placeOrder.ORDER.order.goods_id = res[0].data._id;
         AccConfig_placeOrder.ORDER.order.goods_image = res[0].data.goods_cover;
         AccConfig_placeOrder.ORDER.order.goods_title = res[0].data.goods_title;
-        if (result.sku_data.length === 0 && result.seckill.length === 0) {
+        if (((_c = result.sku_data) == null ? void 0 : _c.length) === 0 && ((_d = result.seckill) == null ? void 0 : _d.length) === 0) {
           AccConfig_placeOrder.ORDER.order.goods_price = res[0].data.goods_price;
         }
         setTimeout(() => {
@@ -138,7 +139,7 @@ const _sfc_main = {
       });
     }
     return (_ctx, _cache) => {
-      return {
+      return common_vendor.e({
         a: common_vendor.s("height:" + common_vendor.unref(S_top) + "px;"),
         b: common_vendor.o(goTo),
         c: common_vendor.f(common_vendor.unref(tab_name), (item, index, i0) => {
@@ -154,31 +155,34 @@ const _sfc_main = {
         f: common_vendor.s("padding-right:" + common_vendor.unref(S_width) + "px;"),
         g: common_vendor.unref(styleOpacity),
         h: common_vendor.unref(being),
-        i: common_vendor.p({
+        i: common_vendor.unref(goods)
+      }, common_vendor.unref(goods) ? {
+        j: common_vendor.p({
           id: "select",
           goods: common_vendor.unref(goods),
           seckill: common_vendor.unref(seckill)
-        }),
-        j: common_vendor.p({
+        })
+      } : {}, {
+        k: common_vendor.p({
           id: "select",
           eav_num: common_vendor.unref(eav_num),
           eav_data: common_vendor.unref(eav_data)
         }),
-        k: common_vendor.p({
+        l: common_vendor.p({
           id: "select",
           goods_details: common_vendor.unref(goods).goods_details
         }),
-        l: common_vendor.p({
+        m: common_vendor.p({
           goods_id: common_vendor.unref(goods_id),
           collection: common_vendor.unref(collection),
           sku_data: common_vendor.unref(sku_data),
           goods: common_vendor.unref(goods)
         }),
-        m: common_vendor.p({
+        n: common_vendor.p({
           sku_data: common_vendor.unref(sku_data),
           goods: common_vendor.unref(goods)
         })
-      };
+      });
     };
   }
 };

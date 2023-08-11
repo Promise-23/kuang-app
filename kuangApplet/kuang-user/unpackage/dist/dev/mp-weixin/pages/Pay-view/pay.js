@@ -44,6 +44,10 @@ const _sfc_main = {
       or_data.total_price = or_data.order[0].subtotal;
     }
     async function subMit() {
+      if (re_data.address.length == 0) {
+        new AccConfig_public.Plublic().toast("请填写收货地址！");
+        return false;
+      }
       common_vendor.wx$1.showLoading({ title: "正在下单", mask: true });
       let time = common_vendor.hooks().utcOffset(8).format("YYYY-MM-DD HH:mm:ss");
       let query_time = common_vendor.hooks().utcOffset(8).format("YYYY-MM-DD");
@@ -88,7 +92,7 @@ const _sfc_main = {
       }
     });
     return (_ctx, _cache) => {
-      return {
+      return common_vendor.e({
         a: common_vendor.f(common_vendor.unref(address), (item, index, i0) => {
           return {
             a: common_vendor.t(item.name),
@@ -98,7 +102,11 @@ const _sfc_main = {
             e: common_vendor.o(choIce, index)
           };
         }),
-        b: common_vendor.f(common_vendor.unref(order), (item, index, i0) => {
+        b: common_vendor.unref(address).length == 0
+      }, common_vendor.unref(address).length == 0 ? {
+        c: common_vendor.o(choIce)
+      } : {}, {
+        d: common_vendor.f(common_vendor.unref(order), (item, index, i0) => {
           return common_vendor.e({
             a: item.goods_image,
             b: common_vendor.t(item.goods_title),
@@ -123,10 +131,10 @@ const _sfc_main = {
             k: index
           });
         }),
-        c: common_vendor.unref(type) != "direct",
-        d: common_vendor.t(common_vendor.unref(total_price)),
-        e: common_vendor.o(subMit)
-      };
+        e: common_vendor.unref(type) != "direct",
+        f: common_vendor.t(common_vendor.unref(total_price)),
+        g: common_vendor.o(subMit)
+      });
     };
   }
 };

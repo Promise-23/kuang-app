@@ -37,11 +37,11 @@
 			<text>收货地址</text>
 			<image src="/static/detail/xiangyou-jiantou.svg" mode="aspectFit" class="my-other-deta"></image>
 		</view>
-		<view>
+<!-- 		<view>
 			<image src="/static/detail/yijianfankui.svg" mode="aspectFit"></image>
-			<text>意见反馈</text>
+			<text>意见反馈(开发中)</text>
 			<image src="/static/detail/xiangyou-jiantou.svg" mode="aspectFit" class="my-other-deta"></image>
-		</view>
+		</view> -->
 	</view>
 	<!-- 登陆弹窗 -->
 	<Login />
@@ -107,6 +107,7 @@
 	import {login_user} from '@/Acc-config/answer.js'
 	// 调用登陆弹窗
 	function goLogin(){
+		console.log('gologin')
 		login_user.show = true
 	}
 	

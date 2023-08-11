@@ -3,29 +3,80 @@ class Plublic{
 	constructor(){}
 	
 	// 登陆
-	login(){
-		return new Promise((resolve,reject)=>{
-			wx.getUserProfile({
-				desc: '获取用户信息',
-				success:async(res)=>{
-					// 存储数据库查询数据库是否存在用户信息，不存在则提交
-					const query_openid = await db.collection('user_infor').get()
-					if(query_openid.data.length > 0){
-						// 存在用户信息
-						const user = query_openid.data[0]
-						wx.setStorageSync('user_infor', {avatarUrl:user.avatarUrl,nickName:user.nickName,openid:user._openid})
-					}else{
-						await db.collection('user_infor').add({data:{avatarUrl:res.userInfo.avatarUrl,nickName:res.userInfo.nickName,watch_num:1,pay:true}})
-						const query = await db.collection('user_infor').get()
-						const user = query.data[0]
-						wx.setStorageSync('user_infor', {avatarUrl:user.avatarUrl,nickName:user.nickName,openid:user._openid})
-					}
-					resolve('success')
-				},
-				fail:(err)=>{
-					reject(err)
+	// login(){
+	// 	return new Promise((resolve,reject)=>{
+	// 		wx.getUserProfile({
+	// 			desc: '获取用户信息',
+	// 			success:async(res)=>{
+					
+	// 				// 存储数据库查询数据库是否存在用户信息，不存在则提交
+	// 				const query_openid = await db.collection('user_infor').get()
+	// 				if(query_openid.data.length > 0){
+	// 					// 存在用户信息
+	// 					const user = query_openid.data[0]
+	// 					wx.setStorageSync('user_infor', {avatarUrl:user.avatarUrl,nickName:user.nickName,openid:user._openid})
+	// 				}else{
+	// 					await db.collection('user_infor').add({data:{avatarUrl:res.userInfo.avatarUrl,nickName:res.userInfo.nickName,watch_num:1,pay:true}})
+	// 					const query = await db.collection('user_infor').get()
+	// 					const user = query.data[0]
+	// 					wx.setStorageSync('user_infor', {avatarUrl:user.avatarUrl,nickName:user.nickName,openid:user._openid})
+	// 				}
+	// 				resolve('success')
+	// 			},
+	// 			fail:(err)=>{
+	// 				reject(err)
+	// 			}
+	// 		})
+	// 	})
+	// }
+	
+	async getImageBase64_readFile(tempFilePath) {
+	  wx.showLoading()
+	  const base64 = await new Promise(resolve => {
+	    //获取全局唯一的文件管理器
+	    wx.getFileSystemManager()
+	      .readFile({ //读取本地文件内容
+	        filePath: tempFilePath, // 文件路径
+	        encoding: 'base64', // 返回格式
+	        success: ({data}) => {
+	          return resolve('data:image/png;base64,' + data);
+	        },
+	        fail(res) {
+	          console.log('fail', res)
+	        }
+	      });
+	  });
+	
+	  wx.hideLoading()
+	  console.log('base64', base64)
+	  // return base64.replace(/[\r\n]/g, '')
+	  return base64
+	}
+	
+	// 登陆
+	login(userInfo){
+		return new Promise(async (resolve,reject)=>{
+			try{
+				// 存储数据库查询数据库是否存在用户信息，不存在则提交
+				const query_openid = await db.collection('user_infor').get()
+				console.log('query_openid', query_openid)
+				if(query_openid.data.length > 0){
+					// 存在用户信息
+					const user = query_openid.data[0]
+					console.log('user', user)
+					wx.setStorageSync('user_infor', {avatarUrl:user.avatarUrl,nickName:user.nickName,openid:user._openid})
+				}else{
+					console.log('userInfo', userInfo)
+					await db.collection('user_infor').add({data:{avatarUrl:userInfo.avatarUrl,nickName:userInfo.nickName,watch_num:1,pay:true}})
+					const query = await db.collection('user_infor').get()
+					const user = query.data[0]
+					wx.setStorageSync('user_infor', {avatarUrl:user.avatarUrl,nickName:user.nickName,openid:user._openid})
 				}
-			})
+				resolve('success')
+			}catch(err){
+				//TODO handle the exception
+				reject(err)
+			}
 		})
 	}
 	

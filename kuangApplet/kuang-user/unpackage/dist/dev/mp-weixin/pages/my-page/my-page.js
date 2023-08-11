@@ -59,6 +59,7 @@ const _sfc_main = {
       }
     }
     function goLogin() {
+      console.log("gologin");
       AccConfig_answer.login_user.show = true;
     }
     common_vendor.watch(() => AccConfig_answer.login_user.response, (newVal, oldVal) => {

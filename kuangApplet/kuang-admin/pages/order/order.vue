@@ -161,11 +161,17 @@
 		const $ = BASE.command.aggregate
 		// 查询总金额
 		const tatal_fee = await BASE.collection('order_data').aggregate().match({out_trade_no}).group({_id: null,totalPrice: $.sum('$subtotal')}).end()
-		const res = await wx.cloud.callFunction({name:'refund',data:{
+		// const res = await wx.cloud.callFunction({name:'refund',data:{
+		// 	out_trade_no,
+		// 	total_fee:tatal_fee.list[0].totalPrice,
+		// 	refund_fee:subtotal
+		// }})
+		const res = await DB.callFunction({name:'refund',data:{
 			out_trade_no,
 			total_fee:tatal_fee.list[0].totalPrice,
 			refund_fee:subtotal
 		}})
+		console.log('退款', res)
 		if(res.result.code == 200){
 			// 退款成功
 			await BASE.collection('order_data').doc(_id).update({
@@ -183,7 +189,8 @@
 	// 查询退款
 	async function queryRefund(out_refund_no){
 		wx.showLoading({title: '查询中',mask:true})
-		const res = await wx.cloud.callFunction({name:'queryRefund',data:{out_refund_no}})
+		let DB = await inIt()
+		const res = await DB.callFunction({name:'queryRefund',data:{out_refund_no}})
 		new Feedback(res.result.msg,'none').toast()
 	}
 	

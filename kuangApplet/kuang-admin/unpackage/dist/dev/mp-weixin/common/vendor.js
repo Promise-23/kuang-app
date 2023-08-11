@@ -399,7 +399,11 @@ function normalizeLocale$1(locale2, messages) {
     }
     return LOCALE_ZH_HANS;
   }
-  const lang2 = startsWith(locale2, [LOCALE_EN, LOCALE_FR, LOCALE_ES]);
+  let locales2 = [LOCALE_EN, LOCALE_FR, LOCALE_ES];
+  if (messages && Object.keys(messages).length > 0) {
+    locales2 = Object.keys(messages);
+  }
+  const lang2 = startsWith(locale2, locales2);
   if (lang2) {
     return lang2;
   }
@@ -1242,8 +1246,8 @@ function populateParameters(fromRes, toRes) {
     appVersion: "1.0.0",
     appVersionCode: "100",
     appLanguage: getAppLanguage(hostLanguage),
-    uniCompileVersion: "3.7.11",
-    uniRuntimeVersion: "3.7.11",
+    uniCompileVersion: "3.8.7",
+    uniRuntimeVersion: "3.8.7",
     uniPlatform: "mp-weixin",
     deviceBrand,
     deviceModel: model,
@@ -1485,10 +1489,14 @@ function isWxKey(key) {
   return objectKeys.indexOf(key) > -1 || typeof wx[key] === "function";
 }
 function initWx() {
+  let global2 = wx;
+  if (typeof globalThis !== "undefined" && globalThis.wx && wx !== globalThis.wx) {
+    global2 = globalThis.wx;
+  }
   const newWx = {};
-  for (const key in wx) {
+  for (const key in global2) {
     if (isWxKey(key)) {
-      newWx[key] = wx[key];
+      newWx[key] = global2[key];
     }
   }
   if (typeof globalThis !== "undefined") {
@@ -5849,7 +5857,7 @@ function createInvoker(initialValue, instance) {
     const eventValue = invoker.value;
     const invoke = () => callWithAsyncErrorHandling(patchStopImmediatePropagation(e2, eventValue), instance, 5, args);
     const eventTarget = e2.target;
-    const eventSync = eventTarget ? eventTarget.dataset ? eventTarget.dataset.eventsync === "true" : false : false;
+    const eventSync = eventTarget ? eventTarget.dataset ? String(eventTarget.dataset.eventsync) === "true" : false : false;
     if (bubbles.includes(e2.type) && !eventSync) {
       setTimeout(invoke);
     } else {
@@ -6551,6 +6559,7 @@ function parseComponent(vueOptions, { parse, mocks: mocks2, isPage: isPage2, ini
   vueOptions = vueOptions.default || vueOptions;
   const options = {
     multipleSlots: true,
+    // styleIsolation: 'apply-shared',
     addGlobalClass: true,
     pureDataPattern: /^uP$/
   };
@@ -6961,7 +6970,7 @@ function Moment(config) {
   copyConfig(this, config);
   this._d = new Date(config._d != null ? config._d.getTime() : NaN);
   if (!this.isValid()) {
-    this._d = new Date(NaN);
+    this._d = /* @__PURE__ */ new Date(NaN);
   }
   if (updateInProgress === false) {
     updateInProgress = true;
@@ -8522,7 +8531,7 @@ function configFromRFC2822(config) {
 function configFromString(config) {
   var matched = aspNetJsonRegex.exec(config._i);
   if (matched !== null) {
-    config._d = new Date(+matched[1]);
+    config._d = /* @__PURE__ */ new Date(+matched[1]);
     return;
   }
   configFromISO(config);
@@ -8546,7 +8555,7 @@ function configFromString(config) {
 hooks.createFromInputFallback = deprecate(
   "value provided is not in a recognized RFC2822 or ISO format. moment construction falls back to js Date(), which is not reliable across all browsers and versions. Non RFC2822/ISO date formats are discouraged. Please refer to http://momentjs.com/guides/#/warnings/js-date/ for more info.",
   function(config) {
-    config._d = new Date(config._i + (config._useUTC ? " UTC" : ""));
+    config._d = /* @__PURE__ */ new Date(config._i + (config._useUTC ? " UTC" : ""));
   }
 );
 function defaults(a, b, c) {
@@ -8745,7 +8754,7 @@ function configFromStringAndArray(config) {
   var tempConfig, bestMoment, scoreToBeat, i, currentScore, validFormatFound, bestFormatIsValid = false, configfLen = config._f.length;
   if (configfLen === 0) {
     getParsingFlags(config).invalidFormat = true;
-    config._d = new Date(NaN);
+    config._d = /* @__PURE__ */ new Date(NaN);
     return;
   }
   for (i = 0; i < configfLen; i++) {
@@ -8917,7 +8926,7 @@ function max() {
   return pickBy("isAfter", args);
 }
 var now = function() {
-  return Date.now ? Date.now() : +new Date();
+  return Date.now ? Date.now() : +/* @__PURE__ */ new Date();
 };
 var ordering = [
   "year",

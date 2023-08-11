@@ -59,8 +59,8 @@
 	// 获取接收父组件传来的值
 	watch(props,(newVla_a,oldVal)=>{
 		const newVla = JSON.parse(JSON.stringify(newVla_a))//深拷贝
-		// console.log(newVla)
-		ban_length.value = newVla.goods.goods_banner.length
+		// console.log('newVla.goods.goods_banner', newVla)
+		ban_length.value = newVla?.goods?.goods_banner?.length ?? 0
 		if(newVla.seckill.length === 0){
 			// 没有秒杀
 			seckill_display.value = false

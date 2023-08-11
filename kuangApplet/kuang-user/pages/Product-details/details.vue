@@ -16,7 +16,7 @@
 		</view>
 	</view>
 	<!-- 轮播 -->
-	<Swipers id="select" class="swiper" :goods="goods" :seckill="seckill"/>
+	<Swipers v-if="goods" id="select" class="swiper" :goods="goods" :seckill="seckill"/>
 	<!-- 评价 -->
 	<Eva id="select" class="eva" :eav_num="eav_num" :eav_data="eav_data"/>
 	<!-- 详情 -->
@@ -144,8 +144,8 @@
 			await nextTick()
 			console.log(res)
 			result.goods = res[0].data//商品数据
-			result.collection = user ? res[1].data.length : 0//收藏
-			result.login_coll = res[1].data.length//登陆成功之后获取这里的收藏数据
+			result.collection = user ? res[1].data?.length : 0//收藏
+			result.login_coll = res[1].data?.length//登陆成功之后获取这里的收藏数据
 			result.sku_data = res[2].data//sku
 			result.seckill = res[3].data//秒杀
 			ORDER.nu_sh_cart = user ? res[4].total : 0//购物车件数
@@ -158,7 +158,7 @@
 			ORDER.order.goods_image = res[0].data.goods_cover
 			ORDER.order.goods_title = res[0].data.goods_title
 			// 没有秒杀，sku，取返回价格下单
-			if(result.sku_data.length === 0 && result.seckill.length === 0){
+			if(result.sku_data?.length === 0 && result.seckill?.length === 0){
 				ORDER.order.goods_price = res[0].data.goods_price
 			}
 			setTimeout(()=>{viewheight()},900)
@@ -209,12 +209,13 @@ page{background-color: #f6f6f6;}
 	justify-content: space-around;
 }
 .tab-jiantou{
-	width: 35rpx;
-	height: 35rpx;
+	padding: 30rpx 20rpx;
+	width: 50rpx;
+	height: 50rpx;
 }
 .tab-jiantou image{
-	width: 35rpx;
-	height: 35rpx;
+	width: 100%;
+	height: 100%;
 }
 .tab-view{
 	display: flex;

@@ -13,8 +13,9 @@ const _sfc_main = {
     }
     const seckill_display = common_vendor.ref(false);
     common_vendor.watch(props, (newVla_a, oldVal) => {
+      var _a, _b;
       const newVla = JSON.parse(JSON.stringify(newVla_a));
-      ban_length.value = newVla.goods.goods_banner.length;
+      ban_length.value = ((_b = (_a = newVla == null ? void 0 : newVla.goods) == null ? void 0 : _a.goods_banner) == null ? void 0 : _b.length) ?? 0;
       if (newVla.seckill.length === 0) {
         seckill_display.value = false;
         AccConfig_placeOrder.ORDER.order.goods_price = newVla.goods.goods_price;
@@ -34,7 +35,7 @@ const _sfc_main = {
       }
     });
     function currentTime() {
-      return Math.round(new Date().getTime() / 1e3);
+      return Math.round((/* @__PURE__ */ new Date()).getTime() / 1e3);
     }
     const result = common_vendor.reactive({ day: "00", hour: "00", minute: "00", second: "00" });
     const { day, hour, minute, second } = common_vendor.toRefs(result);

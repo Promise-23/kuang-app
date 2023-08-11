@@ -20,7 +20,7 @@ if (!Math) {
 const _sfc_main = {
   onLaunch: function() {
     common_vendor.wx$1.cloud.init({
-      env: "kuang-user-3gwx0hw999ca1b62",
+      env: "kuang-user-6g2o2xcc9991491f",
       traceUser: true
     });
   }

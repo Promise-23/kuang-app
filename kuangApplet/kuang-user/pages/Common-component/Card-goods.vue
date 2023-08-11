@@ -5,6 +5,10 @@
 			<view class="Card-image">
 				<image :src="item.goods_cover" mode="aspectFill"></image>
 			</view>
+<!-- 			<view class="brand-icon">
+				<image src="../../static/brand.png" mode="aspectFill"></image>
+			</view> -->
+			<brand-icon :style="{fontSize: '60rpx', position: 'absolute',top: '20rpx', right: '20rpx'}"/>
 			<view class="Card-title overflow">{{item.goods_title}}</view>
 			<view class="Card-price">
 				<text>¥ {{item.goods_price}}</text>
@@ -15,6 +19,9 @@
 </template>
 
 <script setup>
+	import BrandIcon from './UI/BrandIcon'
+	import Card from '../Common-component/Card-goods.vue'
+	
 	import {defineProps} from 'vue'
 	defineProps({card:Array})
 	
@@ -41,6 +48,7 @@
 	margin: 20rpx 10rpx;
 }
 .Card-stream{
+	position: relative;
 	width: calc(50% - 10rpx*2);
 	margin: 10rpx;
 	background: #FFFFFF;
@@ -56,6 +64,22 @@
 	height: 400rpx;
 	border-top-left-radius: 10rpx;
 	border-top-right-radius: 10rpx;
+}
+.brand-icon{
+	position: absolute;
+	top: 20rpx;
+	height: 60rpx;
+	width: 60rpx;
+	right: 20rpx;
+	background-color: #fff;
+	border-radius: 50%;
+	overflow: hidden;
+	box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
+}
+
+.brand-icon image{
+	width: 100%;
+	height: 100%;
 }
 .Card-title{
 	font-size: 28rpx;

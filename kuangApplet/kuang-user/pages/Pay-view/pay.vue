@@ -15,6 +15,15 @@
 			<image src="/static/detail/xiangyou-jiantou.svg" mode="aspectFit"></image>
 		</view>
 	</view>
+	<view class="pay-address" v-if="address.length == 0" @click="choIce">
+		<view class="pay-address-left">
+			<image src="/static/detail/dingdan-dizhi.svg" mode="aspectFit"></image>
+		</view>
+		<view class="pay-address-name placeholder-tip">请选择收货地址</view>
+		<view class="pay-address-right">
+			<image src="/static/detail/xiangyou-jiantou.svg" mode="aspectFit"></image>
+		</view>
+	</view>
 	<!-- 商品详情 -->
 	<view class="pay-goods" v-for="(item,index) in order" :key="index">
 		<view>
@@ -100,6 +109,11 @@
 	import {Wxpay} from '../../Acc-config/wx-pay.js'
 	import {Plublic} from '@/Acc-config/public.js'
 	async function subMit(){
+		if(re_data.address.length == 0){
+			// 地址未填
+			new Plublic().toast('请填写收货地址！')
+			return false
+		}
 		wx.showLoading({title: '正在下单',mask:true})
 		// 当前时间:年月日，时分秒
 		let time = moment().utcOffset(8).format('YYYY-MM-DD HH:mm:ss')
@@ -201,6 +215,10 @@ page{
 	font-weight: bold;
 }
 .pay-address-name view text:nth-child(2){
+	color: #8b8b8d;
+}
+
+.placeholder-tip{
 	color: #8b8b8d;
 }
 /* 待支付商品 */

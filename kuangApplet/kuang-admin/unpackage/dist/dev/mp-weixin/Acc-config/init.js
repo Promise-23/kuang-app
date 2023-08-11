@@ -4,9 +4,9 @@ let inIt = function() {
   return new Promise(async (resolve, reject) => {
     var res = new common_vendor.wx$1.cloud.Cloud({
       // 用户端 AppID
-      resourceAppid: "wx72a2b830a0d427a8",
+      resourceAppid: "wxf627a4c6489c75f5",
       // 用户端环境 ID
-      resourceEnv: "kuang-user-3gwx0hw999ca1b62"
+      resourceEnv: "kuang-user-6g2o2xcc9991491f"
     });
     await res.init();
     await res.callFunction({

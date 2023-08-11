@@ -85,11 +85,12 @@ const _sfc_main = {
       const BASE = DB.database();
       const $ = BASE.command.aggregate;
       const tatal_fee = await BASE.collection("order_data").aggregate().match({ out_trade_no }).group({ _id: null, totalPrice: $.sum("$subtotal") }).end();
-      const res = await common_vendor.wx$1.cloud.callFunction({ name: "refund", data: {
+      const res = await DB.callFunction({ name: "refund", data: {
         out_trade_no,
         total_fee: tatal_fee.list[0].totalPrice,
         refund_fee: subtotal
       } });
+      console.log("退款", res);
       if (res.result.code == 200) {
         await BASE.collection("order_data").doc(_id).update({
           data: { deliver: "ref_succ", out_refund_no: res.result.out_refund_no }
@@ -104,7 +105,8 @@ const _sfc_main = {
     }
     async function queryRefund(out_refund_no) {
       common_vendor.wx$1.showLoading({ title: "查询中", mask: true });
-      const res = await common_vendor.wx$1.cloud.callFunction({ name: "queryRefund", data: { out_refund_no } });
+      let DB = await AccConfig_init.inIt();
+      const res = await DB.callFunction({ name: "queryRefund", data: { out_refund_no } });
       new AccConfig_media.Feedback(res.result.msg, "none").toast();
     }
     return (_ctx, _cache) => {

@@ -9,7 +9,7 @@
 	</view>
 	<view :style=" 'height:' + Custom_height + 'px;' "></view>
 	<!-- 轮播--横幅 -->
-	<Swiper style="height: 540rpx;" :banner="banner" />
+	<Swiper style="height: 740rpx;" :banner="banner" />
 	<!-- 秒杀 -->
 	<Flash :seckill="seckill"/>
 	<!-- 商品列表 -->

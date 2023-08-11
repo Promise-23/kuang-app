@@ -50,19 +50,19 @@
 <style scoped>
 /* 轮播区域 */
 .Rotation-view {
-	height: 520rpx;
+	height: 720rpx;
 	/* background: linear-gradient(to bottom, #4CD964 25%, #c0f2c8 100%); */
 	background: linear-gradient(to bottom, #a0c179 25%, #fff 100%);
 	padding: 20rpx 20rpx 0 20rpx;
 }
 
 .swiper-top {
-	height: 500rpx;
+	height: 700rpx;
 	position: relative;
 }
 
 .swiper {
-	height: 500rpx !important;
+	height: 700rpx !important;
 	border-radius: 20rpx;
 	overflow: hidden;
 	transform: translateY(0);
@@ -70,7 +70,7 @@
 
 .swiper-item image {
 	width: 100%;
-	height: 500rpx !important;
+	height: 700rpx !important;
 	object-position: top;
 }
 

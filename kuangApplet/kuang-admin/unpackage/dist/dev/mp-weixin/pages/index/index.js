@@ -91,14 +91,15 @@ const _sfc_main = {
     const { profit, sales, orders, com_order } = common_vendor.toRefs(res);
     common_vendor.hooks.locale("zh-cn");
     async function coUnt() {
+      var _a, _b, _c, _d;
       let DB = await AccConfig_init.inIt();
       const BASE = DB.database();
       const $ = BASE.command.aggregate;
       let query_time = common_vendor.hooks().utcOffset(8).format("YYYY-MM-DD");
       const profit2 = await BASE.collection("order_data").aggregate().group({ _id: null, totalPrice: $.sum("$subtotal") }).end();
-      res.profit = profit2.list[0].totalPrice === 0 ? "0.00" : profit2.list[0].totalPrice;
+      res.profit = (((_a = profit2.list[0]) == null ? void 0 : _a.totalPrice) ?? 0) === 0 ? "0.00" : (_b = profit2.list[0]) == null ? void 0 : _b.totalPrice;
       const sales2 = await BASE.collection("order_data").aggregate().match({ query_time }).group({ _id: null, totalPrice: $.sum("$subtotal") }).end();
-      res.sales = sales2.list[0].totalPrice === 0 ? "0.00" : sales2.list[0].totalPrice;
+      res.sales = (((_c = sales2.list[0]) == null ? void 0 : _c.totalPrice) ?? 0) === 0 ? "0.00" : (_d = sales2.list[0]) == null ? void 0 : _d.totalPrice;
       const orders2 = await BASE.collection("order_data").where({ query_time }).count();
       res.orders = orders2.total;
       const com_order2 = await BASE.collection("order_data").count();

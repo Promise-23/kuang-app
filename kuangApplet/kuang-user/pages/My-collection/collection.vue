@@ -24,6 +24,7 @@
 	
 	async function getData(skip=0){
 		const res = await wx.cloud.callFunction({name:'my-collection',data:{skip}})
+		console.log('收藏', res)
 		data.card = [...data.card,...res.result]
 	}
 	
