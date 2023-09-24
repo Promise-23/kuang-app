@@ -15,11 +15,10 @@
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
-    },
-    "condition": false
+    }
   },
   "compileType": "miniprogram",
-  "libVersion": "2.31.0",
+  "libVersion": "3.0.2",
   "appid": "wxf627a4c6489c75f5",
   "projectname": "kuang-user",
   "condition": {

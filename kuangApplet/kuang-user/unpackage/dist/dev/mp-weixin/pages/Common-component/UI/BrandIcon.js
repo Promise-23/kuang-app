@@ -11,5 +11,5 @@ const _sfc_main = {
     };
   }
 };
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/hujie/Applet/kuangApplet/kuang-user/pages/Common-component/UI/BrandIcon.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "/Users/hujie/Documents/Kuang+/kuang-app/kuangApplet/kuang-user/pages/Common-component/UI/BrandIcon.vue"]]);
 wx.createComponent(Component);

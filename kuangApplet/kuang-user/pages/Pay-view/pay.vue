@@ -132,6 +132,7 @@
 			result.out_trade_no = out_trade_no
 			result.or_data = or_data.order
 			// 3.发起支付
+			console.log('payment.result', payment.result)
 			const pay = await new Wxpay().payMent(payment.result)
 			// console.log(pay)
 		}catch(err){

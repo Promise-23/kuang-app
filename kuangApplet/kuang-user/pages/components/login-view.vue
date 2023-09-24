@@ -3,12 +3,29 @@
 	<view class="login-view" v-if="login_user.show">
 		<view class="overlay" @click="cancel"></view>
 		<view class="content">
-			<view class="avatar">
+			<view class="brand">
+				<brand-icon :style="{fontSize: '60rpx'}"/>
+				<view class="title">
+					Kuang+框架
+				</view>
+			</view>
+			<view class="descs">
+				<view class="desc">
+					申请获取您的登陆信息（头像、昵称等）
+				</view>
+				<view class="tip">为了更好的用户体验/推荐使用微信信息</view>
+			</view>
+			<view class="avatar box">
 				<button open-type="chooseAvatar" @chooseavatar="onChooseAvatar">
 				  <image :src="userInfo.avatarUrl"></image>
 				</button>
 			</view>
-			<input ref="inputRef" v-model="userInfo.nickName" class="input" type="nickname" placeholder="请输入昵称"/>
+			<view class="box">
+				<input ref="inputRef" v-model="userInfo.nickName" class="input" type="nickname" placeholder="请输入昵称"/>
+			</view>
+			<view class="phone box">
+				<button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">获取手机号</button>
+			</view>
 			<view class="opitions">
 				<button type="primary" @click="login">确定</button>
 				<button type="default" @click="login_user.show = false">取消</button>
@@ -21,7 +38,7 @@
 	import {login_user} from '../../Acc-config/answer.js'
 	import {Plublic} from '../../Acc-config/public.js'
 	import {reactive} from 'vue'
-	
+	import BrandIcon from '../Common-component/UI/BrandIcon.vue'
 	//登陆
 	async function login(){
 		try{
@@ -40,6 +57,9 @@
 		const { avatarUrl } = e.detail 
 		console.log('avatarUrl',new Plublic().getImageBase64_readFile(avatarUrl))
 		userInfo.avatarUrl = await new Plublic().getImageBase64_readFile(avatarUrl)
+	}
+	function getPhoneNumber(e){
+		console.log('phone', e)
 	}
 	function cancel(e){
 		e.stopPropagation()
@@ -74,36 +94,79 @@
 	bottom: 0;
 	left: 0;
 	height: max-content;
-	width: 100%;
-	padding: 50rpx 10rpx;
+	width: calc(100% - 100rpx);
+	padding: 50rpx 50rpx;
 	z-index: 999;
-	background-color: #FFFFFF;
+	background-color: #f3f3f3;
+	border-radius: 26rpx 26rpx 0 0;
+}
+
+.brand{
+	display: flex;
+	align-items: center;
+	margin-bottom: 18rpx;
+}
+
+.title{
+	margin-left: 20rpx;
+	font-size: 28rpx;
+}
+
+.descs{
+	font-size: 30rpx;
+	margin-bottom: 30rpx;
+}
+.tip{
+	font-size: 24rpx;
+	color: #999;
 }
 @keyframes post-list-row {
 	0% {bottom:-100%}
 	100%{bottom:0}
 }
 
-.avatar,
-.input,
-.opitions{
-	padding: 20rpx;
+.box{
 	width: 100%;
+	height: 100rpx;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	text-align: center;
+	margin-bottom: 30rpx;
+	border-radius: 16rpx;
+	background-color: #fff;
+}
+
+
+.opitions{
+	padding-top: 30rpx;
+	text-align: center;
 }
 
 .avatar button{
-	width: 100rpx;
-	height: 100rpx;
+	width: 90rpx;
+	height: 90rpx;
 	padding: 0;
 }
 
+.phone button{
+	width: 300rpx;
+	height: 90rpx;
+	line-height: 90rpx;
+	background-color: transparent;
+	font-size: 16px;
+	color: #999;
+}
+.phone button::after{
+	width: 300rpx;
+	height: 90rpx;
+	padding: 0;
+	border: none;
+}
+
 .avatar image{
-	width: 100rpx;
-	height: 100rpx;
+	width: 90rpx;
+	height: 90rpx;
 }
 
 .opitions button{
@@ -116,6 +179,6 @@
 }
 
 .opitions button:first-child{
-	margin-right: 20rpx;
+	margin-right: 50rpx;
 }
 </style>

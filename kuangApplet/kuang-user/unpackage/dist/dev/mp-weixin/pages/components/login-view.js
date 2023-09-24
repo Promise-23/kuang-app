@@ -2,6 +2,10 @@
 const common_vendor = require("../../common/vendor.js");
 const AccConfig_answer = require("../../Acc-config/answer.js");
 const AccConfig_public = require("../../Acc-config/public.js");
+if (!Math) {
+  BrandIcon();
+}
+const BrandIcon = () => "../Common-component/UI/BrandIcon.js";
 const _sfc_main = {
   __name: "login-view",
   setup(__props) {
@@ -21,6 +25,9 @@ const _sfc_main = {
       console.log("avatarUrl", new AccConfig_public.Plublic().getImageBase64_readFile(avatarUrl));
       userInfo.avatarUrl = await new AccConfig_public.Plublic().getImageBase64_readFile(avatarUrl);
     }
+    function getPhoneNumber(e) {
+      console.log("phone", e);
+    }
     function cancel(e) {
       e.stopPropagation();
       AccConfig_answer.login_user.show = false;
@@ -34,11 +41,12 @@ const _sfc_main = {
         d: common_vendor.o(onChooseAvatar),
         e: userInfo.nickName,
         f: common_vendor.o(($event) => userInfo.nickName = $event.detail.value),
-        g: common_vendor.o(login),
-        h: common_vendor.o(($event) => common_vendor.unref(AccConfig_answer.login_user).show = false)
+        g: common_vendor.o(getPhoneNumber),
+        h: common_vendor.o(login),
+        i: common_vendor.o(($event) => common_vendor.unref(AccConfig_answer.login_user).show = false)
       } : {});
     };
   }
 };
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-1dd05679"], ["__file", "D:/hujie/Applet/kuangApplet/kuang-user/pages/components/login-view.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-1dd05679"], ["__file", "/Users/hujie/Documents/Kuang+/kuang-app/kuangApplet/kuang-user/pages/components/login-view.vue"]]);
 wx.createComponent(Component);

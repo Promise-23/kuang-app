@@ -58,6 +58,7 @@ const _sfc_main = {
         const can_res = await new AccConfig_wxPay.Wxpay().suBmit(or_data.order, payment.result, re_data.address, time, query_time, out_trade_no);
         result.out_trade_no = out_trade_no;
         result.or_data = or_data.order;
+        console.log("payment.result", payment.result);
         const pay = await new AccConfig_wxPay.Wxpay().payMent(payment.result);
       } catch (err) {
         if (err && err.errMsg == "requestPayment:fail cancel") {
@@ -138,5 +139,5 @@ const _sfc_main = {
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/hujie/Applet/kuangApplet/kuang-user/pages/Pay-view/pay.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "/Users/hujie/Documents/Kuang+/kuang-app/kuangApplet/kuang-user/pages/Pay-view/pay.vue"]]);
 wx.createPage(MiniProgramPage);
