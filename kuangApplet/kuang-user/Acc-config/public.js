@@ -63,14 +63,17 @@ class Plublic{
 				if(query_openid.data.length > 0){
 					// 存在用户信息
 					const user = query_openid.data[0]
-					console.log('user', user)
-					wx.setStorageSync('user_infor', {avatarUrl:user.avatarUrl,nickName:user.nickName,openid:user._openid})
+					console.log('更新user', user)
+					console.log('更新userInfo', userInfo)
+					await db.collection('user_infor').where({_openid:user.openid}).update({data:{avatarUrl:userInfo.avatarUrl,nickName:userInfo.nickName,phone:userInfo.phone}})
+					wx.setStorageSync('user_infor', {avatarUrl:userInfo.avatarUrl,nickName:userInfo.nickName,openid:user._openid,phone:userInfo.phone})
 				}else{
-					console.log('userInfo', userInfo)
-					await db.collection('user_infor').add({data:{avatarUrl:userInfo.avatarUrl,nickName:userInfo.nickName,watch_num:1,pay:true}})
+					await db.collection('user_infor').add({data:{avatarUrl:userInfo.avatarUrl,nickName:userInfo.nickName,phone:userInfo.phone,watch_num:1,pay:true}})
 					const query = await db.collection('user_infor').get()
 					const user = query.data[0]
-					wx.setStorageSync('user_infor', {avatarUrl:user.avatarUrl,nickName:user.nickName,openid:user._openid})
+					console.log('新增user', user)
+					console.log('新增userInfo', userInfo)
+					wx.setStorageSync('user_infor', {avatarUrl:user.avatarUrl,nickName:user.nickName,openid:user._openid,phone:user.phone})
 				}
 				resolve('success')
 			}catch(err){
@@ -156,4 +159,43 @@ class Plublic{
 	
 }
 
-export {Plublic}
+
+function getAccessToken(){
+	//获取access_token
+	const APPID='wxf627a4c6489c75f5'
+	const APPSECRET='adf0c27ab3ba4a517c76d95b588eec6b'
+	const URL = `https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${APPID}&secret=${APPSECRET}`
+	return new Promise((resolve,reject)=>{
+		wx.request({
+		  url: URL, //仅为示例，并非真实的接口地址
+		  method: 'GET',
+		  success (res) {
+			resolve(res.data)
+		  },
+		  fail(err){
+		  	reject(err)
+		  }
+		})
+	})
+}
+
+function getPhoneNumberByToken(code, token){
+	const URL = `https://api.weixin.qq.com/wxa/business/getuserphonenumber?access_token=${token}`
+	const requestOptions = {
+		code: code
+	}
+	return new Promise((resolve,reject)=>{
+		wx.request({
+		  url: URL, //仅为示例，并非真实的接口地址
+		  method: 'POST',
+		  data: requestOptions,
+		  success (res) {
+			resolve(res.data)
+		  },
+		  fail(err){
+		  	reject(err)
+		  }
+		})
+	})
+}
+export {Plublic, getAccessToken, getPhoneNumberByToken}

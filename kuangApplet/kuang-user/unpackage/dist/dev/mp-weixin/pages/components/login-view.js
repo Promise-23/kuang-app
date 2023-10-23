@@ -18,15 +18,25 @@ const _sfc_main = {
         new AccConfig_public.Plublic().toast("登录失败,重试");
       }
     }
-    const userInfo = common_vendor.reactive({ avatarUrl: "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0", nickName: "" });
+    const userInfo = common_vendor.reactive({ avatarUrl: "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0", nickName: "", phone: "" });
     async function onChooseAvatar(e) {
       console.log("e", e);
       const { avatarUrl } = e.detail;
       console.log("avatarUrl", new AccConfig_public.Plublic().getImageBase64_readFile(avatarUrl));
       userInfo.avatarUrl = await new AccConfig_public.Plublic().getImageBase64_readFile(avatarUrl);
     }
+    function handleNickName(e) {
+      userInfo.nickName = e.detail.value;
+    }
     function getPhoneNumber(e) {
-      console.log("phone", e);
+      AccConfig_public.getAccessToken().then(({ access_token }) => {
+        console.log(e.detail.code, access_token);
+        const code = e.detail.code;
+        AccConfig_public.getPhoneNumberByToken(code, access_token).then(({ phone_info }) => {
+          console.log("getPhoneNumber", phone_info);
+          userInfo.phone = phone_info.purePhoneNumber;
+        });
+      });
     }
     function cancel(e) {
       e.stopPropagation();
@@ -39,14 +49,15 @@ const _sfc_main = {
         b: common_vendor.o(cancel),
         c: userInfo.avatarUrl,
         d: common_vendor.o(onChooseAvatar),
-        e: userInfo.nickName,
-        f: common_vendor.o(($event) => userInfo.nickName = $event.detail.value),
+        e: common_vendor.o(handleNickName),
+        f: common_vendor.t(userInfo.phone ? userInfo.phone : "点击获取手机号"),
         g: common_vendor.o(getPhoneNumber),
-        h: common_vendor.o(login),
-        i: common_vendor.o(($event) => common_vendor.unref(AccConfig_answer.login_user).show = false)
+        h: common_vendor.n(userInfo.phone ? "has-phone" : ""),
+        i: common_vendor.o(login),
+        j: common_vendor.o(($event) => common_vendor.unref(AccConfig_answer.login_user).show = false)
       } : {});
     };
   }
 };
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-1dd05679"], ["__file", "/Users/hujie/Documents/Kuang+/kuang-app/kuangApplet/kuang-user/pages/components/login-view.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-1dd05679"], ["__file", "D:/hujie/Applet-new/kuang-app/kuangApplet/kuang-user/pages/components/login-view.vue"]]);
 wx.createComponent(Component);

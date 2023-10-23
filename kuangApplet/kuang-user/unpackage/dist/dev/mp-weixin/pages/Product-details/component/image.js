@@ -16,5 +16,5 @@ const _sfc_main = {
     };
   }
 };
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-359d0f06"], ["__file", "/Users/hujie/Documents/Kuang+/kuang-app/kuangApplet/kuang-user/pages/Product-details/component/image.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-359d0f06"], ["__file", "D:/hujie/Applet-new/kuang-app/kuangApplet/kuang-user/pages/Product-details/component/image.vue"]]);
 wx.createComponent(Component);

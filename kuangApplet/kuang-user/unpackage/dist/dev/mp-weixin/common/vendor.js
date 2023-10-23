@@ -7294,7 +7294,7 @@ var md5$1 = {
 })(md5$1);
 const md5 = md5Exports;
 //! moment.js
-//! version : 2.29.3
+//! version : 2.29.4
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
 //! license : MIT
 //! momentjs.com
@@ -8981,7 +8981,7 @@ function untruncateYear(yearStr) {
   return year;
 }
 function preprocessRFC2822(s2) {
-  return s2.replace(/\([^)]*\)|[\n\t]/g, " ").replace(/(\s\s+)/g, " ").replace(/^\s\s*/, "").replace(/\s\s*$/, "");
+  return s2.replace(/\([^()]*\)|[\n\t]/g, " ").replace(/(\s\s+)/g, " ").replace(/^\s\s*/, "").replace(/\s\s*$/, "");
 }
 function checkWeekday(weekdayStr, parsedInput, config) {
   if (weekdayStr) {
@@ -11167,7 +11167,7 @@ addParseToken("x", function(input, array, config) {
   config._d = new Date(toInt(input));
 });
 //! moment.js
-hooks.version = "2.29.3";
+hooks.version = "2.29.4";
 setHookCallback(createLocal);
 hooks.fn = proto;
 hooks.min = min;

@@ -11,7 +11,7 @@
 			</view>
 			<view class="descs">
 				<view class="desc">
-					申请获取您的登陆信息（头像、昵称等）
+					申请获取您的登陆信息（头像、昵称、手机号等）
 				</view>
 				<view class="tip">为了更好的用户体验/推荐使用微信信息</view>
 			</view>
@@ -21,10 +21,10 @@
 				</button>
 			</view>
 			<view class="box">
-				<input ref="inputRef" v-model="userInfo.nickName" class="input" type="nickname" placeholder="请输入昵称"/>
+				<input ref="inputRef" @change="handleNickName" class="input" type="nickname" placeholder="请输入昵称" placeholder-style="color: #999"/>
 			</view>
 			<view class="phone box">
-				<button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber">获取手机号</button>
+				<button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber" :class="userInfo.phone ? 'has-phone' : ''">{{ userInfo.phone ? userInfo.phone : '点击获取手机号'}}</button>
 			</view>
 			<view class="opitions">
 				<button type="primary" @click="login">确定</button>
@@ -35,8 +35,9 @@
 </template>
 
 <script setup>
+	import { ref } from 'vue'
 	import {login_user} from '../../Acc-config/answer.js'
-	import {Plublic} from '../../Acc-config/public.js'
+	import {Plublic, getAccessToken, getPhoneNumberByToken} from '../../Acc-config/public.js'
 	import {reactive} from 'vue'
 	import BrandIcon from '../Common-component/UI/BrandIcon.vue'
 	//登陆
@@ -50,7 +51,7 @@
 		}
 	}
 	
-	const userInfo = reactive({avatarUrl: 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0', nickName: ''})
+	const userInfo = reactive({avatarUrl: 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0', nickName: '', phone: ''})
 	
 	async function onChooseAvatar(e) {
 		console.log('e', e)
@@ -58,8 +59,20 @@
 		console.log('avatarUrl',new Plublic().getImageBase64_readFile(avatarUrl))
 		userInfo.avatarUrl = await new Plublic().getImageBase64_readFile(avatarUrl)
 	}
+	
+	function handleNickName(e){
+		userInfo.nickName = e.detail.value 
+	}
+	
 	function getPhoneNumber(e){
-		console.log('phone', e)
+		getAccessToken().then(({access_token}) => {
+			console.log(e.detail.code, access_token)
+			const code = e.detail.code
+			getPhoneNumberByToken(code, access_token).then(({phone_info}) => {
+				console.log('getPhoneNumber', phone_info)
+				userInfo.phone = phone_info.purePhoneNumber
+			})
+		})
 	}
 	function cancel(e){
 		e.stopPropagation()
@@ -143,6 +156,9 @@
 	text-align: center;
 }
 
+.avatar{
+	background-color: transparent
+}
 .avatar button{
 	width: 90rpx;
 	height: 90rpx;
@@ -150,18 +166,23 @@
 }
 
 .phone button{
-	width: 300rpx;
+	width: 100%;
 	height: 90rpx;
 	line-height: 90rpx;
 	background-color: transparent;
 	font-size: 16px;
 	color: #999;
+	text-align: center;
 }
 .phone button::after{
 	width: 300rpx;
 	height: 90rpx;
 	padding: 0;
 	border: none;
+}
+
+.phone .has-phone{
+	color: #000
 }
 
 .avatar image{

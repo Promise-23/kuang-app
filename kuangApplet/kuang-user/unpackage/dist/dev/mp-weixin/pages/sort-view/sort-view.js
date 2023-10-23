@@ -71,5 +71,5 @@ const _sfc_main = {
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-466d4362"], ["__file", "/Users/hujie/Documents/Kuang+/kuang-app/kuangApplet/kuang-user/pages/sort-view/sort-view.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-466d4362"], ["__file", "D:/hujie/Applet-new/kuang-app/kuangApplet/kuang-user/pages/sort-view/sort-view.vue"]]);
 wx.createPage(MiniProgramPage);

@@ -9,8 +9,8 @@
 		{
 			"path": "pages/my-page/my-page",
 			"style": {
-				"navigationBarTitleText": "我的",
-				"navigationStyle": "custom"
+				"navigationBarTitleText": "个人中心"
+				// "navigationStyle": "custom"
 			}
 		},
 		{

@@ -1,0 +1,29 @@
+<template>
+	<view :style="style" class="brand-icon">
+		<image src="../../static/brand.png" mode="aspectFill"></image>
+	</view>
+</template>
+
+<script setup>
+	import {defineProps} from 'vue'
+	defineProps({style:Object})
+</script>
+
+<style>
+	.brand-icon{
+		height: 1em;
+		width: 1em;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: #fff;
+		border-radius: 50%;
+		overflow: hidden;
+		box-shadow: -2px 2px 5px rgba(0,0,0,0.2);
+	}
+	
+	.brand-icon image{
+		width: 100%;
+		height: 100%;
+	}
+</style>

@@ -62,6 +62,28 @@ const _sfc_main = {
       console.log("gologin");
       AccConfig_answer.login_user.show = true;
     }
+    function goLogout() {
+      common_vendor.index.showModal({
+        title: "提示",
+        content: "确认退出登录吗？",
+        success: function(res) {
+          if (res.confirm) {
+            common_vendor.index.removeStorageSync("user_infor");
+            common_vendor.index.switchTab({
+              //跳转到主页
+              url: "/pages/index/index",
+              success: () => {
+                common_vendor.wx$1.showToast({
+                  title: "退出成功"
+                });
+              }
+            });
+          } else if (res.cancel) {
+            console.log("用户点击取消");
+          }
+        }
+      });
+    }
     common_vendor.watch(() => AccConfig_answer.login_user.response, (newVal, oldVal) => {
       staTus();
     });
@@ -98,12 +120,13 @@ const _sfc_main = {
         a: common_vendor.unref(exist)
       }, common_vendor.unref(exist) ? {
         b: common_vendor.unref(user_infor).avatarUrl,
-        c: common_vendor.t(common_vendor.unref(user_infor).nickName)
+        c: common_vendor.t(common_vendor.unref(user_infor).nickName),
+        d: common_vendor.o(goLogout)
       } : {
-        e: common_vendor.o(goLogin)
+        f: common_vendor.o(goLogin)
       }, {
-        d: !common_vendor.unref(exist),
-        f: common_vendor.f(list_data.whole, (item, index, i0) => {
+        e: !common_vendor.unref(exist),
+        g: common_vendor.f(list_data.whole, (item, index, i0) => {
           return {
             a: common_vendor.t(item.name),
             b: item.icon,
@@ -111,7 +134,7 @@ const _sfc_main = {
             d: common_vendor.o(($event) => viewOrder(item.index, item.query), index)
           };
         }),
-        g: common_vendor.f(list_data.list, (item, index, i0) => {
+        h: common_vendor.f(list_data.list, (item, index, i0) => {
           return {
             a: item.icon,
             b: common_vendor.t(item.name),
@@ -119,11 +142,11 @@ const _sfc_main = {
             d: common_vendor.o(($event) => viewOrder(item.index, item.query), index)
           };
         }),
-        h: common_vendor.o(myCollect),
-        i: common_vendor.o(getInfo)
+        i: common_vendor.o(myCollect),
+        j: common_vendor.o(getInfo)
       });
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-d9593e3f"], ["__file", "/Users/hujie/Documents/Kuang+/kuang-app/kuangApplet/kuang-user/pages/my-page/my-page.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-d9593e3f"], ["__file", "D:/hujie/Applet-new/kuang-app/kuangApplet/kuang-user/pages/my-page/my-page.vue"]]);
 wx.createPage(MiniProgramPage);
