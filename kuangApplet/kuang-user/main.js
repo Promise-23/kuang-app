@@ -6,7 +6,6 @@ import { createSSRApp } from 'vue'
 import './Common-style/style.css'
 
 
-
 export function createApp() {
   const app = createSSRApp(App)
   return {

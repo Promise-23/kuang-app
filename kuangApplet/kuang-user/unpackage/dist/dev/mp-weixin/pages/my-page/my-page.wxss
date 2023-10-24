@@ -4,7 +4,7 @@
 	width: calc(100% - 80rpx);
 	padding: 20rpx;
 	margin: 0 auto;
-	background-image: linear-gradient(to bottom right, #CECECE 0%, #575757 50%, #000 100%);
+	background-image: linear-gradient(to bottom right, #000 0%, #575757 90%, #575757 100%);
 	/* background-image: linear-gradient(to bottom right, #EEDABC 0%, #987952 100%, #022F2C 100%); */
 	position: relative;
 	border-radius: 16rpx;
@@ -38,6 +38,35 @@
 	width: 40rpx;
 	height: 40rpx;
 }
+.propertys.data-v-d9593e3f{
+	margin-top: 40rpx;
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-around;
+}
+.propertys .box.data-v-d9593e3f{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	font-size: 14px;
+	background: linear-gradient(to bottom right, #EEDABC 0%, #987952 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+.propertys .box image.data-v-d9593e3f{
+	height: 50rpx;
+	width: 50rpx;
+}
+.propertys .integral image.data-v-d9593e3f{
+	height: 40rpx;
+	width: 40rpx;
+}
+.propertys .box .num.data-v-d9593e3f{
+	font-size: 18px;
+	font-weight: 600;
+	margin-top: 6rpx;
+}
 .text-info.data-v-d9593e3f{
 	display: flex;
 	flex-direction: column;
@@ -45,6 +74,10 @@
 }
 .text-info .nickname.data-v-d9593e3f{
 	font-size: 14px;
+}
+.text-info .phone.data-v-d9593e3f{
+	font-size: 12px;
+	margin-top: 3px;
 }
 .text-info .grade.data-v-d9593e3f{
 	font-size: 12px;

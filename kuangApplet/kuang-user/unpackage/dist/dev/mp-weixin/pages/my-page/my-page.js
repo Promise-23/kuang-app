@@ -49,6 +49,11 @@ const _sfc_main = {
     });
     const user = common_vendor.reactive({ user_infor: {}, exist: false });
     const { user_infor, exist } = common_vendor.toRefs(user);
+    const mockPhone = common_vendor.computed(() => {
+      var _a;
+      const tel = ((_a = user_infor.value) == null ? void 0 : _a.phone) ?? "";
+      return tel.replace(/(\d{3})\d{4}(\d{4})/, "$1****$2");
+    });
     function staTus() {
       const user_data = common_vendor.wx$1.getStorageSync("user_infor");
       if (user_data) {
@@ -121,12 +126,15 @@ const _sfc_main = {
       }, common_vendor.unref(exist) ? {
         b: common_vendor.unref(user_infor).avatarUrl,
         c: common_vendor.t(common_vendor.unref(user_infor).nickName),
-        d: common_vendor.o(goLogout)
+        d: common_vendor.t(common_vendor.unref(mockPhone)),
+        e: common_vendor.o(goLogout)
       } : {
-        f: common_vendor.o(goLogin)
+        g: common_vendor.o(goLogin)
       }, {
-        e: !common_vendor.unref(exist),
-        g: common_vendor.f(list_data.whole, (item, index, i0) => {
+        f: !common_vendor.unref(exist),
+        h: common_vendor.unref(exist)
+      }, common_vendor.unref(exist) ? {} : {}, {
+        i: common_vendor.f(list_data.whole, (item, index, i0) => {
           return {
             a: common_vendor.t(item.name),
             b: item.icon,
@@ -134,7 +142,7 @@ const _sfc_main = {
             d: common_vendor.o(($event) => viewOrder(item.index, item.query), index)
           };
         }),
-        h: common_vendor.f(list_data.list, (item, index, i0) => {
+        j: common_vendor.f(list_data.list, (item, index, i0) => {
           return {
             a: item.icon,
             b: common_vendor.t(item.name),
@@ -142,8 +150,8 @@ const _sfc_main = {
             d: common_vendor.o(($event) => viewOrder(item.index, item.query), index)
           };
         }),
-        i: common_vendor.o(myCollect),
-        j: common_vendor.o(getInfo)
+        k: common_vendor.o(myCollect),
+        l: common_vendor.o(getInfo)
       });
     };
   }

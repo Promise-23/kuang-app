@@ -33,7 +33,16 @@
 .brand.data-v-1dd05679{
 	display: flex;
 	align-items: center;
-	margin-bottom: 18rpx;
+	justify-content: space-between;
+	margin-bottom: 20rpx;
+}
+.brand .info.data-v-1dd05679{
+	display: flex;
+	align-items: center;
+}
+.brand .tip image.data-v-1dd05679{
+	width: 40rpx;
+	height: 40rpx;
 }
 .title.data-v-1dd05679{
 	margin-left: 20rpx;

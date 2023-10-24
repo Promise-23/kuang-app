@@ -4,9 +4,14 @@
 		<view class="overlay" @click="cancel"></view>
 		<view class="content">
 			<view class="brand">
-				<brand-icon :style="{fontSize: '60rpx'}"/>
-				<view class="title">
-					Kuang+框架
+				<view class="info">
+					<brand-icon :style="{fontSize: '60rpx'}"/>
+					<view class="title">
+						Kuang+框架
+					</view>
+				</view>
+				<view class="tip">
+					<image src="/static/img/warning-circle.png" mode="aspectFit"></image>
 				</view>
 			</view>
 			<view class="descs">
@@ -117,7 +122,18 @@
 .brand{
 	display: flex;
 	align-items: center;
-	margin-bottom: 18rpx;
+	justify-content: space-between;
+	margin-bottom: 20rpx;
+}
+
+.brand .info{
+	display: flex;
+	align-items: center;
+}
+
+.brand .tip image{
+	width: 40rpx;
+	height: 40rpx;
 }
 
 .title{
