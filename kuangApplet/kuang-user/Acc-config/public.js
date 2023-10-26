@@ -1,3 +1,6 @@
+import moment from 'moment'
+moment.locale('zh-cn');
+	
 const db = wx.cloud.database()
 class Plublic{
 	constructor(){}
@@ -66,14 +69,23 @@ class Plublic{
 					console.log('更新user', user)
 					console.log('更新userInfo', userInfo)
 					await db.collection('user_infor').where({_openid:user.openid}).update({data:{avatarUrl:userInfo.avatarUrl,nickName:userInfo.nickName,phone:userInfo.phone}})
-					wx.setStorageSync('user_infor', {avatarUrl:userInfo.avatarUrl,nickName:userInfo.nickName,openid:user._openid,phone:userInfo.phone})
+					wx.setStorageSync('user_infor', {avatarUrl:userInfo.avatarUrl,nickName:userInfo.nickName,openid:user._openid,phone:userInfo.phone,integral:user.integral, coupon:user.coupon,kcoin:user.kcoin})
+					wx.showToast({
+					  title: '欢迎回来!',
+					})
 				}else{
-					await db.collection('user_infor').add({data:{avatarUrl:userInfo.avatarUrl,nickName:userInfo.nickName,phone:userInfo.phone,watch_num:1,pay:true}})
+					await db.collection('user_infor').add({data:{avatarUrl:userInfo.avatarUrl,nickName:userInfo.nickName,phone:userInfo.phone,integral: 100,coupon: 0, kcoin: 0,watch_num:1,pay:true}})
 					const query = await db.collection('user_infor').get()
 					const user = query.data[0]
 					console.log('新增user', user)
 					console.log('新增userInfo', userInfo)
-					wx.setStorageSync('user_infor', {avatarUrl:user.avatarUrl,nickName:user.nickName,openid:user._openid,phone:user.phone})
+					wx.setStorageSync('user_infor', {avatarUrl:user.avatarUrl,nickName:user.nickName,openid:user._openid,phone:user.phone,integral:user.integral, coupon:user.coupon,kcoin:user.kcoin})
+					// 新注册用户送100积分
+					let time = moment().utcOffset(8).format('YYYY-MM-DD HH:mm:ss')  // 当前时间:年月日，时分秒
+					await db.collection('integral_detail').add({data:{type: 'add', num: 100, desc: '注册用户成功!', time: time}})
+					wx.showToast({
+					  title: '注册成功!',
+					})
 				}
 				resolve('success')
 			}catch(err){

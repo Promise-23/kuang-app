@@ -1,5 +1,6 @@
 "use strict";
 const common_vendor = require("../common/vendor.js");
+common_vendor.hooks.locale("zh-cn");
 const db = common_vendor.wx$1.cloud.database();
 class Plublic {
   constructor() {
@@ -62,14 +63,22 @@ class Plublic {
           console.log("更新user", user);
           console.log("更新userInfo", userInfo);
           await db.collection("user_infor").where({ _openid: user.openid }).update({ data: { avatarUrl: userInfo.avatarUrl, nickName: userInfo.nickName, phone: userInfo.phone } });
-          common_vendor.wx$1.setStorageSync("user_infor", { avatarUrl: userInfo.avatarUrl, nickName: userInfo.nickName, openid: user._openid, phone: userInfo.phone });
+          common_vendor.wx$1.setStorageSync("user_infor", { avatarUrl: userInfo.avatarUrl, nickName: userInfo.nickName, openid: user._openid, phone: userInfo.phone, integral: user.integral, coupon: user.coupon, kcoin: user.kcoin });
+          common_vendor.wx$1.showToast({
+            title: "欢迎回来!"
+          });
         } else {
-          await db.collection("user_infor").add({ data: { avatarUrl: userInfo.avatarUrl, nickName: userInfo.nickName, phone: userInfo.phone, watch_num: 1, pay: true } });
+          await db.collection("user_infor").add({ data: { avatarUrl: userInfo.avatarUrl, nickName: userInfo.nickName, phone: userInfo.phone, integral: 100, coupon: 0, kcoin: 0, watch_num: 1, pay: true } });
           const query = await db.collection("user_infor").get();
           const user = query.data[0];
           console.log("新增user", user);
           console.log("新增userInfo", userInfo);
-          common_vendor.wx$1.setStorageSync("user_infor", { avatarUrl: user.avatarUrl, nickName: user.nickName, openid: user._openid, phone: user.phone });
+          common_vendor.wx$1.setStorageSync("user_infor", { avatarUrl: user.avatarUrl, nickName: user.nickName, openid: user._openid, phone: user.phone, integral: user.integral, coupon: user.coupon, kcoin: user.kcoin });
+          let time = common_vendor.hooks().utcOffset(8).format("YYYY-MM-DD HH:mm:ss");
+          await db.collection("integral_detail").add({ data: { type: "add", num: 100, desc: "注册用户成功!", time } });
+          common_vendor.wx$1.showToast({
+            title: "注册成功!"
+          });
         }
         resolve("success");
       } catch (err) {

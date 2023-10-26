@@ -203,4 +203,15 @@
 		out_refund_no:'商户退款单号'wx_pay
 	},
 	
+],
+
+/* 积分数据库 integral_detail */
+规则:仅创建者可读写
+[
+	{
+		type: 类型, // add: 增加，del：减少
+		num: 数量,
+		desc: 描述,
+		time: 时间
+	}
 ]

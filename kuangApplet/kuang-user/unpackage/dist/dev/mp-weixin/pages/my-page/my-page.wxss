@@ -67,6 +67,9 @@
 	font-weight: 600;
 	margin-top: 6rpx;
 }
+.propertys .box .desc.data-v-d9593e3f{
+	font-size: 12px;
+}
 .text-info.data-v-d9593e3f{
 	display: flex;
 	flex-direction: column;

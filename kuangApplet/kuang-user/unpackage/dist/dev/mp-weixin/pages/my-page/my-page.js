@@ -58,7 +58,7 @@ const _sfc_main = {
       const user_data = common_vendor.wx$1.getStorageSync("user_infor");
       if (user_data) {
         user.exist = true;
-        user.user_infor = user_data;
+        queryUserInfo();
       } else {
         user.exist = false;
       }
@@ -120,6 +120,23 @@ const _sfc_main = {
         AccConfig_answer.login_user.show = true;
       }
     }
+    const db = common_vendor.wx$1.cloud.database();
+    async function queryUserInfo() {
+      const query_openid = await db.collection("user_infor").get();
+      console.log("queryUserInfo", query_openid);
+      if (query_openid.data.length > 0) {
+        const info = query_openid.data[0];
+        user.user_infor = info;
+        common_vendor.wx$1.setStorageSync("user_infor", info);
+      }
+    }
+    function goDetail(type) {
+      const url = `/pages/property/${type}`;
+      console.log("goDetail", url);
+      common_vendor.wx$1.navigateTo({
+        url
+      });
+    }
     return (_ctx, _cache) => {
       return common_vendor.e({
         a: common_vendor.unref(exist)
@@ -133,8 +150,15 @@ const _sfc_main = {
       }, {
         f: !common_vendor.unref(exist),
         h: common_vendor.unref(exist)
-      }, common_vendor.unref(exist) ? {} : {}, {
-        i: common_vendor.f(list_data.whole, (item, index, i0) => {
+      }, common_vendor.unref(exist) ? {
+        i: common_vendor.t(common_vendor.unref(user_infor).integral || 0),
+        j: common_vendor.o(($event) => goDetail("integral")),
+        k: common_vendor.t(common_vendor.unref(user_infor).coupon || 0),
+        l: common_vendor.o(($event) => goDetail("coupon")),
+        m: common_vendor.t(common_vendor.unref(user_infor).kcoin || 0),
+        n: common_vendor.o(($event) => goDetail("kcoin"))
+      } : {}, {
+        o: common_vendor.f(list_data.whole, (item, index, i0) => {
           return {
             a: common_vendor.t(item.name),
             b: item.icon,
@@ -142,7 +166,7 @@ const _sfc_main = {
             d: common_vendor.o(($event) => viewOrder(item.index, item.query), index)
           };
         }),
-        j: common_vendor.f(list_data.list, (item, index, i0) => {
+        p: common_vendor.f(list_data.list, (item, index, i0) => {
           return {
             a: item.icon,
             b: common_vendor.t(item.name),
@@ -150,8 +174,8 @@ const _sfc_main = {
             d: common_vendor.o(($event) => viewOrder(item.index, item.query), index)
           };
         }),
-        k: common_vendor.o(myCollect),
-        l: common_vendor.o(getInfo)
+        q: common_vendor.o(myCollect),
+        r: common_vendor.o(getInfo)
       });
     };
   }

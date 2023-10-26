@@ -91,6 +91,27 @@
 				"navigationBarTitleText": "",
 				"navigationBarBackgroundColor": "#fefefe"
 			}
+		},
+		{
+			"path": "pages/property/integral",
+			"style": {
+				"navigationBarTitleText": "我的积分",
+				"navigationBarBackgroundColor": "#fefefe"
+			}
+		},
+		{
+			"path": "pages/property/coupon",
+			"style": {
+				"navigationBarTitleText": "我的优惠券",
+				"navigationBarBackgroundColor": "#fefefe"
+			}
+		},
+		{
+			"path": "pages/property/kcoin",
+			"style": {
+				"navigationBarTitleText": "我的K币",
+				"navigationBarBackgroundColor": "#fefefe"
+			}
 		}
 	],
 	"globalStyle": {

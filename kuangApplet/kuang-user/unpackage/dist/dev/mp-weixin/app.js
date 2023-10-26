@@ -16,6 +16,9 @@ if (!Math) {
   "./pages/Re-address/address.js";
   "./pages/Short-video/video.js";
   "./pages/Search-view/search.js";
+  "./pages/property/integral.js";
+  "./pages/property/coupon.js";
+  "./pages/property/kcoin.js";
 }
 const _sfc_main = {
   onLaunch: function() {

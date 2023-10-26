@@ -22,22 +22,22 @@
 			</view>		
 		</view>
 		<view class="propertys" v-if="exist">
-			<view class="box integral">
+			<view class="box integral" @click="goDetail('integral')">
 				<image src="/static/img/integral.png" mode="aspectFit"></image>
-				<text class="num">0</text>
+				<text class="num">{{ user_infor.integral || 0}}</text>
 				<text>积分</text>
 			</view>
-			<view class="box">
+			<view class="box" @click="goDetail('coupon')">
 				<image src="/static/img/coupon.png" mode="aspectFit"></image>
 				<view>
-					 <text class="num">0</text>
-					 <text> 张可用</text>
+					 <text class="num">{{ user_infor.coupon || 0}}</text>
+					 <text class="desc"> 张可用</text>
 				</view>
 				<text>优惠券</text>
 			</view>
-			<view class="box">
+			<view class="box" @click="goDetail('kcoin')">
 				<image src="/static/img/k_coin.png" mode="aspectFit"></image>
-				<text class="num">0</text>
+				<text class="num">{{ user_infor.kcoin || 0}}</text>
 				<text>K币</text>
 			</view>
 		</view>
@@ -136,7 +136,7 @@
 		const user_data = wx.getStorageSync('user_infor')//取出本地缓存的用户信息
 		if(user_data){
 			user.exist = true
-			user.user_infor = user_data
+			queryUserInfo()
 		}else{
 			user.exist = false
 		}
@@ -211,6 +211,27 @@
 		}else{
 			login_user.show = true
 		}
+	}
+	const db = wx.cloud.database()
+	// 查询用户信息
+	async function queryUserInfo(){
+		// 存储数据库查询数据库是否存在用户信息，不存在则提交
+		const query_openid = await db.collection('user_infor').get()
+		console.log('queryUserInfo', query_openid)
+		if(query_openid.data.length > 0){
+			const info = query_openid.data[0]
+			user.user_infor = info
+			wx.setStorageSync('user_infor', info)
+		}
+	}
+	
+	// 跳转资产详情
+	function goDetail(type){
+		const url = `/pages/property/${type}`
+		console.log('goDetail', url)
+		wx.navigateTo({
+			url: url
+		})
 	}
 	
 </script>
@@ -288,6 +309,9 @@
 	font-size: 18px;
 	font-weight: 600;
 	margin-top: 6rpx;
+}
+.propertys .box .desc{
+	font-size: 12px;
 }
 
 .text-info{

@@ -13,7 +13,10 @@
     "pages/Pay-view/pay",
     "pages/Re-address/address",
     "pages/Short-video/video",
-    "pages/Search-view/search"
+    "pages/Search-view/search",
+    "pages/property/integral",
+    "pages/property/coupon",
+    "pages/property/kcoin"
   ],
   "window": {
     "navigationBarTextStyle": "black",
