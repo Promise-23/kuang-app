@@ -93,5 +93,5 @@ const _sfc_main = {
     };
   }
 };
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-d3817507"], ["__file", "D:/hujie/Applet-new/kuang-app/kuangApplet/kuang-user/pages/Short-video/component/comment.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-d3817507"], ["__file", "E:/Project/kuang-app/kuangApplet/kuang-user/pages/Short-video/component/comment.vue"]]);
 wx.createComponent(Component);

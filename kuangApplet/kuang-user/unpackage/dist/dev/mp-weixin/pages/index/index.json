@@ -4,6 +4,7 @@
     "swiper": "./component/swiper",
     "flash": "./component/flash-sale",
     "card": "../Common-component/Card-goods",
-    "loading": "../public-view/loading"
+    "loading": "../public-view/loading",
+    "privacy": "../components/privacy-view"
   }
 }

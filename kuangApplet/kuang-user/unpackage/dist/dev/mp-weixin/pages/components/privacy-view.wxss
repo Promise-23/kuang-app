@@ -1,0 +1,78 @@
+
+.privacy-view.data-v-2eab5286{
+	position: fixed;
+	top:0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	background-color: #FFFFFF;
+	z-index: 998;
+	background-color: transparent;
+	animation: post-list-row .3s;
+}
+.privacy-mask.data-v-2eab5286 {
+  position: fixed;
+  z-index: 5000;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.privacy-dialog-wrap.data-v-2eab5286 {
+  position: fixed;
+  z-index: 5000;
+  top: 16px;
+  bottom: 16px;
+  left: 80rpx;
+  right: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.privacy-dialog.data-v-2eab5286 {
+  background-color: #fff;
+  border-radius: 32rpx;
+}
+.privacy-dialog-header.data-v-2eab5286 {
+  padding: 60rpx 40rpx 30rpx;
+  font-weight: 700;
+  font-size: 36rpx;
+  text-align: center;
+}
+.privacy-dialog-content.data-v-2eab5286 {
+  font-size: 30rpx;
+  color: #555;
+  line-height: 2;
+  text-align: left;
+  padding: 0 40rpx;
+}
+.privacy-dialog-content .privacy-link.data-v-2eab5286 {
+  color: #2f80ed;
+}
+.privacy-dialog-footer.data-v-2eab5286 {
+  display: flex;
+  padding: 20rpx 40rpx 60rpx;
+}
+.privacy-dialog-footer .btn.data-v-2eab5286 {
+  color: #FFF;
+  font-size: 30rpx;
+  font-weight: 500;
+  line-height: 100rpx;
+  text-align: center;
+  height: 100rpx;
+  border-radius: 20rpx;
+  border: none;
+  background: #07c160;
+  flex: 1;
+  margin-left: 30rpx;
+  justify-content: center;
+}
+.privacy-dialog-footer .btn.data-v-2eab5286::after {
+  border: none;
+}
+.privacy-dialog-footer .btn-disagree.data-v-2eab5286 {
+  color: #07c160;
+  background: #f2f2f2;
+  margin-left: 0;
+}

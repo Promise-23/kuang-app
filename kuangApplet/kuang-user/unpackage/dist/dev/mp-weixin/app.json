@@ -56,5 +56,6 @@
       }
     ]
   },
+  "__usePrivacyCheck__": true,
   "usingComponents": {}
 }

@@ -10,6 +10,16 @@ const _sfc_main = {
   __name: "login-view",
   setup(__props) {
     async function login() {
+      if (userInfo.avatarUrl == "") {
+        new AccConfig_public.Plublic().toast("请选择头像！");
+        return false;
+      } else if (userInfo.nickName == "") {
+        new AccConfig_public.Plublic().toast("请输入昵称！");
+        return false;
+      } else if (userInfo.phone == "") {
+        new AccConfig_public.Plublic().toast("请输入手机号！");
+        return false;
+      }
       try {
         await new AccConfig_public.Plublic().login(userInfo);
         AccConfig_answer.login_user.show = false;
@@ -59,5 +69,5 @@ const _sfc_main = {
     };
   }
 };
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-1dd05679"], ["__file", "D:/hujie/Applet-new/kuang-app/kuangApplet/kuang-user/pages/components/login-view.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-1dd05679"], ["__file", "E:/Project/kuang-app/kuangApplet/kuang-user/pages/components/login-view.vue"]]);
 wx.createComponent(Component);

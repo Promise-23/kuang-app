@@ -47,6 +47,16 @@
 	import BrandIcon from '../Common-component/UI/BrandIcon.vue'
 	//登陆
 	async function login(){
+		if(userInfo.avatarUrl == ''){
+			new Plublic().toast('请选择头像！')
+			return false
+		}else if(userInfo.nickName == ''){
+			new Plublic().toast('请输入昵称！')
+			return false
+		}else if(userInfo.phone == ''){
+			new Plublic().toast('请输入手机号！')
+			return false
+		}
 		try{
 			await new Plublic().login(userInfo)
 			login_user.show = false
