@@ -1,12 +1,13 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
 if (!Math) {
-  (Swiper + Flash + Card + Loading)();
+  (Swiper + Flash + Card + Loading + privacy)();
 }
 const Swiper = () => "./component/swiper.js";
 const Flash = () => "./component/flash-sale.js";
 const Card = () => "../Common-component/Card-goods.js";
 const Loading = () => "../public-view/loading.js";
+const privacy = () => "../components/privacy-view.js";
 const _sfc_main = {
   __name: "index",
   setup(__props) {

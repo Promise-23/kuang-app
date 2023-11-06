@@ -18,6 +18,10 @@
 	<view class="loading-hei">
 		<Loading v-if="loading"></Loading>
 	</view>
+	
+	<!-- #ifdef MP-WEIXIN -->
+	    <privacy />
+	    <!-- #endif -->
 </template>
 
 <script setup>
@@ -26,6 +30,7 @@
 	import Flash from './component/flash-sale.vue'
 	import Card from '../Common-component/Card-goods.vue'
 	import Loading from '../public-view/loading.vue'
+	import privacy from '../components/privacy-view.vue'
 	const db = wx.cloud.database()
 	
 	
