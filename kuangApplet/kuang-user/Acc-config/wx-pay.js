@@ -78,12 +78,12 @@ class Wxpay{
 	async staTe(value,out_trade_no){
 		const user = wx.getStorageSync('user_infor')//取出本地缓存的用户信息
 		if(value == 'success'){
-			await db.collection('order_data').where({_openid:user.openid,out_trade_no}).update({
+			await db.collection('order_data').where({_openid:user._openid,out_trade_no}).update({
 				data:{pay_success:'success'}
 			})
 			return 'success'
 		}else{
-			await db.collection('order_data').where({_openid:user.openid,out_trade_no}).update({
+			await db.collection('order_data').where({_openid:user._openid,out_trade_no}).update({
 				data:{pay_success:'not_pay'}
 			})
 			return 'success'

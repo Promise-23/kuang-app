@@ -16,7 +16,8 @@
     "pages/Search-view/search",
     "pages/property/integral",
     "pages/property/coupon",
-    "pages/property/kcoin"
+    "pages/property/kcoin",
+    "pages/welfare/center"
   ],
   "window": {
     "navigationBarTextStyle": "black",

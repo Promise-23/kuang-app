@@ -11,6 +11,7 @@ if (!Math) {
   "./pages/goods-admin/goods.js";
   "./pages/specs/specs.js";
   "./pages/sort-admin/sort.js";
+  "./pages/coupon-manage/coupon.js";
 }
 const _sfc_main = {
   onLaunch: function() {
@@ -20,7 +21,7 @@ const _sfc_main = {
     });
   }
 };
-const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/hujie/Applet/kuangApplet/kuang-admin/App.vue"]]);
+const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/hujie/Applet-new/kuang-app/kuangApplet/kuang-admin/App.vue"]]);
 function createApp() {
   const app = common_vendor.createSSRApp(App);
   return {

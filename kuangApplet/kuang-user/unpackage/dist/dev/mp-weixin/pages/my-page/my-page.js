@@ -1,5 +1,6 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
+const AccConfig_public = require("../../Acc-config/public.js");
 const AccConfig_answer = require("../../Acc-config/answer.js");
 if (!Math) {
   Login();
@@ -59,6 +60,7 @@ const _sfc_main = {
       if (user_data) {
         user.exist = true;
         queryUserInfo();
+        getCoupons();
       } else {
         user.exist = false;
       }
@@ -137,6 +139,23 @@ const _sfc_main = {
         url
       });
     }
+    function goWelfare() {
+      if (user.exist) {
+        common_vendor.wx$1.navigateTo({
+          url: "/pages/welfare/center"
+        });
+      } else {
+        AccConfig_answer.login_user.show = true;
+      }
+    }
+    async function getCoupons(coupon) {
+      var _a;
+      const res = await db.collection("coupon_detail").where({ used: false }).get();
+      console.log("getCoupons", res == null ? void 0 : res.data);
+      const rightTimeList = (_a = res == null ? void 0 : res.data) == null ? void 0 : _a.filter((item) => AccConfig_public.transferTime(item.time[0]) <= AccConfig_public.currentTime() && AccConfig_public.transferTime(item.time[1]) >= AccConfig_public.currentTime());
+      console.log("rightTimeList", rightTimeList);
+      AccConfig_answer.myCoupons.data = rightTimeList;
+    }
     return (_ctx, _cache) => {
       return common_vendor.e({
         a: common_vendor.unref(exist)
@@ -153,12 +172,10 @@ const _sfc_main = {
       }, common_vendor.unref(exist) ? {
         i: common_vendor.t(common_vendor.unref(user_infor).integral || 0),
         j: common_vendor.o(($event) => goDetail("integral")),
-        k: common_vendor.t(common_vendor.unref(user_infor).coupon || 0),
-        l: common_vendor.o(($event) => goDetail("coupon")),
-        m: common_vendor.t(common_vendor.unref(user_infor).kcoin || 0),
-        n: common_vendor.o(($event) => goDetail("kcoin"))
+        k: common_vendor.t(common_vendor.unref(AccConfig_answer.myCoupons).data.length),
+        l: common_vendor.o(($event) => goDetail("coupon"))
       } : {}, {
-        o: common_vendor.f(list_data.whole, (item, index, i0) => {
+        m: common_vendor.f(list_data.whole, (item, index, i0) => {
           return {
             a: common_vendor.t(item.name),
             b: item.icon,
@@ -166,7 +183,7 @@ const _sfc_main = {
             d: common_vendor.o(($event) => viewOrder(item.index, item.query), index)
           };
         }),
-        p: common_vendor.f(list_data.list, (item, index, i0) => {
+        n: common_vendor.f(list_data.list, (item, index, i0) => {
           return {
             a: item.icon,
             b: common_vendor.t(item.name),
@@ -174,8 +191,9 @@ const _sfc_main = {
             d: common_vendor.o(($event) => viewOrder(item.index, item.query), index)
           };
         }),
-        q: common_vendor.o(myCollect),
-        r: common_vendor.o(getInfo)
+        o: common_vendor.o(myCollect),
+        p: common_vendor.o(getInfo),
+        q: common_vendor.o(goWelfare)
       });
     };
   }

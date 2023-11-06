@@ -36,6 +36,10 @@ const _sfc_main = {
         {
           image: "/static/detail/fenlei.svg",
           name: "分类管理"
+        },
+        {
+          image: "/static/detail/coupon.svg",
+          name: "卡券管理"
         }
       ]
     });
@@ -84,6 +88,11 @@ const _sfc_main = {
         case 4:
           common_vendor.wx$1.navigateTo({
             url: "/pages/sort-admin/sort"
+          });
+          break;
+        case 5:
+          common_vendor.wx$1.navigateTo({
+            url: "/pages/coupon-manage/coupon"
           });
       }
     }
@@ -134,5 +143,5 @@ const _sfc_main = {
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/hujie/Applet/kuangApplet/kuang-admin/pages/index/index.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/hujie/Applet-new/kuang-app/kuangApplet/kuang-admin/pages/index/index.vue"]]);
 wx.createPage(MiniProgramPage);

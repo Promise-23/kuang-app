@@ -19,6 +19,7 @@ if (!Math) {
   "./pages/property/integral.js";
   "./pages/property/coupon.js";
   "./pages/property/kcoin.js";
+  "./pages/welfare/center.js";
 }
 const _sfc_main = {
   onLaunch: function() {

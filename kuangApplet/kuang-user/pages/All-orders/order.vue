@@ -133,7 +133,7 @@
 	const {order_data} = toRefs(res_order)
 	async function getOrder(sk,query){
 		const user = wx.getStorageSync('user_infor')//取出本地缓存的用户信息
-		query['_openid'] = user.openid
+		query['_openid'] = user._openid
 		const res = await db.collection('order_data').where(query).limit(10).skip(sk).orderBy('order_time','desc').get()
 		console.log(res)
 		res_order.order_data = [...res_order.order_data,...res.data]
@@ -188,7 +188,7 @@
 			const user = wx.getStorageSync('user_infor')//取出本地缓存的用户信息
 			if(res.docChanges[0].dataType == 'update'){
 				// 更新该条数据的某些字段
-				await db.collection('order_data').where({_openid:user.openid,_id:result._id}).update({
+				await db.collection('order_data').where({_openid:user._openid,_id:result._id}).update({
 					data:{pay_success: 'success',payment:result.payment,
 					out_trade_no:result.out_trade_no
 					}
@@ -211,7 +211,7 @@
 	// 取消订单
 	async function canOrder(_id,index){
 		const user = wx.getStorageSync('user_infor')//取出本地缓存的用户信息
-		await db.collection('order_data').where({_openid:user.openid,_id}).update({data:{pay_success:'can_order'}})
+		await db.collection('order_data').where({_openid:user._openid,_id}).update({data:{pay_success:'can_order'}})
 		// 如果tab切换在全部上，就更改状态，否则就移除掉
 		if(re.value == 0){
 			res_order.order_data[index].pay_success = 'can_order'
@@ -228,7 +228,7 @@
 			itemList: itemList.value,
 			success: async(res)=> {
 				const user = wx.getStorageSync('user_infor')//取出本地缓存的用户信息
-				await db.collection('order_data').where({_openid:user.openid,_id}).update({data:{deliver:'ref_pro',Re_reason:itemList.value[res.tapIndex]}})
+				await db.collection('order_data').where({_openid:user._openid,_id}).update({data:{deliver:'ref_pro',Re_reason:itemList.value[res.tapIndex]}})
 				// 如果tab切换在全部上，就更改状态，否则就移除掉
 				if(re.value == 0){
 					res_order.order_data[index].deliver = 'ref_pro'
@@ -245,7 +245,7 @@
 	// 确认收货
 	async function confRece(index,_id){
 		const user = wx.getStorageSync('user_infor')//取出本地缓存的用户信息
-		await db.collection('order_data').where({_openid:user.openid,_id}).update({data:{deliver:'rece_goods'}})
+		await db.collection('order_data').where({_openid:user._openid,_id}).update({data:{deliver:'rece_goods'}})
 		// 如果tab切换在全部上，就更改状态，否则就移除掉
 		if(re.value == 0){
 			res_order.order_data[index].deliver = 'rece_goods'
@@ -275,7 +275,7 @@
 			res_order.order_data.splice(newVal,1)
 		}
 		const user = wx.getStorageSync('user_infor')//取出本地缓存的用户信息
-		db.collection('order_data').where({_openid:user.openid,_id:eav_id.value}).update({data:{evaluate:true}})
+		db.collection('order_data').where({_openid:user._openid,_id:eav_id.value}).update({data:{evaluate:true}})
 	})
 	
 	// 查看物流

@@ -112,6 +112,13 @@
 				"navigationBarTitleText": "我的K币",
 				"navigationBarBackgroundColor": "#fefefe"
 			}
+		},
+		{
+			"path": "pages/welfare/center",
+			"style": {
+				"navigationBarTitleText": "领券中心",
+				"navigationBarBackgroundColor": "#fefefe"
+			}
 		}
 	],
 	"globalStyle": {

@@ -19,7 +19,7 @@
 			<view class="info">
 				<image src="/static/detail/weidenglu.svg" mode="aspectFit"></image>
 				<text class="text-info">点击登录</text>
-			</view>		
+			</view>
 		</view>
 		<view class="propertys" v-if="exist">
 			<view class="box integral" @click="goDetail('integral')">
@@ -30,16 +30,16 @@
 			<view class="box" @click="goDetail('coupon')">
 				<image src="/static/img/coupon.png" mode="aspectFit"></image>
 				<view>
-					 <text class="num">{{ user_infor.coupon || 0}}</text>
+					 <text class="num">{{ myCoupons.data.length }}</text>
 					 <text class="desc"> 张可用</text>
 				</view>
 				<text>优惠券</text>
 			</view>
-			<view class="box" @click="goDetail('kcoin')">
+			<!-- <view class="box" @click="goDetail('kcoin')">
 				<image src="/static/img/k_coin.png" mode="aspectFit"></image>
 				<text class="num">{{ user_infor.kcoin || 0}}</text>
 				<text>K币</text>
-			</view>
+			</view> -->
 		</view>
 		<!-- <image class="shuibo-img" src="https://qita-1252107261.cos.ap-chengdu.myqcloud.com/boliang" mode="scaleToFill"></image> -->
 	</view>
@@ -70,6 +70,11 @@
 			<text>收货地址</text>
 			<image src="/static/detail/xiangyou-jiantou.svg" mode="aspectFit" class="my-other-deta"></image>
 		</view>
+		<view @click="goWelfare">
+			<image src="/static/detail/fulizhongxin.svg" mode="aspectFit" ></image>
+			<text>领券中心</text>
+			<image src="/static/detail/xiangyou-jiantou.svg" mode="aspectFit" class="my-other-deta"></image>
+		</view>
 <!-- 		<view>
 			<image src="/static/detail/yijianfankui.svg" mode="aspectFit"></image>
 			<text>意见反馈(开发中)</text>
@@ -81,9 +86,11 @@
 </template>
 
 <script setup>
-	import {computed, reactive,toRefs,watch} from 'vue'
+	import {computed, reactive,toRefs,watch, ref} from 'vue'
 	import {onShow} from '@dcloudio/uni-app'
 	import Login from '../components/login-view.vue'
+	import { currentTime, transferTime } from '../../Acc-config/public.js'
+	import { myCoupons } from '../../Acc-config/answer.js'
 	
 	const list_data = reactive({
 		whole:[
@@ -137,6 +144,7 @@
 		if(user_data){
 			user.exist = true
 			queryUserInfo()
+			getCoupons()
 		}else{
 			user.exist = false
 		}
@@ -232,6 +240,26 @@
 		wx.navigateTo({
 			url: url
 		})
+	}
+	
+	// 领券中心
+	function goWelfare(){
+		if(user.exist){
+			wx.navigateTo({
+				url:'/pages/welfare/center'
+			})
+		}else{
+			login_user.show = true
+		}
+	}
+	
+	// 获取当前可用优惠券
+	async function getCoupons(coupon){
+		const res = await db.collection('coupon_detail').where({used: false}).get()
+		console.log('getCoupons', res?.data)
+		const rightTimeList = res?.data?.filter((item) => (transferTime(item.time[0]) <= currentTime()) && (transferTime(item.time[1]) >= currentTime()))
+		console.log('rightTimeList', rightTimeList)
+		myCoupons.data = rightTimeList
 	}
 	
 </script>

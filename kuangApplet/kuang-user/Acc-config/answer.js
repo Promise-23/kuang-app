@@ -25,5 +25,8 @@ let new_address = reactive({data:[]})
 // 订单页面点击评价到评价页面，提交评价后携带下标返回上一页面
 let eav_index = ref('01')
 
+// 已有优惠券
+let myCoupons = reactive({data: [], hasCouponId: []})
 
-export {login_user,comment_show,sku_popup,show,modify,deci,new_address,eav_index}
+
+export {login_user,comment_show,sku_popup,show,modify,deci,new_address,eav_index, myCoupons}

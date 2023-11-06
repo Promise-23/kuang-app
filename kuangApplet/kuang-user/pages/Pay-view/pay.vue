@@ -1,6 +1,6 @@
 <template>
 	<!-- 收货地址 -->
-	<view class="pay-address" v-for="(item,index) in address" :key="index" @click="choIce">
+	<view class="pay-address card" v-for="(item,index) in address" :key="index" @click="choIce">
 		<view class="pay-address-left">
 			<image src="/static/detail/dingdan-dizhi.svg" mode="aspectFit"></image>
 		</view>
@@ -15,7 +15,7 @@
 			<image src="/static/detail/xiangyou-jiantou.svg" mode="aspectFit"></image>
 		</view>
 	</view>
-	<view class="pay-address" v-if="address.length == 0" @click="choIce">
+	<view class="pay-address card" v-if="address.length == 0" @click="choIce">
 		<view class="pay-address-left">
 			<image src="/static/detail/dingdan-dizhi.svg" mode="aspectFit"></image>
 		</view>
@@ -25,7 +25,7 @@
 		</view>
 	</view>
 	<!-- 商品详情 -->
-	<view class="pay-goods" v-for="(item,index) in order" :key="index">
+	<view class="pay-goods card" v-for="(item,index) in order" :key="index">
 		<view>
 			<image :src="item.goods_image" mode="aspectFill"></image>
 		</view>
@@ -43,16 +43,44 @@
 			</view>
 		</view>
 	</view>
+	<!-- 优惠券、K币 可用于抵扣金额-->
+	<view class="card propertys">
+		<view class="line">
+			<text>优惠券</text>
+			<view class="right" @click="showCoupon">
+				<view v-show='!selectedCoupon && couponsInfo.enable.length > 0'>
+					<text class="hascount" >{{ couponsInfo.enable.length }}</text>
+					<text>张可用</text>
+				</view>
+				<text v-show='!selectedCoupon && couponsInfo.enable.length == 0'>无可用</text>
+				<view v-show='selectedCoupon'>
+					<text>享店铺优惠</text>
+					<text class="hascount" >{{`-￥${selectedCoupon?.price ?? 0}`}}</text>
+				</view>
+				<image src="/static/detail/xiangyou-jiantou.svg" mode="aspectFit"></image>
+			</view>
+		</view>
+		<!-- <view class="line">
+			<text>K币</text>
+			<view class="right">
+				<text>无可用</text>
+				<image src="/static/detail/xiangyou-jiantou.svg" mode="aspectFit"></image>
+			</view>
+		</view> -->
+	</view>
 	<!-- 支付按钮 -->
 	<view style="300rpx"></view>
 	<view class="set-accounts">
 		<view>¥{{total_price}}</view>
 		<view @click="subMit">提交订单</view>
 	</view>
+	<coupon-view :show="showCouponModal" :enableCoupons="couponsInfo.enable" :disableCoupons="couponsInfo.disable" @close="cancelCoupon" @setSelectedCoupon="setSelectedCoupon"/>
 </template>
 
 <script setup>
+	import { computed, ref } from 'vue'
 	import {onMounted,reactive,toRefs,watch,onBeforeUnmount} from 'vue'
+	import couponView from '../components/coupon-view.vue'
 	import moment from 'moment'
 	moment.locale('zh-cn');
 	const db = wx.cloud.database()
@@ -63,6 +91,8 @@
 	onMounted(async()=>{
 		const res = await db.collection('re_address').where({tacitly:true}).get()
 		re_data.address = res.data
+		// 获取优惠券信息
+		getCoupons()
 	})
 	
 	// 跳转收货地址
@@ -85,23 +115,39 @@
 		// console.log(data)
 		or_data.order = data
 		or_data.type = event.type
+		calcPrice()
+	})
+	
+	// 计算待支付的价格
+	function calcPrice(){
 		// 计算待支付的价格
 		let sum = 0
 		or_data.order.forEach((item=>sum += item.subtotal))
 		or_data.total_price = parseFloat((sum).toFixed(10))
-	})
+	}
 	
 	// 减数量
 	function reDuce(){
+		console.log('or_data.order', or_data.order)
 		or_data.order[0].buy_amount--
 		or_data.order[0].subtotal = parseFloat((or_data.order[0].buy_amount * or_data.order[0].goods_price).toFixed(10))
 		or_data.total_price = or_data.order[0].subtotal
+		if(selectedCoupon.value){
+			const final = or_data.total_price - (selectedCoupon.value?.price || 0)
+			const sum = final > 0 ? final : 0
+			or_data.total_price = parseFloat(sum.toFixed(10))
+		}
 	}
 	// 加数量
 	function plUs(){
 		or_data.order[0].buy_amount++
 		or_data.order[0].subtotal = parseFloat((or_data.order[0].buy_amount * or_data.order[0].goods_price).toFixed(10))
 		or_data.total_price = or_data.order[0].subtotal
+		if(selectedCoupon.value){
+			const final = or_data.total_price - (selectedCoupon.value?.price || 0)
+			const sum = final > 0 ? final : 0
+			or_data.total_price = parseFloat(sum.toFixed(10))
+		}
 	}
 	
 	// 提交订单
@@ -167,6 +213,9 @@
 			if(or_data.type == 'cart'){
 				let cart = await new Wxpay().deleteCart(result.or_data)
 			}
+			// 4.如果使用了优惠券则需要更改优惠券状态
+			handleCouponPayMent()
+			handleIntegralAftePay()
 			// 跳转订单界面
 			 wx.hideLoading()
 			wx.redirectTo({url:'/pages/All-orders/order'})
@@ -177,21 +226,113 @@
 	  }
 	})
 	
+	const showCouponModal = ref(false)
+	// 展示优惠券弹窗
+	function showCoupon(){
+		showCouponModal.value = true
+	}
+	function cancelCoupon(){
+		showCouponModal.value = false
+	}
 	
+	import { myCoupons } from '../../Acc-config/answer.js'
+	import { currentTime, transferTime, hasSameElement } from '../../Acc-config/public.js'
 	
+	const couponsInfo = reactive({
+		enable: [], //可用
+		disable: [] // 不可用原因：1、当前商品不支持 2、满减券，金额不够
+	})
 	
+	// 获取优惠券信息
+	async function getCoupons(){
+		const res = await db.collection('coupon_detail').where({used: false}).get()
+		const rightTimeList = res?.data?.filter((item) => (transferTime(item.time[0]) <= currentTime()) && (transferTime(item.time[1]) >= currentTime()))
+		console.log('rightTimeList', rightTimeList)
+		myCoupons.data = rightTimeList
+		const filterCoupons = filterCoupon(rightTimeList)
+		couponsInfo.enable = filterCoupons.enable
+		couponsInfo.disable = filterCoupons.disable
+	}
+	
+	const orderTypeList = computed(() => {
+		return or_data.order.map(order => order.category)
+	})
+	
+	// 优惠券区分可用不可用
+	function filterCoupon(couponList){
+		const res = {enable:[], disable: []}
+		couponList.forEach(item => {
+			if(item.type == 'full' && or_data.total_price < item.full || (item.type == 'limit' && hasSameElement(orderTypeList, item.limit))){
+				res.disable.push(item)
+			}else {
+				res.enable.push(item)
+			}
+		})
+		return res
+	}
+	
+	// 已选择的优惠券
+	const selectedCoupon = ref()
+	function setSelectedCoupon(coupon){
+		selectedCoupon.value = coupon
+	}
+	
+	// 使用了优惠券支付则需要更改优惠券状态
+	async function handleCouponPayMent(){
+		const id = selectedCoupon.value._id || ''
+		await db.collection('coupon_detail').doc(id).update({data:{used:true}})
+	}
+	
+	const _ = db.command
+	// 下单支付成功后送积分活动 满10元得1积分
+	async function handleIntegralAftePay(){
+		const integral = Math.floor(or_data.total_price % 10)
+		console.log('handleIntegralAftePay', integral)
+		// 更新积分明细表
+		let time = moment().utcOffset(8).format('YYYY-MM-DD HH:mm:ss')  // 当前时间:年月日，时分秒
+		await db.collection('integral_detail').add({data:{type: 'add', num: integral, desc: '消费送积分活动！', time: time}})
+		// 用户表做积分合计
+		const user_data = wx.getStorageSync('user_infor')//取出本地缓存的用户信息
+		await db.collection('user_infor').doc(user_data?._id).update({data: {
+			// 表示指示数据库将字段自增
+			integral: _.inc(integral)
+		}})
+	}
+	
+	watch(() => selectedCoupon.value?.price, (newVal) => {
+		if(newVal > 0){
+			const final = or_data.total_price - newVal
+			const sum = final > 0 ? final : 0
+			or_data.total_price = parseFloat(sum.toFixed(10))
+		}else {
+			calcPrice()
+		}
+	})
+	
+	// 处理领取优惠券刷新
+	watch(() => myCoupons.hasCouponId, () => {
+		getCoupons()
+	})
 </script>
 
 <style>
-page{
-	background-color: #f6f6f6;
+	page{
+		background-color: #f6f6f6;
+	}
+</style>
+<style scoped>
+.card{
+	box-sizing: border-box;
+	width: 96%;
+	margin: 0 auto;
+	padding: 20rpx;
+	margin-top: 20rpx;
+	border-radius: 12rpx;
+	background-color: #FFFFFF;
 }
 .pay-address{
 	display: flex;
 	align-items: center;
-	background-color: #FFFFFF;
-	padding: 20rpx;
-	margin-bottom: 20rpx;
 }
 .pay-address-left image{
 	display: block;
@@ -224,7 +365,6 @@ page{
 }
 /* 待支付商品 */
 .pay-goods{
-	background-color: #FFFFFF;
 	display: flex;
 	padding: 20rpx 20rpx 40rpx 20rpx;
 }
@@ -273,9 +413,29 @@ page{
 .pay-goods-price view text{
 	padding: 0 40rpx;
 }
+
+/*资产*/
+.line{
+	display: flex;
+	justify-content: space-between;
+	font-size: 12px;
+	margin-bottom: 10rpx;
+	color: #8b8b8d;
+}
+.line:last-child{
+	margin-bottom: 0;
+}
+.line image{
+	width: 30rpx;
+	height: 30rpx;
+	margin-left: 10rpx;
+}
+.line .right{
+	display: flex;
+	align-items: center;
+}
 /* 结算 */
 .set-accounts{
-	background-color: #FFFFFF;
 	position: fixed;
 	left: 0;
 	right: 0;
@@ -296,5 +456,12 @@ page{
 	font-size: 35rpx;
 	padding: 15rpx 35rpx;
 	border-radius: 10rpx;
+}
+
+.hascount{
+	color: #ea445a;
+	margin-right: 5rpx;
+	font-size: 14px;
+	margin-left: 20rpx;
 }
 </style>

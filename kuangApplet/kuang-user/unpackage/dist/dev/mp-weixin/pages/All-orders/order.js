@@ -55,7 +55,7 @@ const _sfc_main = {
     const { order_data } = common_vendor.toRefs(res_order);
     async function getOrder(sk, query) {
       const user = common_vendor.wx$1.getStorageSync("user_infor");
-      query["_openid"] = user.openid;
+      query["_openid"] = user._openid;
       const res = await db.collection("order_data").where(query).limit(10).skip(sk).orderBy("order_time", "desc").get();
       console.log(res);
       res_order.order_data = [...res_order.order_data, ...res.data];
@@ -96,7 +96,7 @@ const _sfc_main = {
       onChange: async (res) => {
         const user = common_vendor.wx$1.getStorageSync("user_infor");
         if (res.docChanges[0].dataType == "update") {
-          await db.collection("order_data").where({ _openid: user.openid, _id: result._id }).update({
+          await db.collection("order_data").where({ _openid: user._openid, _id: result._id }).update({
             data: {
               pay_success: "success",
               payment: result.payment,
@@ -116,7 +116,7 @@ const _sfc_main = {
     });
     async function canOrder(_id, index) {
       const user = common_vendor.wx$1.getStorageSync("user_infor");
-      await db.collection("order_data").where({ _openid: user.openid, _id }).update({ data: { pay_success: "can_order" } });
+      await db.collection("order_data").where({ _openid: user._openid, _id }).update({ data: { pay_success: "can_order" } });
       if (re.value == 0) {
         res_order.order_data[index].pay_success = "can_order";
       } else {
@@ -130,7 +130,7 @@ const _sfc_main = {
         itemList: itemList.value,
         success: async (res) => {
           const user = common_vendor.wx$1.getStorageSync("user_infor");
-          await db.collection("order_data").where({ _openid: user.openid, _id }).update({ data: { deliver: "ref_pro", Re_reason: itemList.value[res.tapIndex] } });
+          await db.collection("order_data").where({ _openid: user._openid, _id }).update({ data: { deliver: "ref_pro", Re_reason: itemList.value[res.tapIndex] } });
           if (re.value == 0) {
             res_order.order_data[index].deliver = "ref_pro";
           } else {
@@ -144,7 +144,7 @@ const _sfc_main = {
     }
     async function confRece(index, _id) {
       const user = common_vendor.wx$1.getStorageSync("user_infor");
-      await db.collection("order_data").where({ _openid: user.openid, _id }).update({ data: { deliver: "rece_goods" } });
+      await db.collection("order_data").where({ _openid: user._openid, _id }).update({ data: { deliver: "rece_goods" } });
       if (re.value == 0) {
         res_order.order_data[index].deliver = "rece_goods";
       } else {
@@ -168,7 +168,7 @@ const _sfc_main = {
         res_order.order_data.splice(newVal, 1);
       }
       const user = common_vendor.wx$1.getStorageSync("user_infor");
-      db.collection("order_data").where({ _openid: user.openid, _id: eav_id.value }).update({ data: { evaluate: true } });
+      db.collection("order_data").where({ _openid: user._openid, _id: eav_id.value }).update({ data: { evaluate: true } });
     });
     function loGistics(waybill_No, goods_image, goods_title, buy_amount) {
       let obj = JSON.stringify({ waybill_No, goods_image, goods_title, buy_amount });

@@ -186,8 +186,12 @@
 	})
 	// 返回上一页面
 	function goTo(){
-		wx.navigateBack({
-			delta:1
+		// wx.navigateBack({
+		// 	delta:1
+		// })
+		console.log('跳转首页')
+		wx.switchTab({
+			url:'/pages/index/index'
 		})
 	}
 </script>

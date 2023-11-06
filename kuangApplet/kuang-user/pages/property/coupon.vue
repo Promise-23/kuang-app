@@ -6,7 +6,7 @@
 				<text>优惠券</text>
 			</view>
 			<view>
-				<text class="num">{{ user_infor.coupon || 0}}</text>
+				<text class="num">{{ myCoupons.data.length || 0}}</text>
 				<text>张可用</text>
 			</view>
 		</view>
@@ -18,38 +18,23 @@
 		<view class="title">
 			<text>优惠券明细</text>
 		</view>
-		<view class="boxs" v-show="coupon_detail.length > 0">
-			<view class="box" v-for="(item,index) in coupon_detail" :key="index">
-				<view class="integral">
-					<text class="desc">{{item.desc}}</text>
-					<text class="time">{{item.time}}</text>
-				</view>
-				<view class="result">
-					<text>{{item.type=='add' ? '+' : '-'}}</text>
-					<text>{{item.num}}</text>
-				</view>
-			</view>
+		<view class="boxs" v-show="myCoupons.data.length > 0">
+			<Coupon class="box" v-for="(item, index) in myCoupons.data" :key="index" :coupon="item" />
 		</view>
 		<!-- 没有数据的提示 -->
-		<view class="Tips" v-show="coupon_detail.length == 0">暂无优惠券数据</view>
+		<view class="Tips" v-show="myCoupons.data.length == 0">暂无优惠券数据</view>
 	</view>
 </template>
 
 <script setup>
 	import {onMounted,reactive,toRefs} from 'vue'
 	import {Plublic} from '@/Acc-config/public.js'
+	import Coupon from '../Common-component/UI/Coupon.vue'
+	import { myCoupons } from '../../Acc-config/answer.js'
 	const db = wx.cloud.database()
 	
-	// 请求数据
-	onMounted(()=>{getCoupon()})
-	const data = reactive({user_infor: wx.getStorageSync('user_infor') || {},coupon_detail:[]})
-	const {user_infor,coupon_detail} = toRefs(data)
-	async function getCoupon(){
-		const res = await db.collection('coupon_detail').get()
-		console.log('couponDetail', res.data)
-		data.coupon_detail = res.data
-	}
-	
+	const data = reactive({user_infor: wx.getStorageSync('user_infor') || {}})
+	const {user_infor} = toRefs(data)
 </script>
 
 <style scoped>

@@ -134,8 +134,9 @@ const _sfc_main = {
       };
     });
     function goTo() {
-      common_vendor.wx$1.navigateBack({
-        delta: 1
+      console.log("跳转首页");
+      common_vendor.wx$1.switchTab({
+        url: "/pages/index/index"
       });
     }
     return (_ctx, _cache) => {

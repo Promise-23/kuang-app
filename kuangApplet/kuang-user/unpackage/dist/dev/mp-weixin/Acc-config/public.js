@@ -62,8 +62,8 @@ class Plublic {
           const user = query_openid.data[0];
           console.log("更新user", user);
           console.log("更新userInfo", userInfo);
-          await db.collection("user_infor").where({ _openid: user.openid }).update({ data: { avatarUrl: userInfo.avatarUrl, nickName: userInfo.nickName, phone: userInfo.phone } });
-          common_vendor.wx$1.setStorageSync("user_infor", { avatarUrl: userInfo.avatarUrl, nickName: userInfo.nickName, openid: user._openid, phone: userInfo.phone, integral: user.integral, coupon: user.coupon, kcoin: user.kcoin });
+          await db.collection("user_infor").where({ _openid: user._openid }).update({ data: { avatarUrl: userInfo.avatarUrl, nickName: userInfo.nickName, phone: userInfo.phone } });
+          common_vendor.wx$1.setStorageSync("user_infor", { avatarUrl: userInfo.avatarUrl, nickName: userInfo.nickName, _openid: user._openid, phone: userInfo.phone, integral: user.integral, coupon: user.coupon, kcoin: user.kcoin });
           common_vendor.wx$1.showToast({
             title: "欢迎回来!"
           });
@@ -73,7 +73,7 @@ class Plublic {
           const user = query.data[0];
           console.log("新增user", user);
           console.log("新增userInfo", userInfo);
-          common_vendor.wx$1.setStorageSync("user_infor", { avatarUrl: user.avatarUrl, nickName: user.nickName, openid: user._openid, phone: user.phone, integral: user.integral, coupon: user.coupon, kcoin: user.kcoin });
+          common_vendor.wx$1.setStorageSync("user_infor", { avatarUrl: user.avatarUrl, nickName: user.nickName, _openid: user._openid, phone: user.phone, integral: user.integral, coupon: user.coupon, kcoin: user.kcoin });
           let time = common_vendor.hooks().utcOffset(8).format("YYYY-MM-DD HH:mm:ss");
           await db.collection("integral_detail").add({ data: { type: "add", num: 100, desc: "注册用户成功!", time } });
           common_vendor.wx$1.showToast({
@@ -190,6 +190,26 @@ function getPhoneNumberByToken(code, token) {
     });
   });
 }
+function currentTime() {
+  const date = common_vendor.hooks().format("YYYY-MM-DD");
+  return transferTime(date);
+}
+function transferTime(time) {
+  return Math.round(common_vendor.hooks(time, "YYYY-MM-DD").valueOf() / 1e3);
+}
+function hasSameElement(arr1, arr2) {
+  for (let i = 0; i < arr1.length; i++) {
+    for (let j = 0; j < arr2.length; j++) {
+      if (arr1[i] == arr2[j]) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
 exports.Plublic = Plublic;
+exports.currentTime = currentTime;
 exports.getAccessToken = getAccessToken;
 exports.getPhoneNumberByToken = getPhoneNumberByToken;
+exports.hasSameElement = hasSameElement;
+exports.transferTime = transferTime;

@@ -215,3 +215,31 @@
 		time: 时间
 	}
 ]
+
+/* 优惠券数据库 coupon_detail */
+规则:仅创建者可读写
+[
+	{
+		couponId: string, // 关联领券中心的优惠券id
+		type: 类型, // pay: 支付立减券 full: 满减 limit: 部分商品可用
+		price: 金额,
+		desc: 描述,
+		time: 有效时间区间,
+		limit: 可用于商品 ,// 非必选
+		full: num, // 满多少金额可用（非必选）
+		used: boolean, // 是否已使用
+		remark: 备注
+	}
+]
+
+
+/* 拼单信息数据库 collage_info */
+规则:仅创建者可读写
+[
+	{
+		type: 类型, // add: 增加，del：减少
+		num: 数量,
+		desc: 描述,
+		time: 时间
+	}
+]

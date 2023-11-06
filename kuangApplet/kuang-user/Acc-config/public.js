@@ -68,8 +68,8 @@ class Plublic{
 					const user = query_openid.data[0]
 					console.log('更新user', user)
 					console.log('更新userInfo', userInfo)
-					await db.collection('user_infor').where({_openid:user.openid}).update({data:{avatarUrl:userInfo.avatarUrl,nickName:userInfo.nickName,phone:userInfo.phone}})
-					wx.setStorageSync('user_infor', {avatarUrl:userInfo.avatarUrl,nickName:userInfo.nickName,openid:user._openid,phone:userInfo.phone,integral:user.integral, coupon:user.coupon,kcoin:user.kcoin})
+					await db.collection('user_infor').where({_openid:user._openid}).update({data:{avatarUrl:userInfo.avatarUrl,nickName:userInfo.nickName,phone:userInfo.phone}})
+					wx.setStorageSync('user_infor', {avatarUrl:userInfo.avatarUrl,nickName:userInfo.nickName,_openid:user._openid,phone:userInfo.phone,integral:user.integral, coupon:user.coupon,kcoin:user.kcoin})
 					wx.showToast({
 					  title: '欢迎回来!',
 					})
@@ -79,7 +79,7 @@ class Plublic{
 					const user = query.data[0]
 					console.log('新增user', user)
 					console.log('新增userInfo', userInfo)
-					wx.setStorageSync('user_infor', {avatarUrl:user.avatarUrl,nickName:user.nickName,openid:user._openid,phone:user.phone,integral:user.integral, coupon:user.coupon,kcoin:user.kcoin})
+					wx.setStorageSync('user_infor', {avatarUrl:user.avatarUrl,nickName:user.nickName,_openid:user._openid,phone:user.phone,integral:user.integral, coupon:user.coupon,kcoin:user.kcoin})
 					// 新注册用户送100积分
 					let time = moment().utcOffset(8).format('YYYY-MM-DD HH:mm:ss')  // 当前时间:年月日，时分秒
 					await db.collection('integral_detail').add({data:{type: 'add', num: 100, desc: '注册用户成功!', time: time}})
@@ -210,4 +210,28 @@ function getPhoneNumberByToken(code, token){
 		})
 	})
 }
-export {Plublic, getAccessToken, getPhoneNumberByToken}
+
+// 当前时间的时间戳
+function currentTime(){//new Date().getTime():毫秒；Math.round：四舍五入
+	const date = moment().format('YYYY-MM-DD');
+	return transferTime(date)
+}
+
+// 转换时间戳
+function transferTime(time){//new Date().getTime():毫秒；Math.round：四舍五入
+	return Math.round(moment(time, 'YYYY-MM-DD').valueOf() /1000 );
+}
+
+// 判断两个数组是否存在相同元素
+function hasSameElement(arr1, arr2){
+	for(let i=0;i<arr1.length;i++){
+		for(let j=0;j<arr2.length;j++){
+			if(arr1[i] == arr2[j]){
+				return true
+			}
+		}
+	}
+	return false
+}
+	
+export {Plublic, getAccessToken, getPhoneNumberByToken, currentTime, transferTime, hasSameElement}

@@ -67,6 +67,10 @@
 			{
 				image:'/static/detail/fenlei.svg',
 				name:'分类管理'
+			},
+			{
+				image:'/static/detail/coupon.svg',
+				name:'卡券管理'
 			}
 		]
 	})
@@ -122,6 +126,11 @@
 			case 4:
 			wx.navigateTo({
 				url:'/pages/sort-admin/sort'
+			})
+			break;
+			case 5:
+			wx.navigateTo({
+				url:'/pages/coupon-manage/coupon'
 			})
 		}
 	}

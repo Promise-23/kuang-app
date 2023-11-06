@@ -8,7 +8,8 @@
     "pages/commodity/commodity",
     "pages/goods-admin/goods",
     "pages/specs/specs",
-    "pages/sort-admin/sort"
+    "pages/sort-admin/sort",
+    "pages/coupon-manage/coupon"
   ],
   "window": {
     "navigationBarTextStyle": "black",

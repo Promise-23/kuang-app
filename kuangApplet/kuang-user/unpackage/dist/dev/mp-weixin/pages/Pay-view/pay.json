@@ -1,5 +1,7 @@
 {
   "navigationBarTitleText": "确认订单",
   "navigationBarBackgroundColor": "#fefefe",
-  "usingComponents": {}
+  "usingComponents": {
+    "coupon-view": "../components/coupon-view"
+  }
 }

@@ -62,6 +62,13 @@
 				"navigationBarTitleText": "分类管理",
 				"navigationBarBackgroundColor": "#fefefe"
 			}
+		},
+		{
+			"path": "pages/coupon-manage/coupon",
+			"style": {
+				"navigationBarTitleText": "优惠券管理",
+				"navigationBarBackgroundColor": "#fefefe"
+			}
 		}
 	],
 	"globalStyle": {
