@@ -5,19 +5,21 @@
 	  <view class="privacy-dialog-wrap">
 		<view class="privacy-dialog">
 		  <view class="privacy-dialog-header">用户隐私保护提示</view>
-		  <view class="privacy-dialog-content">感谢您使用本小程序，在使用前您应当阅读井同意<text class="privacy-link" bindtap="openPrivacyContract">《用户隐私保护指引》</text>，当点击同意并继续时，即表示您已理解并同意该条款内容，该条款将对您产生法律约束力；如您不同意，将无法继续使用小程序相关功能。</view>
+		  <view class="privacy-dialog-content">感谢您使用本小程序，在使用前您应当阅读井同意<text class="privacy-link" @click="openPrivacyContract">《用户隐私保护指引》</text>，当点击同意并继续时，即表示您已理解并同意该条款内容，该条款将对您产生法律约束力；如您不同意，将无法继续使用小程序相关功能。</view>
 		  <view class="privacy-dialog-footer">
-			<button
+			<!-- <button
 			  id="btn-disagree"
 			  type="default"
 			  class="btn btn-disagree"
-			  bindtap="handleDisagree"
-			>不同意</button>
+			  @click="handleDisagree"
+			>不同意</button> -->
+			<navigator id="btn-disagree" open-type="exit" class="btn btn-disagree" target="miniProgram" @click="handleDisagree">不同意</navigator>
 			<button
 			  id="agree-btn"
 			  type="default"
 			  open-type="agreePrivacyAuthorization"
 			  class="btn btn-agree"
+			  @click="handleAgree"
 			  bindagreeprivacyauthorization="handleAgree"
 			>同意并继续</button>
 		  </view>
@@ -31,15 +33,15 @@
 	import {reactive} from 'vue'
 	import {onLoad,onReachBottom} from '@dcloudio/uni-app'
 	
-	const showPrivacy = ref(true)
+	const showPrivacy = ref(false)
 	const resolvePrivacyAuthorization = ref()
-	uni.hideTabBar()
 	let privacyHandler
 	let privacyResolves = new Set()
 	let closeOtherPagePopUpHooks = new Set()
 	console.log('wx.onNeedPrivacyAuthorization', wx.onNeedPrivacyAuthorization)
 	if (wx.onNeedPrivacyAuthorization) {
 	  wx.onNeedPrivacyAuthorization(resolve => {
+		  debugger
 		  console.log('resolve', resolve)
 	    if (typeof privacyHandler === 'function') {
 	      privacyHandler(resolve)
@@ -56,18 +58,36 @@
 	}
 	
 	onLoad((event)=>{
-		wx.onNeedPrivacyAuthorization((resolve, eventInfo) => {
-		  console.log('触发本次事件的接口是：' + eventInfo.referrer)
-		  // 需要用户同意隐私授权时
-		  // 弹出开发者自定义的隐私授权弹窗
-		  showPrivacy.value = true
-		  resolvePrivacyAuthorization.value = resolve
+		wx.getPrivacySetting({
+		  success: res => {
+			console.log(res) // 返回结果为: res = { needAuthorization: true/false, privacyContractName: '《xxx隐私保护指引》' }
+			if (res.needAuthorization) {
+			  // 需要弹出隐私协议
+			  showPrivacy.value = true
+			  uni.hideTabBar()
+			} else {
+			  // 用户已经同意过隐私协议，所以不需要再弹出隐私协议，也能调用已声明过的隐私接口
+			  // wx.getUserProfile()
+			  // wx.chooseMedia()
+			  // wx.getClipboardData()
+			  // wx.startRecord()
+			}
+		  },
+		  fail: () => {},
+		  complete: () => {}
 		})
+	// 	wx.onNeedPrivacyAuthorization((resolve, eventInfo) => {
+	// 	  console.log('触发本次事件的接口是：' + eventInfo.referrer)
+	// 	  // 需要用户同意隐私授权时
+	// 	  // 弹出开发者自定义的隐私授权弹窗
+	// 	  showPrivacy.value = true
+	// 	  resolvePrivacyAuthorization.value = resolve
+	// 	})
 	
-		wx.getUserProfile({
-		  success: console.log,
-		  fail: console.error
-		})
+	// 	wx.getUserProfile({
+	// 	  success: console.log,
+	// 	  fail: console.error
+	// 	})
 	})
 	
 	function handleAgree(e) {
@@ -82,7 +102,6 @@
 	} 
 	
 	function handleDisagree(e) {
-		debugger
 	  disPopUp()
 	  privacyResolves.forEach(resolve => {
 		resolve({
@@ -90,6 +109,11 @@
 		})
 	  })
 	  privacyResolves.clear()
+	  if(window){
+		  window.close()
+	  }else{
+		uni.navigateBackMiniProgram()	  
+	  }
 	}
 	
 	function popUp() {
@@ -98,6 +122,7 @@
 	
 	function disPopUp() {
 	  showPrivacy.value=false
+	  uni.showTabBar()
 	}
 	
 	function openPrivacyContract() {
