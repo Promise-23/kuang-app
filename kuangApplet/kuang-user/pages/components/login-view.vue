@@ -10,7 +10,7 @@
 						Kuang+框架
 					</view>
 				</view>
-				<view class="tip">
+				<view class="tip" @click="openPrivacyContract">
 					<image src="/static/img/warning-circle.png" mode="aspectFit"></image>
 				</view>
 			</view>
@@ -92,6 +92,17 @@
 	function cancel(e){
 		e.stopPropagation()
 		login_user.show = false
+	}
+	
+	function openPrivacyContract() {
+	  wx.openPrivacyContract({
+		success: res => {
+		  console.log('openPrivacyContract success')
+		},
+		fail: res => {
+		  console.error('openPrivacyContract fail', res)
+		}
+	  })
 	}
 </script>
 

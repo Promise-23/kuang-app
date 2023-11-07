@@ -420,7 +420,6 @@
 	margin: 50rpx 20rpx 20rpx 20rpx;
 	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 	border-radius: 6rpx;
-	padding: 0 10rpx;
 	color: #828282;
 }
 .my-other image{
@@ -432,7 +431,7 @@
 .my-other view{
 	display: flex;
 	align-items: center;
-	padding: 30rpx 0;
+	padding: 30rpx;
 }
 .my-other view:nth-child(2){
 	border-bottom: 1rpx solid #e0e0e0;

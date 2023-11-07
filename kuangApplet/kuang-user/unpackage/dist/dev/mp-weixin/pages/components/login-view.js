@@ -52,22 +52,33 @@ const _sfc_main = {
       e.stopPropagation();
       AccConfig_answer.login_user.show = false;
     }
+    function openPrivacyContract() {
+      common_vendor.wx$1.openPrivacyContract({
+        success: (res) => {
+          console.log("openPrivacyContract success");
+        },
+        fail: (res) => {
+          console.error("openPrivacyContract fail", res);
+        }
+      });
+    }
     return (_ctx, _cache) => {
       return common_vendor.e({
         a: common_vendor.unref(AccConfig_answer.login_user).show
       }, common_vendor.unref(AccConfig_answer.login_user).show ? {
         b: common_vendor.o(cancel),
-        c: userInfo.avatarUrl,
-        d: common_vendor.o(onChooseAvatar),
-        e: common_vendor.o(handleNickName),
-        f: common_vendor.t(userInfo.phone ? userInfo.phone : "点击获取手机号"),
-        g: common_vendor.o(getPhoneNumber),
-        h: common_vendor.n(userInfo.phone ? "has-phone" : ""),
-        i: common_vendor.o(login),
-        j: common_vendor.o(($event) => common_vendor.unref(AccConfig_answer.login_user).show = false)
+        c: common_vendor.o(openPrivacyContract),
+        d: userInfo.avatarUrl,
+        e: common_vendor.o(onChooseAvatar),
+        f: common_vendor.o(handleNickName),
+        g: common_vendor.t(userInfo.phone ? userInfo.phone : "点击获取手机号"),
+        h: common_vendor.o(getPhoneNumber),
+        i: common_vendor.n(userInfo.phone ? "has-phone" : ""),
+        j: common_vendor.o(login),
+        k: common_vendor.o(($event) => common_vendor.unref(AccConfig_answer.login_user).show = false)
       } : {});
     };
   }
 };
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-1dd05679"], ["__file", "E:/Project/kuang-app/kuangApplet/kuang-user/pages/components/login-view.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-1dd05679"], ["__file", "D:/hujie/Applet-new/kuang-app/kuangApplet/kuang-user/pages/components/login-view.vue"]]);
 wx.createComponent(Component);

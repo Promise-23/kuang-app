@@ -3,13 +3,11 @@ const common_vendor = require("../../common/vendor.js");
 const _sfc_main = {
   __name: "privacy-view",
   setup(__props) {
-    const showPrivacy = common_vendor.ref(false);
+    const showPrivacy = common_vendor.ref(true);
     common_vendor.ref();
     let privacyResolves = /* @__PURE__ */ new Set();
-    console.log("wx.onNeedPrivacyAuthorization", common_vendor.wx$1.onNeedPrivacyAuthorization);
     if (common_vendor.wx$1.onNeedPrivacyAuthorization) {
       common_vendor.wx$1.onNeedPrivacyAuthorization((resolve) => {
-        debugger;
         console.log("resolve", resolve);
       });
     }
@@ -77,5 +75,5 @@ const _sfc_main = {
     };
   }
 };
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-2eab5286"], ["__file", "E:/Project/kuang-app/kuangApplet/kuang-user/pages/components/privacy-view.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-2eab5286"], ["__file", "D:/hujie/Applet-new/kuang-app/kuangApplet/kuang-user/pages/components/privacy-view.vue"]]);
 wx.createComponent(Component);

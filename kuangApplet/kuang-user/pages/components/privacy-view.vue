@@ -33,15 +33,13 @@
 	import {reactive} from 'vue'
 	import {onLoad,onReachBottom} from '@dcloudio/uni-app'
 	
-	const showPrivacy = ref(false)
+	const showPrivacy = ref(true)
 	const resolvePrivacyAuthorization = ref()
 	let privacyHandler
 	let privacyResolves = new Set()
 	let closeOtherPagePopUpHooks = new Set()
-	console.log('wx.onNeedPrivacyAuthorization', wx.onNeedPrivacyAuthorization)
 	if (wx.onNeedPrivacyAuthorization) {
 	  wx.onNeedPrivacyAuthorization(resolve => {
-		  debugger
 		  console.log('resolve', resolve)
 	    if (typeof privacyHandler === 'function') {
 	      privacyHandler(resolve)
