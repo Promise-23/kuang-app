@@ -61,6 +61,7 @@ const _sfc_main = {
         user.exist = true;
         queryUserInfo();
         getCoupons();
+        getIntegral();
       } else {
         user.exist = false;
       }
@@ -156,6 +157,39 @@ const _sfc_main = {
       console.log("rightTimeList", rightTimeList);
       AccConfig_answer.myCoupons.data = rightTimeList;
     }
+    async function getIntegral() {
+      const res = await db.collection("integral_detail").get();
+      console.log("integralDetail", res.data);
+      AccConfig_answer.myIntegral.data = res.data;
+      AccConfig_answer.myIntegral.count = res.data.reduce(function(prev, cur) {
+        console.log("reduce", prev, cur);
+        return prev + (cur.type == "add" ? cur.num : -1 * cur.num);
+      }, 0);
+    }
+    function copyCode() {
+      var _a;
+      if (user.exist) {
+        debugger;
+        common_vendor.index.setClipboardData({
+          data: (_a = user == null ? void 0 : user.user_infor) == null ? void 0 : _a._id,
+          //要被复制的内容
+          success: () => {
+            common_vendor.index.showToast({
+              //提示
+              title: "复制成功"
+            });
+          },
+          fail() {
+            common_vendor.index.showToast({
+              //提示
+              title: "复制失败"
+            });
+          }
+        });
+      } else {
+        AccConfig_answer.login_user.show = true;
+      }
+    }
     return (_ctx, _cache) => {
       return common_vendor.e({
         a: common_vendor.unref(exist)
@@ -163,19 +197,20 @@ const _sfc_main = {
         b: common_vendor.unref(user_infor).avatarUrl,
         c: common_vendor.t(common_vendor.unref(user_infor).nickName),
         d: common_vendor.t(common_vendor.unref(mockPhone)),
-        e: common_vendor.o(goLogout)
+        e: common_vendor.o(copyCode),
+        f: common_vendor.o(goLogout)
       } : {
-        g: common_vendor.o(goLogin)
+        h: common_vendor.o(goLogin)
       }, {
-        f: !common_vendor.unref(exist),
-        h: common_vendor.unref(exist)
+        g: !common_vendor.unref(exist),
+        i: common_vendor.unref(exist)
       }, common_vendor.unref(exist) ? {
-        i: common_vendor.t(common_vendor.unref(user_infor).integral || 0),
-        j: common_vendor.o(($event) => goDetail("integral")),
-        k: common_vendor.t(common_vendor.unref(AccConfig_answer.myCoupons).data.length),
-        l: common_vendor.o(($event) => goDetail("coupon"))
+        j: common_vendor.t(common_vendor.unref(AccConfig_answer.myIntegral).count || 0),
+        k: common_vendor.o(($event) => goDetail("integral")),
+        l: common_vendor.t(common_vendor.unref(AccConfig_answer.myCoupons).data.length),
+        m: common_vendor.o(($event) => goDetail("coupon"))
       } : {}, {
-        m: common_vendor.f(list_data.whole, (item, index, i0) => {
+        n: common_vendor.f(list_data.whole, (item, index, i0) => {
           return {
             a: common_vendor.t(item.name),
             b: item.icon,
@@ -183,7 +218,7 @@ const _sfc_main = {
             d: common_vendor.o(($event) => viewOrder(item.index, item.query), index)
           };
         }),
-        n: common_vendor.f(list_data.list, (item, index, i0) => {
+        o: common_vendor.f(list_data.list, (item, index, i0) => {
           return {
             a: item.icon,
             b: common_vendor.t(item.name),
@@ -191,9 +226,9 @@ const _sfc_main = {
             d: common_vendor.o(($event) => viewOrder(item.index, item.query), index)
           };
         }),
-        o: common_vendor.o(myCollect),
-        p: common_vendor.o(getInfo),
-        q: common_vendor.o(goWelfare)
+        p: common_vendor.o(myCollect),
+        q: common_vendor.o(getInfo),
+        r: common_vendor.o(goWelfare)
       });
     };
   }

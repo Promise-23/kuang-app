@@ -28,5 +28,8 @@ let eav_index = ref('01')
 // 已有优惠券
 let myCoupons = reactive({data: [], hasCouponId: []})
 
+// 已有优惠券
+let myIntegral = reactive({data: [], count: 0})
 
-export {login_user,comment_show,sku_popup,show,modify,deci,new_address,eav_index, myCoupons}
+
+export {login_user,comment_show,sku_popup,show,modify,deci,new_address,eav_index, myCoupons, myIntegral}

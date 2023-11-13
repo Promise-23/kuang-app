@@ -290,7 +290,7 @@
 		console.log('handleIntegralAftePay', integral)
 		// 更新积分明细表
 		let time = moment().utcOffset(8).format('YYYY-MM-DD HH:mm:ss')  // 当前时间:年月日，时分秒
-		await db.collection('integral_detail').add({data:{type: 'add', num: integral, desc: '消费送积分活动！', time: time}})
+		await db.collection('integral_detail').add({data:{_openid:user._openid, type: 'add', num: integral, desc: '消费送积分活动！', time: time}})
 		// 用户表做积分合计
 		const user_data = wx.getStorageSync('user_infor')//取出本地缓存的用户信息
 		await db.collection('user_infor').doc(user_data?._id).update({data: {

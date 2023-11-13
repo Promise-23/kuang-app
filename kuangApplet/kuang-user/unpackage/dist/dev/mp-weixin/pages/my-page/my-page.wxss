@@ -79,8 +79,19 @@
 	font-size: 14px;
 }
 .text-info .phone.data-v-d9593e3f{
+	display: flex;
+    align-items: center;
 	font-size: 12px;
 	margin-top: 3px;
+}
+.text-info .copy-code.data-v-d9593e3f{
+	font-size: 10px;
+	margin-left: 10rpx;
+	border: 1px solid #575757;
+	height: 15px;
+	line-height: 15px;
+	padding: 0 20rpx;
+	border-radius: 20rpx;
 }
 .text-info .grade.data-v-d9593e3f{
 	font-size: 12px;
@@ -97,7 +108,7 @@
 /* 我的订单 */
 .my-order.data-v-d9593e3f{
 	margin-top: 20rpx;
-	padding: 0 20rpx;
+	padding: 0 40rpx;
 }
 .my-order-title image.data-v-d9593e3f{
 	width: 30rpx;

@@ -60,6 +60,7 @@ class Plublic {
         console.log("query_openid", query_openid);
         if (query_openid.data.length > 0) {
           const user = query_openid.data[0];
+          dealInviteChange(user._openid);
           console.log("更新user", user);
           console.log("更新userInfo", userInfo);
           await db.collection("user_infor").where({ _openid: user._openid }).update({ data: { avatarUrl: userInfo.avatarUrl, nickName: userInfo.nickName, phone: userInfo.phone } });
@@ -68,7 +69,7 @@ class Plublic {
             title: "欢迎回来!"
           });
         } else {
-          await db.collection("user_infor").add({ data: { avatarUrl: userInfo.avatarUrl, nickName: userInfo.nickName, phone: userInfo.phone, integral: 100, coupon: 0, kcoin: 0, watch_num: 1, pay: true } });
+          await db.collection("user_infor").add({ data: { avatarUrl: userInfo.avatarUrl, nickName: userInfo.nickName, phone: userInfo.phone, inviteCode: userInfo.inviteCode, integral: 100, coupon: 0, kcoin: 0, watch_num: 1, pay: true } });
           const query = await db.collection("user_infor").get();
           const user = query.data[0];
           console.log("新增user", user);
@@ -76,6 +77,9 @@ class Plublic {
           common_vendor.wx$1.setStorageSync("user_infor", { avatarUrl: user.avatarUrl, nickName: user.nickName, _openid: user._openid, phone: user.phone, integral: user.integral, coupon: user.coupon, kcoin: user.kcoin });
           let time = common_vendor.hooks().utcOffset(8).format("YYYY-MM-DD HH:mm:ss");
           await db.collection("integral_detail").add({ data: { type: "add", num: 100, desc: "注册用户成功!", time } });
+          if (userInfo.inviteCode) {
+            await db.collection("invite_log").add({ data: { userid: userInfo.inviteCode, type: "add", num: 100, desc: "邀请好友注册成功!", time, expire: false } });
+          }
           common_vendor.wx$1.showToast({
             title: "注册成功!"
           });
@@ -206,6 +210,14 @@ function hasSameElement(arr1, arr2) {
     }
   }
   return false;
+}
+async function dealInviteChange(userid) {
+  const res = await db.collection("invite_log").where({ userid, expire: false }).get();
+  console.log("dealInviteChange", res.data);
+  res.data.forEach(async (item) => {
+    await db.collection("integral_detail").add({ data: { type: item.type, num: item.num, desc: item.desc, time: item.time } });
+  });
+  await db.collection("invite_log").where({ userid, expire: false }).update({ data: { expire: true } });
 }
 exports.Plublic = Plublic;
 exports.currentTime = currentTime;

@@ -6,7 +6,7 @@
 				<text>积分余额</text>
 			</view>
 			<view class="num">
-				<text>{{ user_infor.integral || 0}}</text>
+				<text>{{ count || 0}}</text>
 			</view>
 		</view>
 		<view class="desc">
@@ -17,8 +17,8 @@
 		<view class="title">
 			<text>积分明细</text>
 		</view>
-		<view class="boxs" v-show="integral_detail.length > 0">
-			<view class="box" v-for="(item,index) in integral_detail" :key="index">
+		<view class="boxs" v-show="data.length > 0">
+			<view class="box" v-for="(item,index) in data" :key="index">
 				<view class="integral">
 					<text class="desc">{{item.desc}}</text>
 					<text class="time">{{item.time}}</text>
@@ -30,24 +30,26 @@
 			</view>
 		</view>
 		<!-- 没有数据的提示 -->
-		<view class="Tips" v-show="integral_detail.length == 0">暂无积分数据</view>
+		<view class="Tips" v-show="data.length == 0">暂无积分数据</view>
 	</view>
 </template>
 
 <script setup>
-	import {onMounted,reactive,toRefs} from 'vue'
-	import {Plublic} from '@/Acc-config/public.js'
-	const db = wx.cloud.database()
+	import {toRefs} from 'vue'
+	// import {Plublic} from '@/Acc-config/public.js'
+	import { myIntegral } from '../../Acc-config/answer.js'
+	// const db = wx.cloud.database()
+	const {data,count} = toRefs(myIntegral)
 	
 	// 请求数据
-	onMounted(()=>{getIntegral()})
-	const data = reactive({user_infor: wx.getStorageSync('user_infor') || {},integral_detail:[]})
-	const {user_infor,integral_detail} = toRefs(data)
-	async function getIntegral(){
-		const res = await db.collection('integral_detail').get()
-		console.log('integralDetail', res.data)
-		data.integral_detail = res.data
-	}
+	// onMounted(()=>{getIntegral()})
+	// const data = reactive({user_infor: wx.getStorageSync('user_infor') || {},integral_detail:[]})
+	// const {user_infor,integral_detail} = toRefs(data)
+	// async function getIntegral(){
+	// 	const res = await db.collection('integral_detail').get()
+	// 	console.log('integralDetail', res.data)
+	// 	data.integral_detail = res.data
+	// }
 </script>
 
 <style scoped>

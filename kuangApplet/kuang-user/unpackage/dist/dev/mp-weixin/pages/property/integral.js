@@ -1,24 +1,14 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
-require("../../Acc-config/public.js");
+const AccConfig_answer = require("../../Acc-config/answer.js");
 const _sfc_main = {
   __name: "integral",
   setup(__props) {
-    const db = common_vendor.wx$1.cloud.database();
-    common_vendor.onMounted(() => {
-      getIntegral();
-    });
-    const data = common_vendor.reactive({ user_infor: common_vendor.wx$1.getStorageSync("user_infor") || {}, integral_detail: [] });
-    const { user_infor, integral_detail } = common_vendor.toRefs(data);
-    async function getIntegral() {
-      const res = await db.collection("integral_detail").get();
-      console.log("integralDetail", res.data);
-      data.integral_detail = res.data;
-    }
+    const { data, count } = common_vendor.toRefs(AccConfig_answer.myIntegral);
     return (_ctx, _cache) => {
       return {
-        a: common_vendor.t(common_vendor.unref(user_infor).integral || 0),
-        b: common_vendor.f(common_vendor.unref(integral_detail), (item, index, i0) => {
+        a: common_vendor.t(common_vendor.unref(count) || 0),
+        b: common_vendor.f(common_vendor.unref(data), (item, index, i0) => {
           return {
             a: common_vendor.t(item.desc),
             b: common_vendor.t(item.time),
@@ -27,8 +17,8 @@ const _sfc_main = {
             e: index
           };
         }),
-        c: common_vendor.unref(integral_detail).length > 0,
-        d: common_vendor.unref(integral_detail).length == 0
+        c: common_vendor.unref(data).length > 0,
+        d: common_vendor.unref(data).length == 0
       };
     };
   }

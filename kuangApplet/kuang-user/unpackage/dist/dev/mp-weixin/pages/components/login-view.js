@@ -28,7 +28,7 @@ const _sfc_main = {
         new AccConfig_public.Plublic().toast("登录失败,重试");
       }
     }
-    const userInfo = common_vendor.reactive({ avatarUrl: "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0", nickName: "", phone: "" });
+    const userInfo = common_vendor.reactive({ avatarUrl: "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0", nickName: "", phone: "", inviteCode: "" });
     async function onChooseAvatar(e) {
       console.log("e", e);
       const { avatarUrl } = e.detail;
@@ -62,10 +62,22 @@ const _sfc_main = {
         }
       });
     }
+    const db = common_vendor.wx$1.cloud.database();
+    const hasUser = common_vendor.ref(false);
+    async function queryUserInfo() {
+      const query_openid = await db.collection("user_infor").get();
+      console.log("queryUserInfo", query_openid);
+      if (query_openid.data.length > 0) {
+        hasUser.value = true;
+      }
+    }
+    common_vendor.onMounted(() => {
+      queryUserInfo();
+    });
     return (_ctx, _cache) => {
       return common_vendor.e({
         a: common_vendor.unref(AccConfig_answer.login_user).show
-      }, common_vendor.unref(AccConfig_answer.login_user).show ? {
+      }, common_vendor.unref(AccConfig_answer.login_user).show ? common_vendor.e({
         b: common_vendor.o(cancel),
         c: common_vendor.o(openPrivacyContract),
         d: userInfo.avatarUrl,
@@ -74,9 +86,15 @@ const _sfc_main = {
         g: common_vendor.t(userInfo.phone ? userInfo.phone : "点击获取手机号"),
         h: common_vendor.o(getPhoneNumber),
         i: common_vendor.n(userInfo.phone ? "has-phone" : ""),
-        j: common_vendor.o(login),
-        k: common_vendor.o(($event) => common_vendor.unref(AccConfig_answer.login_user).show = false)
-      } : {});
+        j: !hasUser.value
+      }, !hasUser.value ? {
+        k: userInfo.inviteCode,
+        l: common_vendor.o(($event) => userInfo.inviteCode = $event.detail.value)
+      } : {}, {
+        m: common_vendor.t(hasUser.value ? "登陆" : "注册"),
+        n: common_vendor.o(login),
+        o: common_vendor.o(($event) => common_vendor.unref(AccConfig_answer.login_user).show = false)
+      }) : {});
     };
   }
 };

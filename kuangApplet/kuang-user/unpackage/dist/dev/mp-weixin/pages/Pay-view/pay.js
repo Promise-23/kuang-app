@@ -165,7 +165,7 @@ const _sfc_main = {
       const integral = Math.floor(or_data.total_price % 10);
       console.log("handleIntegralAftePay", integral);
       let time = common_vendor.hooks().utcOffset(8).format("YYYY-MM-DD HH:mm:ss");
-      await db.collection("integral_detail").add({ data: { type: "add", num: integral, desc: "消费送积分活动！", time } });
+      await db.collection("integral_detail").add({ data: { _openid: user._openid, type: "add", num: integral, desc: "消费送积分活动！", time } });
       const user_data = common_vendor.wx$1.getStorageSync("user_infor");
       await db.collection("user_infor").doc(user_data == null ? void 0 : user_data._id).update({ data: {
         // 表示指示数据库将字段自增

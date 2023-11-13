@@ -18,9 +18,8 @@
 			  id="agree-btn"
 			  type="default"
 			  open-type="agreePrivacyAuthorization"
+			  @agreeprivacyauthorization.stop="handleAgree"
 			  class="btn btn-agree"
-			  @click="handleAgree"
-			  bindagreeprivacyauthorization="handleAgree"
 			>同意并继续</button>
 		  </view>
 		</view>
@@ -33,7 +32,7 @@
 	import {reactive} from 'vue'
 	import {onLoad,onReachBottom} from '@dcloudio/uni-app'
 	
-	const showPrivacy = ref(true)
+	const showPrivacy = ref(false)
 	const resolvePrivacyAuthorization = ref()
 	let privacyHandler
 	let privacyResolves = new Set()
@@ -90,7 +89,7 @@
 	
 	function handleAgree(e) {
 	  disPopUp()
-	  privacyResolves.forEach(resolve => {
+	   .forEach(resolve => {
 		resolve({
 		  event: 'agree',
 		  buttonId: 'agree-btn'
@@ -134,16 +133,16 @@
 	  })
 	}
 	
-	function curPageShow() {
-	  if (closePopUp) {
-		privacyHandler = resolve => {
-		  privacyResolves.add(resolve)
-		  popUp()
-		  // 额外逻辑：当前页面的隐私弹窗弹起的时候，关掉其他页面的隐私弹窗
-		  closeOtherPagePopUp(closePopUp)
-		}
-	  }
-	}
+	// function curPageShow() {
+	//   if (closePopUp) {
+	// 	privacyHandler = resolve => {
+	// 	  privacyResolves.add(resolve)
+	// 	  popUp()
+	// 	  // 额外逻辑：当前页面的隐私弹窗弹起的时候，关掉其他页面的隐私弹窗
+	// 	  closeOtherPagePopUp(closePopUp)
+	// 	}
+	//   }
+	// }
 </script>
 
 <style scoped>

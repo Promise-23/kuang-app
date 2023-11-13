@@ -3,7 +3,7 @@ const common_vendor = require("../../common/vendor.js");
 const _sfc_main = {
   __name: "privacy-view",
   setup(__props) {
-    const showPrivacy = common_vendor.ref(true);
+    const showPrivacy = common_vendor.ref(false);
     common_vendor.ref();
     let privacyResolves = /* @__PURE__ */ new Set();
     if (common_vendor.wx$1.onNeedPrivacyAuthorization) {
@@ -27,8 +27,7 @@ const _sfc_main = {
       });
     });
     function handleAgree(e) {
-      disPopUp();
-      privacyResolves.forEach((resolve) => {
+      disPopUp().forEach((resolve) => {
         resolve({
           event: "agree",
           buttonId: "agree-btn"

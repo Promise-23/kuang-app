@@ -31,8 +31,11 @@
 			<view class="phone box">
 				<button open-type="getPhoneNumber" @getphonenumber="getPhoneNumber" :class="userInfo.phone ? 'has-phone' : ''">{{ userInfo.phone ? userInfo.phone : '点击获取手机号'}}</button>
 			</view>
+			<view class="box" v-if="!hasUser">
+				<input ref="inviteRef" v-model="userInfo.inviteCode" class="input" placeholder="邀请码(选填)" placeholder-style="color: #999"/>
+			</view>
 			<view class="opitions">
-				<button type="primary" @click="login">确定</button>
+				<button type="primary" @click="login">{{ hasUser ? '登陆' : '注册'}}</button>
 				<button type="default" @click="login_user.show = false">取消</button>
 			</view>	
 		</view>
@@ -40,7 +43,7 @@
 </template>
 
 <script setup>
-	import { ref } from 'vue'
+	import { ref, onMounted } from 'vue'
 	import {login_user} from '../../Acc-config/answer.js'
 	import {Plublic, getAccessToken, getPhoneNumberByToken} from '../../Acc-config/public.js'
 	import {reactive} from 'vue'
@@ -66,7 +69,7 @@
 		}
 	}
 	
-	const userInfo = reactive({avatarUrl: 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0', nickName: '', phone: ''})
+	const userInfo = reactive({avatarUrl: 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0', nickName: '', phone: '', inviteCode: ''})
 	
 	async function onChooseAvatar(e) {
 		console.log('e', e)
@@ -104,6 +107,22 @@
 		}
 	  })
 	}
+	
+	const db = wx.cloud.database()
+	const hasUser = ref(false)
+	// 查询用户信息
+	async function queryUserInfo(){
+		// 存储数据库查询数据库是否存在用户信息，不存在则提交
+		const query_openid = await db.collection('user_infor').get()
+		console.log('queryUserInfo', query_openid)
+		if(query_openid.data.length > 0){
+			hasUser.value = true
+		}
+	}
+	
+	onMounted(() => {
+		queryUserInfo()
+	})
 </script>
 
 <style scoped>
