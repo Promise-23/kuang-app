@@ -3,7 +3,7 @@ const common_vendor = require("../../common/vendor.js");
 const AccConfig_placeOrder = require("../../Acc-config/place-order.js");
 const AccConfig_answer = require("../../Acc-config/answer.js");
 if (!Math) {
-  (Swipers + Eva + Img + Purchase + Login + Specs)();
+  (Swipers + Eva + Img + Purchase + Login + Specs + BackTop)();
 }
 const Swipers = () => "./component/swiper.js";
 const Eva = () => "./component/evaluate.js";
@@ -11,6 +11,7 @@ const Img = () => "./component/image.js";
 const Purchase = () => "./component/purchase.js";
 const Login = () => "../components/login-view.js";
 const Specs = () => "../components/specs-view.js";
+const BackTop = () => "../Common-component/UI/BackTop.js";
 const _sfc_main = {
   __name: "details",
   setup(__props) {
@@ -187,6 +188,6 @@ const _sfc_main = {
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/hujie/Applet-new/kuang-app/kuangApplet/kuang-user/pages/Product-details/details.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "E:/Project/kuang-app/kuangApplet/kuang-user/pages/Product-details/details.vue"]]);
 _sfc_main.__runtimeHooks = 3;
 wx.createPage(MiniProgramPage);

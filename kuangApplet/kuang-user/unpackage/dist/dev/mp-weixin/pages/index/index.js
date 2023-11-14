@@ -1,13 +1,14 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
 if (!Math) {
-  (Swiper + Flash + Card + Loading + privacy)();
+  (Swiper + Flash + Card + Loading + BackTop + privacy)();
 }
 const Swiper = () => "./component/swiper.js";
 const Flash = () => "./component/flash-sale.js";
 const Card = () => "../Common-component/Card-goods.js";
 const Loading = () => "../public-view/loading.js";
 const privacy = () => "../components/privacy-view.js";
+const BackTop = () => "../Common-component/UI/BackTop.js";
 const _sfc_main = {
   __name: "index",
   setup(__props) {
@@ -79,5 +80,6 @@ const _sfc_main = {
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/hujie/Applet-new/kuang-app/kuangApplet/kuang-user/pages/index/index.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "E:/Project/kuang-app/kuangApplet/kuang-user/pages/index/index.vue"]]);
+_sfc_main.__runtimeHooks = 1;
 wx.createPage(MiniProgramPage);

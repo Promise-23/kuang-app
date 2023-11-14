@@ -32,3 +32,19 @@ page{background-color: #f4f4f4;}
 	left: 30rpx;
 	align-self: center;
 }
+
+/* .arrow-top{
+	position: fixed;
+	bottom: 10%;
+	right: calc(20rpx + 8px);
+	
+}
+
+.arrow-top image{
+	width: 40rpx;
+	height: 40rpx;
+	border-radius: 50%;
+	padding: 15rpx;
+	background-color: #000;
+	opacity: 0.5;
+} */

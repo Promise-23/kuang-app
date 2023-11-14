@@ -5,6 +5,7 @@
     "flash": "./component/flash-sale",
     "card": "../Common-component/Card-goods",
     "loading": "../public-view/loading",
-    "privacy": "../components/privacy-view"
+    "privacy": "../components/privacy-view",
+    "back-top": "../Common-component/UI/BackTop"
   }
 }

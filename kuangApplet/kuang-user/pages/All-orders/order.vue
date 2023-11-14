@@ -76,7 +76,6 @@
 		<Loading v-if="loading"></Loading>
 	</view>
 	<view style="height: 200rpx;"></view>
-	
 </template>
 
 <script setup>

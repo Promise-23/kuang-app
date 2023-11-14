@@ -156,17 +156,18 @@ class Plublic {
     });
   }
 }
-function getAccessToken() {
-  const APPID = "wxf627a4c6489c75f5";
-  const APPSECRET = "adf0c27ab3ba4a517c76d95b588eec6b";
+async function getAccessToken() {
+  const res = await db.collection("base_info").get();
+  const baseInfo = res.data[0];
+  const { APPID, APPSECRET } = baseInfo;
   const URL = `https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${APPID}&secret=${APPSECRET}`;
   return new Promise((resolve, reject) => {
     common_vendor.wx$1.request({
       url: URL,
       //仅为示例，并非真实的接口地址
       method: "GET",
-      success(res) {
-        resolve(res.data);
+      success(res2) {
+        resolve(res2.data);
       },
       fail(err) {
         reject(err);

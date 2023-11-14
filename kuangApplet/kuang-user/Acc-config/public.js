@@ -176,10 +176,11 @@ class Plublic{
 }
 
 
-function getAccessToken(){
+async function getAccessToken(){
 	//获取access_token
-	const APPID='wxf627a4c6489c75f5'
-	const APPSECRET='adf0c27ab3ba4a517c76d95b588eec6b'
+	const res = await db.collection('base_info').get()
+	const baseInfo = res.data[0]
+	const {APPID, APPSECRET} = baseInfo
 	const URL = `https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${APPID}&secret=${APPSECRET}`
 	return new Promise((resolve,reject)=>{
 		wx.request({

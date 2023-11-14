@@ -29,6 +29,8 @@
 	<Login />
 	<!-- sku选择弹窗 -->
 	<Specs :sku_data="sku_data" :goods="goods"/>
+	
+	<back-top />
 </template>
 
 <script setup>
@@ -39,6 +41,7 @@
 	import Purchase from './component/purchase.vue'
 	import Login from '../components/login-view.vue'
 	import Specs from '../components/specs-view.vue'
+	import BackTop from '../Common-component/UI/BackTop.vue'
 	
 	// 与顶部导航栏相关的
 	const search_data = reactive({

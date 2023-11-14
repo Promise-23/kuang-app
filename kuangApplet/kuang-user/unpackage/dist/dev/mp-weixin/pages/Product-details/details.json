@@ -6,6 +6,7 @@
     "img": "./component/image",
     "purchase": "./component/purchase",
     "login": "../components/login-view",
-    "specs": "../components/specs-view"
+    "specs": "../components/specs-view",
+    "back-top": "../Common-component/UI/BackTop"
   }
 }

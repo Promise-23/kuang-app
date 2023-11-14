@@ -1,0 +1,14 @@
+
+.arrow-top.data-v-47b803c6{
+	position: fixed;
+	bottom: 24%;
+	right: calc(20rpx + 8px);
+}
+.arrow-top image.data-v-47b803c6{
+	width: 50rpx;
+	height: 50rpx;
+	border-radius: 50%;
+	padding: 15rpx;
+	background-color: #000;
+	opacity: 0.5;
+}

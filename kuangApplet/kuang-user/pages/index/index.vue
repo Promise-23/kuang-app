@@ -19,6 +19,8 @@
 		<Loading v-if="loading"></Loading>
 	</view>
 	
+	<back-top />
+	
 	<!-- #ifdef MP-WEIXIN -->
 	    <privacy />
 	    <!-- #endif -->
@@ -31,6 +33,7 @@
 	import Card from '../Common-component/Card-goods.vue'
 	import Loading from '../public-view/loading.vue'
 	import privacy from '../components/privacy-view.vue'
+	import BackTop from '../Common-component/UI/BackTop.vue'
 	const db = wx.cloud.database()
 	
 	
@@ -91,7 +94,16 @@
 		})
 	}
 	
+	// import { onPageScroll } from '@dcloudio/uni-app' 
+	// const showArrowTopBtn = ref(false)
 	
+	// onPageScroll((e) => {
+	// 	if(e.scrollTop>=200){
+	// 		showArrowTopBtn.value=true
+	// 	}else{
+	// 		showArrowTopBtn.value = false
+	// 	}
+	// })
 	
 </script>
 
@@ -129,4 +141,20 @@ page{background-color: #f4f4f4;}
 	left: 30upx;
 	align-self: center;
 }
+
+/* .arrow-top{
+	position: fixed;
+	bottom: 10%;
+	right: calc(20rpx + 8px);
+	
+}
+
+.arrow-top image{
+	width: 40rpx;
+	height: 40rpx;
+	border-radius: 50%;
+	padding: 15rpx;
+	background-color: #000;
+	opacity: 0.5;
+} */
 </style>

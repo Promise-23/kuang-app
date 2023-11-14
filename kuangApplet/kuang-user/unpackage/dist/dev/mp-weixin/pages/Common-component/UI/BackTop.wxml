@@ -1,0 +1,1 @@
+<view hidden="{{!a}}" class="arrow-top data-v-47b803c6" bindtap="{{b}}"><image class="data-v-47b803c6" src="/static/svg/arrow-top.svg" mode="widthFix"></image></view>
