@@ -281,7 +281,6 @@
 	// 复制邀请码
 	function copyCode(){
 		if(user.exist){
-			debugger
 			uni.setClipboardData({
 				data:user?.user_infor?._id,//要被复制的内容
 				success:()=>{//复制成功的回调函数

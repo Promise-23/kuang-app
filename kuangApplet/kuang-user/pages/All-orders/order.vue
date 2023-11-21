@@ -25,7 +25,7 @@
 		</view>
 		<!-- 合计 -->
 		<view class="order-total">
-			<text class="copy-code" @click="copyCode">复制订单号</text>
+			<text class="copy-code" @click="copyCode(item._id)">复制订单号</text>
 			<view class="total">
 				<text>合计</text>
 				<text>{{item.subtotal}}</text>
@@ -294,6 +294,23 @@
 		wx.navigateTo({
 			url:`/pages/Product-details/details?goods_id=${goods_id}`
 		})
+	}
+	
+	// 复制订单号
+	function copyCode(id){
+		uni.setClipboardData({
+			data:id,//要被复制的内容
+			success:()=>{//复制成功的回调函数
+			  uni.showToast({//提示
+				title:'复制成功'
+			  })
+			},
+			fail() {
+				uni.showToast({//提示
+					title:'复制失败'
+				})
+			}
+		});
 	}
 	
 </script>

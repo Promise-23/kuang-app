@@ -181,6 +181,24 @@ const _sfc_main = {
         url: `/pages/Product-details/details?goods_id=${goods_id}`
       });
     }
+    function copyCode(id) {
+      common_vendor.index.setClipboardData({
+        data: id,
+        //要被复制的内容
+        success: () => {
+          common_vendor.index.showToast({
+            //提示
+            title: "复制成功"
+          });
+        },
+        fail() {
+          common_vendor.index.showToast({
+            //提示
+            title: "复制失败"
+          });
+        }
+      });
+    }
     return (_ctx, _cache) => {
       return common_vendor.e({
         a: common_vendor.f(common_vendor.unref(tab), (item, index, i0) => {
@@ -208,7 +226,7 @@ const _sfc_main = {
           } : {}, {
             g: common_vendor.t(item.goods_price),
             h: common_vendor.t(item.buy_amount),
-            i: common_vendor.o((...args) => _ctx.copyCode && _ctx.copyCode(...args), index),
+            i: common_vendor.o(($event) => copyCode(item._id), index),
             j: common_vendor.t(item.subtotal),
             k: item.pay_success == "success"
           }, item.pay_success == "success" ? common_vendor.e({

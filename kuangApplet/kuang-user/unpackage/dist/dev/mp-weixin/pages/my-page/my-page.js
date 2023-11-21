@@ -169,7 +169,6 @@ const _sfc_main = {
     function copyCode() {
       var _a;
       if (user.exist) {
-        debugger;
         common_vendor.index.setClipboardData({
           data: (_a = user == null ? void 0 : user.user_infor) == null ? void 0 : _a._id,
           //要被复制的内容
