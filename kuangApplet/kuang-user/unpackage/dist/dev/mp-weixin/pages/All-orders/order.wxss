@@ -69,19 +69,33 @@ page{
 .order-total{
 	display: flex;
 	align-items: center;
-	justify-content: flex-end;
+	justify-content: space-between;
 	margin-bottom: 30rpx;
+	margin-top: 10rpx;
 }
-.order-total text{
+.order-total .total{
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+.order-total .total text{
 	display: block;
 	padding-left: 20rpx;
 }
-.order-total text:nth-child(1){
+.order-total .total text:nth-child(1){
 	color: #8b8c90;
 }
-.order-total text:nth-child(2){
+.order-total .total text:nth-child(2){
 	font-weight: bold;
 	font-size: 34rpx;
+}
+.copy-code{
+	font-size: 22rpx;
+	border: 1px solid #575757;
+	height: 15px;
+	line-height: 15px;
+	padding: 0 20rpx;
+	border-radius: 20rpx;
 }
 /* 按钮 */
 .order-button{

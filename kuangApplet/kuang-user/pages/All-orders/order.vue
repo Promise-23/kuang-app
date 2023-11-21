@@ -10,22 +10,26 @@
 	<!-- 订单数据 -->
 	<view class="order-back" v-for="(item,index) in order_data" :key="index">
 		<view class="order-card">
-			<view>
+			<view @click="jumpGoods(item.goods_id)">
 				<image :src="item.goods_image" mode="aspectFill"></image>
 			</view>
 			<view>
-				<text class="order-title-padd">{{item.goods_title}}</text>
+				<text @click="jumpGoods(item.goods_id)" class="order-title-padd">{{item.goods_title}}</text>
 				<text class="order-specs" v-if="item.specs.length > 0" v-for="(item_a,index_a) in item.specs" :key="index_a">{{item_a.att_val}}</text>
 			</view>
 			<view>
+				<text></text>
 				<text class="order-title-padd order-num">{{item.goods_price}}</text>
 				<text class="order-num">x{{item.buy_amount}}</text>
 			</view>
 		</view>
 		<!-- 合计 -->
 		<view class="order-total">
-			<text>合计</text>
-			<text>{{item.subtotal}}</text>
+			<text class="copy-code" @click="copyCode">复制订单号</text>
+			<view class="total">
+				<text>合计</text>
+				<text>{{item.subtotal}}</text>
+			</view>
 		</view>
 		<!-- 支付的状态 -->
 		<!-- 支付成功的状态 -->
@@ -134,7 +138,7 @@
 		const user = wx.getStorageSync('user_infor')//取出本地缓存的用户信息
 		query['_openid'] = user._openid
 		const res = await db.collection('order_data').where(query).limit(10).skip(sk).orderBy('order_time','desc').get()
-		console.log(res)
+		console.log('order_data', res.data)
 		res_order.order_data = [...res_order.order_data,...res.data]
 	}
 	
@@ -285,11 +289,12 @@
 		})
 	}
 	
-	
-	
-	
-	
-	
+	// 跳转指定商品
+	function jumpGoods(goods_id){
+		wx.navigateTo({
+			url:`/pages/Product-details/details?goods_id=${goods_id}`
+		})
+	}
 	
 </script>
 
@@ -365,19 +370,34 @@ page{
 .order-total{
 	display: flex;
 	align-items: center;
-	justify-content: flex-end;
+	justify-content: space-between;
 	margin-bottom: 30rpx;
+	margin-top: 10rpx;
 }
-.order-total text{
+
+.order-total .total{
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+.order-total .total text{
 	display: block;
 	padding-left: 20rpx;
 }
-.order-total text:nth-child(1){
+.order-total .total text:nth-child(1){
 	color: #8b8c90;
 }
-.order-total text:nth-child(2){
+.order-total .total text:nth-child(2){
 	font-weight: bold;
 	font-size: 34rpx;
+}
+.copy-code{
+	font-size: 22rpx;
+	border: 1px solid #575757;
+	height: 15px;
+	line-height: 15px;
+	padding: 0 20rpx;
+	border-radius: 20rpx;
 }
 /* 按钮 */
 .order-button{

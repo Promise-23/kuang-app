@@ -57,7 +57,7 @@ const _sfc_main = {
       const user = common_vendor.wx$1.getStorageSync("user_infor");
       query["_openid"] = user._openid;
       const res = await db.collection("order_data").where(query).limit(10).skip(sk).orderBy("order_time", "desc").get();
-      console.log(res);
+      console.log("order_data", res.data);
       res_order.order_data = [...res_order.order_data, ...res.data];
     }
     let loading = common_vendor.ref(false);
@@ -176,6 +176,11 @@ const _sfc_main = {
         url: "/pages/Order-tracking/tracking?value=" + obj
       });
     }
+    function jumpGoods(goods_id) {
+      common_vendor.wx$1.navigateTo({
+        url: `/pages/Product-details/details?goods_id=${goods_id}`
+      });
+    }
     return (_ctx, _cache) => {
       return common_vendor.e({
         a: common_vendor.f(common_vendor.unref(tab), (item, index, i0) => {
@@ -189,47 +194,50 @@ const _sfc_main = {
         b: common_vendor.f(common_vendor.unref(order_data), (item, index, i0) => {
           return common_vendor.e({
             a: item.goods_image,
-            b: common_vendor.t(item.goods_title),
-            c: item.specs.length > 0
+            b: common_vendor.o(($event) => jumpGoods(item.goods_id), index),
+            c: common_vendor.t(item.goods_title),
+            d: common_vendor.o(($event) => jumpGoods(item.goods_id), index),
+            e: item.specs.length > 0
           }, item.specs.length > 0 ? {
-            d: common_vendor.f(item.specs, (item_a, index_a, i1) => {
+            f: common_vendor.f(item.specs, (item_a, index_a, i1) => {
               return {
                 a: common_vendor.t(item_a.att_val),
                 b: index_a
               };
             })
           } : {}, {
-            e: common_vendor.t(item.goods_price),
-            f: common_vendor.t(item.buy_amount),
-            g: common_vendor.t(item.subtotal),
-            h: item.pay_success == "success"
+            g: common_vendor.t(item.goods_price),
+            h: common_vendor.t(item.buy_amount),
+            i: common_vendor.o((...args) => _ctx.copyCode && _ctx.copyCode(...args), index),
+            j: common_vendor.t(item.subtotal),
+            k: item.pay_success == "success"
           }, item.pay_success == "success" ? common_vendor.e({
-            i: item.deliver == "stay"
+            l: item.deliver == "stay"
           }, item.deliver == "stay" ? {
-            j: common_vendor.o(($event) => refUnd(index, item._id), index)
+            m: common_vendor.o(($event) => refUnd(index, item._id), index)
           } : {}, {
-            k: item.deliver == "already"
+            n: item.deliver == "already"
           }, item.deliver == "already" ? {
-            l: common_vendor.o(($event) => confRece(index, item._id), index),
-            m: common_vendor.o(($event) => loGistics(item.waybill_No, item.goods_image, item.goods_title, item.buy_amount), index),
-            n: common_vendor.o(($event) => refUnd(index, item._id), index)
+            o: common_vendor.o(($event) => confRece(index, item._id), index),
+            p: common_vendor.o(($event) => loGistics(item.waybill_No, item.goods_image, item.goods_title, item.buy_amount), index),
+            q: common_vendor.o(($event) => refUnd(index, item._id), index)
           } : {}, {
-            o: item.deliver == "rece_goods"
+            r: item.deliver == "rece_goods"
           }, item.deliver == "rece_goods" ? {
-            p: common_vendor.t(item.evaluate ? "已评价" : "评价"),
-            q: common_vendor.o(($event) => eavLuate(item._id, item.goods_id, index, item.evaluate, item.specs), index),
-            r: common_vendor.o(($event) => refUnd(index, item._id), index)
+            s: common_vendor.t(item.evaluate ? "已评价" : "评价"),
+            t: common_vendor.o(($event) => eavLuate(item._id, item.goods_id, index, item.evaluate, item.specs), index),
+            v: common_vendor.o(($event) => refUnd(index, item._id), index)
           } : {}, {
-            s: item.deliver == "ref_pro"
+            w: item.deliver == "ref_pro"
           }, item.deliver == "ref_pro" ? {} : {}, {
-            t: item.deliver == "ref_succ"
+            x: item.deliver == "ref_succ"
           }, item.deliver == "ref_succ" ? {} : {}) : item.pay_success == "not_pay" ? {
-            w: common_vendor.o(($event) => canOrder(item._id, index), index),
-            x: common_vendor.o(($event) => goonPay(index, item._id, item.subtotal, item), index)
+            z: common_vendor.o(($event) => canOrder(item._id, index), index),
+            A: common_vendor.o(($event) => goonPay(index, item._id, item.subtotal, item), index)
           } : item.pay_success == "can_order" ? {} : {}, {
-            v: item.pay_success == "not_pay",
-            y: item.pay_success == "can_order",
-            z: index
+            y: item.pay_success == "not_pay",
+            B: item.pay_success == "can_order",
+            C: index
           });
         }),
         c: common_vendor.unref(order_data).length == 0
