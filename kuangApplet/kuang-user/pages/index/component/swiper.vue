@@ -67,7 +67,9 @@
 	overflow: hidden;
 	transform: translateY(0);
 }
-
+.swiper-item {
+	margin-right: 20rpx;
+}
 .swiper-item image {
 	width: 100%;
 	height: 700rpx !important;

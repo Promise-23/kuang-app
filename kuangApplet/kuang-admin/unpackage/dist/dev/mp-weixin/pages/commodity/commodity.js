@@ -73,10 +73,23 @@ const _sfc_main = {
         url: "/pages/sort-admin/sort"
       });
     }
-    function rootGoods() {
+    function rootGoods(id) {
       common_vendor.wx$1.navigateTo({
-        url: "/pages/goods-admin/goods"
+        url: "/pages/goods-admin/goods?id=" + id
       });
+    }
+    async function delGoods(id, index) {
+      try {
+        let DB = await AccConfig_init.inIt();
+        await DB.database().collection("goods").doc(id).remove();
+        data.goods.splice(index, 1);
+        await DB.database().collection("sku_data").where({ sku_id: id }).remove();
+        const _ = DB.database().command;
+        await DB.database().collection("goods_sort").doc(data.sort_id).update({ data: { quantity: _.inc(-1) } });
+        new AccConfig_media.Feedback("删除成功", "success").toast();
+      } catch (e) {
+        new AccConfig_media.Feedback("删除失败").toast();
+      }
     }
     return (_ctx, _cache) => {
       return common_vendor.e({
@@ -98,16 +111,24 @@ const _sfc_main = {
           }, item.shelves ? {
             f: common_vendor.o(($event) => shelf(item._id, index), index)
           } : {}, {
-            g: index
+            g: !item.shelves
+          }, !item.shelves ? {
+            h: common_vendor.o(($event) => rootGoods(item._id), index)
+          } : {}, {
+            i: !item.shelves
+          }, !item.shelves ? {
+            j: common_vendor.o(($event) => delGoods(item._id, index), index)
+          } : {}, {
+            k: index
           });
         }),
         c: common_vendor.unref(loading)
       }, common_vendor.unref(loading) ? {} : {}, {
         d: common_vendor.o(rootSoRt),
-        e: common_vendor.o(rootGoods)
+        e: common_vendor.o(($event) => rootGoods())
       });
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-f133ce92"], ["__file", "D:/hujie/Applet-new/kuang-app/kuangApplet/kuang-admin/pages/commodity/commodity.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-f133ce92"], ["__file", "E:/Project/kuang-app/kuangApplet/kuang-admin/pages/commodity/commodity.vue"]]);
 wx.createPage(MiniProgramPage);

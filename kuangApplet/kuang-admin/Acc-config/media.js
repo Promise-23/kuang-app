@@ -64,8 +64,13 @@ class Upload{
 		let storage = []
 		return new Promise((resolve,reject)=>{
 			uploads.forEach(async item=>{
-				let nm = await this.cloud(item.image)
-				storage.push({[key]:nm})
+				// https开头则是已上传过的地址，不需要处理
+				if(item.image?.substring(0, 5) == 'https'){
+					storage.push({[key]:item.image})
+				}else{
+					let nm = await this.cloud(item.image)
+					storage.push({[key]:nm})
+				}
 				if(storage.length == uploads.length){
 					resolve(storage)
 				}

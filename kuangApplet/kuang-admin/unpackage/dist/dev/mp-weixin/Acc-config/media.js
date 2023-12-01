@@ -59,8 +59,13 @@ class Upload {
     let storage = [];
     return new Promise((resolve, reject) => {
       uploads.forEach(async (item) => {
-        let nm = await this.cloud(item.image);
-        storage.push({ [key]: nm });
+        var _a;
+        if (((_a = item.image) == null ? void 0 : _a.substring(0, 5)) == "https") {
+          storage.push({ [key]: item.image });
+        } else {
+          let nm = await this.cloud(item.image);
+          storage.push({ [key]: nm });
+        }
         if (storage.length == uploads.length) {
           resolve(storage);
         }

@@ -1,6 +1,6 @@
 <template>
 	<view class="Manage" @click="manAge">{{manage}}</view>
-	<view class="SH-view" v-for="(item,index) in cart_data" :key="index">
+	<view v-if="exist" class="SH-view" v-for="(item,index) in cart_data" :key="index">
 		<view class="SH-icon">
 			<icon type="success" color="#ea445a" v-if="item.select" @click="seLect(index,item.select)"></icon>
 			<icon type="circle" v-else @click="seLect(index,item.select)"></icon>
@@ -25,7 +25,7 @@
 		</view>
 	</view>
 	<!-- 没有数据的提示 -->
-	<view class="Tips" v-if="cart_data.length == 0">购物车竟然是空的</view>
+	<view class="Tips" v-if="!exist || cart_data.length == 0">购物车竟然是空的</view>
 	<view style="height: 200rpx;"></view>
 	<!-- 底部 -->
 	<view class="SH-bottom">
@@ -55,8 +55,21 @@
 	const db = wx.cloud.database()
 	
 	onShow(()=>{
-		getCart()
+		staTus()
 	})
+	
+	const user = reactive({user_infor:{},exist:false})
+	const {user_infor,exist} = toRefs(user)
+	function staTus(){
+		const user_data = wx.getStorageSync('user_infor')//取出本地缓存的用户信息
+		if(user_data){
+			user.exist = true
+			getCart()
+		}else{
+			user.exist = false
+		}
+	}
+	
 	const data = reactive({cart_data:[]})
 	const {cart_data} = toRefs(data)
 	async function getCart(){

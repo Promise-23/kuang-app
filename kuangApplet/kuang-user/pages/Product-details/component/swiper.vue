@@ -1,7 +1,8 @@
 <template>
+	<view :style=" 'height:' + S_top + 'px;' "></view>
 	<!-- 轮播 -->
 	<view class="swiper-view">
-		<swiper :duration="1000" :circular="true" @change="changeCurrent">
+		<swiper :duration="1000" :circular="true" previous-margin="20rpx" autoplay="true" @change="changeCurrent">
 			<block v-for="(item,index) in goods.goods_banner" :key="index">
 				<swiper-item>
 					<view class="swiper-item">
@@ -47,6 +48,9 @@
 	import {defineProps,watch,ref,reactive,toRefs,onBeforeUnmount} from 'vue'
 	const props = defineProps({goods:Object,seckill:Array})
 	import {ORDER} from '../../../Acc-config/place-order.js'
+	import {search_data} from '@/Acc-config/answer.js'
+	
+	const {S_height,S_top,S_left,Custom_height} = toRefs(search_data)
 	
 	// 轮播图片数量
 	const ban_length = ref(0)
@@ -145,20 +149,33 @@
 <style scoped>
 .imageurl {
 	width: 100%;
+	margin: 0 auto;
 	height: 700rpx !important;
 }
 
 .swiper-view {
+	/* margin:0 20rpx; */
 	height: 700rpx !important;
 	position: relative;
+	border-radius: 10px;
+	overflow: hidden;
+}
+.swiper-item{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: calc(100% - 20rpx);
+	margin-right: 20rpx;
+	border-radius: 10px;
+	overflow: hidden;
 }
 swiper{
 	height: 700rpx !important;
 }
 .point{
 	position: absolute;
-	bottom: 10rpx;
-	right: 20rpx;
+	bottom: 20rpx;
+	right: 40rpx;
 	background-color: #333333;
 	opacity: 0.5;
 	color: #FFFFFF;

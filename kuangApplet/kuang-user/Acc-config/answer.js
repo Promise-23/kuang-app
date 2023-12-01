@@ -1,6 +1,14 @@
 // 一些公用的响应式传值
 import {reactive, ref} from 'vue'
 
+// 获取胶囊按钮的坐标数据
+const search_data = reactive({
+	S_height:0,
+	S_top:0,
+	S_left:0,
+	Custom_height:0
+})
+
 // 用户没有登陆，传值，调用登陆框
 let login_user = reactive({show:false,response:'fail'})
 
@@ -32,4 +40,4 @@ let myCoupons = reactive({data: [], hasCouponId: []})
 let myIntegral = reactive({data: [], count: 0})
 
 
-export {login_user,comment_show,sku_popup,show,modify,deci,new_address,eav_index, myCoupons, myIntegral}
+export {search_data, login_user,comment_show,sku_popup,show,modify,deci,new_address,eav_index, myCoupons, myIntegral}

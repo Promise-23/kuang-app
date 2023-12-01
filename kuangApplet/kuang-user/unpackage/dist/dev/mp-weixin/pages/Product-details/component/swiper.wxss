@@ -1,19 +1,32 @@
 
 .imageurl.data-v-3c116fde {
 	width: 100%;
+	margin: 0 auto;
 	height: 700rpx !important;
 }
 .swiper-view.data-v-3c116fde {
+	/* margin:0 20rpx; */
 	height: 700rpx !important;
 	position: relative;
+	border-radius: 10px;
+	overflow: hidden;
+}
+.swiper-item.data-v-3c116fde{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: calc(100% - 20rpx);
+	margin-right: 20rpx;
+	border-radius: 10px;
+	overflow: hidden;
 }
 swiper.data-v-3c116fde{
 	height: 700rpx !important;
 }
 .point.data-v-3c116fde{
 	position: absolute;
-	bottom: 10rpx;
-	right: 20rpx;
+	bottom: 20rpx;
+	right: 40rpx;
 	background-color: #333333;
 	opacity: 0.5;
 	color: #FFFFFF;

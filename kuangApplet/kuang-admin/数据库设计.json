@@ -243,3 +243,61 @@
 		time: 时间
 	}
 ]
+
+// 积分商城
+
+/* 商品分类数据库  gifts_sort */
+规则:所有用户可读,仅创建者可读写
+
+[
+	{
+		sort_name:'分类名称',
+		quantity:0//数量
+	}
+]
+
+/* 积分商品数据库   gifts */
+规则:
+{
+  "read": true,
+  "write": true
+}
+
+[
+	{
+		_id:'该商品的唯一标示,商品id',
+		gifts_title:'商品标题',
+		gifts_banner:[{商品横幅,image:''}],
+		gifts_cover:'商品封面图,商品横幅的第一张图片作为封面图',
+		video_url:'短视频链接',
+		category:'所属分类',
+		gifts_price:'商品价格', // 积分价格
+		stock:'库存',
+		sku:'true or false 是否有sku规格',
+		gifts_details:[{商品详情图,image:''}],
+		sold:'商品已售多少',
+		shelves:'商品上架与否 true or false'
+	}
+],
+
+/* 数据库 gifts_sku */
+规则:
+{
+  "read": true,
+  "write": true
+}
+[
+	{
+		sku_id:'关联哪个商品的id',
+		sku:[{
+			att_data:[
+				{att_name: "口味", att_val: "微辣"},
+				{att_name: "颜色", att_val: "黑色"}
+			],
+			image: "图片链接",
+			price: 11,
+			stock: 200,
+			title: 1
+		}]
+	}
+]

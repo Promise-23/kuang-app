@@ -69,6 +69,27 @@
 				"navigationBarTitleText": "优惠券管理",
 				"navigationBarBackgroundColor": "#fefefe"
 			}
+		},
+		{
+			"path": "pages/jifen-shop/index",
+			"style": {
+				"navigationBarTitleText": "积分商城",
+				"navigationBarBackgroundColor": "#fefefe"
+			}
+		},
+		{
+			"path": "pages/gift-sort/sort",
+			"style": {
+				"navigationBarTitleText": "积分商品分类",
+				"navigationBarBackgroundColor": "#fefefe"
+			}
+		},
+		{
+			"path": "pages/gifts-admin/gifts",
+			"style": {
+				"navigationBarTitleText": "上传积分商品",
+				"navigationBarBackgroundColor": "#fefefe"
+			}
 		}
 	],
 	"globalStyle": {

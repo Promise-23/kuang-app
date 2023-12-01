@@ -1,5 +1,11 @@
 "use strict";
 const common_vendor = require("../common/vendor.js");
+const search_data = common_vendor.reactive({
+  S_height: 0,
+  S_top: 0,
+  S_left: 0,
+  Custom_height: 0
+});
 let login_user = common_vendor.reactive({ show: false, response: "fail" });
 let comment_show = common_vendor.reactive({ show: false, num: 1, goods_id: "" });
 let sku_popup = common_vendor.reactive({ show: false, judge: "" });
@@ -18,5 +24,6 @@ exports.modify = modify;
 exports.myCoupons = myCoupons;
 exports.myIntegral = myIntegral;
 exports.new_address = new_address;
+exports.search_data = search_data;
 exports.show = show;
 exports.sku_popup = sku_popup;

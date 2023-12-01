@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "积分商品分类",
+  "navigationBarBackgroundColor": "#fefefe",
+  "usingComponents": {
+    "loading": "../public-view/loading"
+  }
+}

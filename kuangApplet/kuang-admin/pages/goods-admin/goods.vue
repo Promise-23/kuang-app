@@ -91,7 +91,14 @@
 </template>
 
 <script setup>
-	import {watch,reactive,toRefs,onMounted} from 'vue'
+	import {watch,reactive,ref, toRefs,onMounted} from 'vue'
+	import {onReachBottom,onLoad} from '@dcloudio/uni-app'
+	
+	const id = ref()
+	//加载的时候接收传递的参数
+	onLoad((event)=>{
+		id.value = event.id
+	})
 	
 	// 价格和库存
 	const priceinv = reactive({price:'',stock:''})
@@ -155,7 +162,36 @@
 		let DB = await inIt()
 		const res = await DB.database().collection('goods_sort').field({_openid:false}).get()
 		sortdata.sortArray = res.data
+		console.log('编辑商品', id.value)
+		if(id.value){
+			queryEditGood(id.value)
+		}
 	})
+	
+	async function queryEditGood(id){
+		let DB = await inIt()
+		const res = await DB.database().collection('goods').where({_id:id}).get()
+		// 获取商品数据
+		console.log('queryEditGood', res.data[0])
+		const currGood = res.data[0] || {}
+		// 回显赋值
+		const {goods_title, goods_banner, goods_cover, video_url, category, goods_price, stock, sku, goods_details} = currGood
+		cover.goods_title = goods_title
+		cover.sto_image = goods_banner
+		cover.sto_image[0].image = goods_cover
+		video.sto_video = video_url
+		sortdata.sort_value = category
+		priceinv.price = goods_price
+		priceinv.stock = stock
+		detail.sto_detail = goods_details
+		
+		if(sku){
+			// sku的数据
+			const sku_data = await DB.database().collection('sku_data').where({sku_id:id}).get()
+			console.log('当前商品sku', sku_data.data)
+			specs.specs_data = sku_data.data[0].sku ?? []
+		}
+	}
 	const sortdata = reactive({
 		sortArray:[],
 		sort_value:'',
@@ -212,10 +248,13 @@
 	async function database(){
 		wx.showLoading({title: '上传中',mask:true})
 		// 1.上传横幅
+		console.log('上传横幅', cover.sto_image)
 		let res_banner = await new Upload().multi(cover.sto_image,'image')
 		// 2.上传详情图
+		console.log('上传详情图', detail.sto_detail)
 		let res_detail = await new Upload().multi(detail.sto_detail,'image')
 		// 3.短视频，存在短视频再上传
+		console.log('短视频，存在短视频再上传', video.sto_video)
 		let res_video = video.sto_video == '' ? '' : await new Upload().cloud(video.sto_video)
 		let obj = {
 			goods_title:cover.goods_title,
@@ -233,15 +272,29 @@
 		}
 		try{
 			let DB = await inIt()
-			const res = await DB.database().collection('goods').add({data:obj})
-			// 获取商品的_id。上传sku
-			if(specs.specs_data.length > 0){
-				await DB.database().collection('sku_data').add({data:{sku_id:res._id,sku:specs.specs_data}})
+			if(id.value){
+				// 编辑
+				const res = await DB.database().collection('goods').doc(id.value).update({data:obj})
+				// 获取商品的_id。上传sku
+				if(specs.specs_data.length > 0){
+					await DB.database().collection('sku_data').where({sku_id:res._id }).update({data:{sku:specs.specs_data}})
+				}
+				new Feedback('编辑成功','success').toast()
+			}else{
+				// 新增
+				const res = await DB.database().collection('goods').add({data:obj})
+				// 获取商品的_id。上传sku
+				if(specs.specs_data.length > 0){
+					await DB.database().collection('sku_data').add({data:{sku_id:res._id,sku:specs.specs_data}})
+				}
+				// 对选择的分类下的数量++
+				const _ = DB.database().command
+				await DB.database().collection('goods_sort').doc(sortdata.sort_id).update({data:{quantity:_.inc(1)}})
+				new Feedback('上传成功','success').toast()
 			}
-			// 对选择的分类下的数量++
-			const _ = DB.database().command
-			await DB.database().collection('goods_sort').doc(sortdata.sort_id).update({data:{quantity:_.inc(1)}})
-			new Feedback('上传成功','success').toast()
+			wx.navigateBack({
+			  delta: 1
+			})
 		}catch(e){
 			console.log(e)
 			new Feedback('提交失败').toast()

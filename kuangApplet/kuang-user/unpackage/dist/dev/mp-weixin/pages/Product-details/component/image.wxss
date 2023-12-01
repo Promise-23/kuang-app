@@ -3,7 +3,19 @@
 	background-color: #FFFFFF;
 	margin: 20rpx 0;
 }
-.details-img image.data-v-359d0f06{
+.details-img .img-box.data-v-359d0f06{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: calc(100% - 40rpx);
+	height: -webkit-max-content;
+	height: max-content;
+	margin: 0 auto;
+	margin-top: 20rpx;
+	border-radius: 10px;
+	overflow: hidden;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+.img-box image.data-v-359d0f06{
 	width: 100%;
-	display: block;
 }

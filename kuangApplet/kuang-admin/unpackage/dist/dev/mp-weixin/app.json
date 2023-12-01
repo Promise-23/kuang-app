@@ -9,7 +9,10 @@
     "pages/goods-admin/goods",
     "pages/specs/specs",
     "pages/sort-admin/sort",
-    "pages/coupon-manage/coupon"
+    "pages/coupon-manage/coupon",
+    "pages/jifen-shop/index",
+    "pages/gift-sort/sort",
+    "pages/gifts-admin/gifts"
   ],
   "window": {
     "navigationBarTextStyle": "black",

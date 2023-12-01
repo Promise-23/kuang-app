@@ -34,16 +34,17 @@
 	import Loading from '../public-view/loading.vue'
 	import privacy from '../components/privacy-view.vue'
 	import BackTop from '../Common-component/UI/BackTop.vue'
+	import {search_data} from '@/Acc-config/answer.js'
 	const db = wx.cloud.database()
 	
 	
 	// 获取胶囊按钮的坐标数据
-	const search_data = reactive({
-		S_height:0,
-		S_top:0,
-		S_left:0,
-		Custom_height:0
-	})
+	// const search_data = reactive({
+	// 	S_height:0,
+	// 	S_top:0,
+	// 	S_left:0,
+	// 	Custom_height:0
+	// })
 	const {S_height,S_top,S_left,Custom_height} = toRefs(search_data)
 	onMounted(()=>{
 		const but_data = wx.getMenuButtonBoundingClientRect()

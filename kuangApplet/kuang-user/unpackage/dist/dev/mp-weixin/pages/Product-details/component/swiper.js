@@ -1,11 +1,13 @@
 "use strict";
 const common_vendor = require("../../../common/vendor.js");
 const AccConfig_placeOrder = require("../../../Acc-config/place-order.js");
+const AccConfig_answer = require("../../../Acc-config/answer.js");
 const _sfc_main = {
   __name: "swiper",
   props: { goods: Object, seckill: Array },
   setup(__props) {
     const props = __props;
+    const { S_height, S_top, S_left, Custom_height } = common_vendor.toRefs(AccConfig_answer.search_data);
     const ban_length = common_vendor.ref(0);
     const current = common_vendor.ref(1);
     function changeCurrent(e) {
@@ -80,34 +82,35 @@ const _sfc_main = {
     });
     return (_ctx, _cache) => {
       return common_vendor.e({
-        a: common_vendor.f(__props.goods.goods_banner, (item, index, i0) => {
+        a: common_vendor.s("height:" + common_vendor.unref(S_top) + "px;"),
+        b: common_vendor.f(__props.goods.goods_banner, (item, index, i0) => {
           return {
             a: item.image,
             b: index
           };
         }),
-        b: common_vendor.o(changeCurrent),
-        c: common_vendor.t(current.value),
-        d: common_vendor.t(ban_length.value),
-        e: seckill_display.value
+        c: common_vendor.o(changeCurrent),
+        d: common_vendor.t(current.value),
+        e: common_vendor.t(ban_length.value),
+        f: seckill_display.value
       }, seckill_display.value ? common_vendor.e({
-        f: common_vendor.t(__props.goods.sold),
-        g: common_vendor.t(__props.seckill[0].price_spike),
-        h: common_vendor.t(__props.seckill[0].ori_price),
-        i: common_vendor.unref(day) != "00"
+        g: common_vendor.t(__props.goods.sold),
+        h: common_vendor.t(__props.seckill[0].price_spike),
+        i: common_vendor.t(__props.seckill[0].ori_price),
+        j: common_vendor.unref(day) != "00"
       }, common_vendor.unref(day) != "00" ? {
-        j: common_vendor.t(common_vendor.unref(day))
+        k: common_vendor.t(common_vendor.unref(day))
       } : {}, {
-        k: common_vendor.unref(day) != "00"
+        l: common_vendor.unref(day) != "00"
       }, common_vendor.unref(day) != "00" ? {} : {}, {
-        l: common_vendor.t(common_vendor.unref(hour)),
-        m: common_vendor.t(common_vendor.unref(minute)),
-        n: common_vendor.t(common_vendor.unref(second))
+        m: common_vendor.t(common_vendor.unref(hour)),
+        n: common_vendor.t(common_vendor.unref(minute)),
+        o: common_vendor.t(common_vendor.unref(second))
       }) : {
-        o: common_vendor.t(__props.goods.goods_price),
-        p: common_vendor.t(__props.goods.sold)
+        p: common_vendor.t(__props.goods.goods_price),
+        q: common_vendor.t(__props.goods.sold)
       }, {
-        q: common_vendor.t(__props.goods.goods_title)
+        r: common_vendor.t(__props.goods.goods_title)
       });
     };
   }

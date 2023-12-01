@@ -20,6 +20,8 @@
 					<view class="Button-rig">
 						<text class="shelf-true" v-if="item.shelves" @click="shelf(item._id,index)">下架</text>
 						<text class="shelf-false" v-else>已下架</text>
+						<text class="shelf-true" v-if="!item.shelves" @click="rootGoods(item._id)">编辑</text>					
+						<text class="shelf-true" v-if="!item.shelves" @click="delGoods(item._id,index)">删除</text>
 					</view>
 				</view>
 			</view>
@@ -33,7 +35,7 @@
 	<!-- 底部 -->
 	<view class="manage">
 		<text @click="rootSoRt">管理分类</text>
-		<text @click="rootGoods">添加商品</text>
+		<text @click="rootGoods()">添加商品</text>
 	</view>
 </template>
 
@@ -102,7 +104,6 @@
 		
 		
 	}
-	
 	// 上拉加载
 	let loading = ref(false)
 	let page_n = ref(0)
@@ -123,10 +124,27 @@
 		})
 	}
 	// 新增商品
-	function rootGoods(){
+	function rootGoods(id){
 		wx.navigateTo({
-			url:'/pages/goods-admin/goods'
+			url:'/pages/goods-admin/goods?id=' + id
 		})
+	}
+	
+	// 删除商品
+	async function delGoods(id,index){
+		try{
+			let DB = await inIt()
+			await DB.database().collection('goods').doc(id).remove()
+			data.goods.splice(index,1)
+			// 删除关联的sku
+			await DB.database().collection('sku_data').where({sku_id:id }).remove()
+			// 下架之后对该分类的数量自减
+			const _ = DB.database().command
+			await DB.database().collection('goods_sort').doc(data.sort_id).update({data:{quantity: _.inc(-1)}})
+			new Feedback('删除成功','success').toast()
+		}catch(e){
+			new Feedback('删除失败').toast()
+		}
 	}
 	
 	
@@ -191,8 +209,8 @@
 	display: flex;
 	justify-content: flex-end;
 }
-.Com-price view text:nth-child(2){
-	margin-left: 50rpx;
+.Com-price view text{
+	margin-left: 10rpx;
 }
 .Com-title{
 	font-weight: bold;

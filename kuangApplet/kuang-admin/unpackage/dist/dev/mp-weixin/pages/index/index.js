@@ -18,28 +18,39 @@ const _sfc_main = {
       // 九宫格的数据
       plate: [
         {
+          id: "hengfu",
           image: "/static/detail/hengfu.svg",
           name: "横幅管理"
         },
         {
+          id: "miaosha",
           image: "/static/detail/miaosha.svg",
           name: "秒杀管理"
         },
         {
+          id: "shangpin",
           image: "/static/detail/shangpin.svg",
           name: "商品管理"
         },
         {
+          id: "dingdan",
           image: "/static/detail/dingdan.svg",
           name: "订单管理"
         },
         {
+          id: "fenlei",
           image: "/static/detail/fenlei.svg",
           name: "分类管理"
         },
         {
+          id: "coupon",
           image: "/static/detail/coupon.svg",
           name: "卡券管理"
+        },
+        {
+          id: "jifen",
+          image: "/static/detail/jifen-shop.svg",
+          name: "积分商城"
         }
       ]
     });
@@ -63,36 +74,41 @@ const _sfc_main = {
         search_data.profit_top = res2[0].height + search_data.pro_hei + 10;
       });
     }
-    function jump(index) {
-      switch (index) {
-        case 0:
+    function jump(id) {
+      switch (id) {
+        case "hengfu":
           common_vendor.wx$1.navigateTo({
             url: "/pages/banner-amdin/banner"
           });
           break;
-        case 1:
+        case "miaosha":
           common_vendor.wx$1.navigateTo({
             url: "/pages/seckill-admin/seckill"
           });
           break;
-        case 2:
+        case "shangpin":
           common_vendor.wx$1.switchTab({
             url: "/pages/commodity/commodity"
           });
           break;
-        case 3:
+        case "dingdan":
           common_vendor.wx$1.switchTab({
             url: "/pages/order/order"
           });
           break;
-        case 4:
+        case "fenlei":
           common_vendor.wx$1.navigateTo({
             url: "/pages/sort-admin/sort"
           });
           break;
-        case 5:
+        case "coupon":
           common_vendor.wx$1.navigateTo({
             url: "/pages/coupon-manage/coupon"
+          });
+          break;
+        case "jifen":
+          common_vendor.wx$1.navigateTo({
+            url: "/pages/jifen-shop/index"
           });
       }
     }
@@ -135,7 +151,7 @@ const _sfc_main = {
             a: item.image,
             b: common_vendor.t(item.name),
             c: index,
-            d: common_vendor.o(($event) => jump(index), index)
+            d: common_vendor.o(($event) => jump(item.id), index)
           };
         }),
         l: common_vendor.s("top:" + common_vendor.unref(profit_top) + "px;")
@@ -143,5 +159,5 @@ const _sfc_main = {
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/hujie/Applet-new/kuang-app/kuangApplet/kuang-admin/pages/index/index.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "E:/Project/kuang-app/kuangApplet/kuang-admin/pages/index/index.vue"]]);
 wx.createPage(MiniProgramPage);

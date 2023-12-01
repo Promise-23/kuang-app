@@ -5,8 +5,19 @@ const _sfc_main = {
   setup(__props) {
     const db = common_vendor.wx$1.cloud.database();
     common_vendor.onShow(() => {
-      getCart();
+      staTus();
     });
+    const user = common_vendor.reactive({ user_infor: {}, exist: false });
+    const { user_infor, exist } = common_vendor.toRefs(user);
+    function staTus() {
+      const user_data = common_vendor.wx$1.getStorageSync("user_infor");
+      if (user_data) {
+        user.exist = true;
+        getCart();
+      } else {
+        user.exist = false;
+      }
+    }
     const data = common_vendor.reactive({ cart_data: [] });
     const { cart_data } = common_vendor.toRefs(data);
     async function getCart() {
@@ -73,7 +84,9 @@ const _sfc_main = {
       return common_vendor.e({
         a: common_vendor.t(manage.value),
         b: common_vendor.o(manAge),
-        c: common_vendor.f(common_vendor.unref(cart_data), (item, index, i0) => {
+        c: common_vendor.unref(exist)
+      }, common_vendor.unref(exist) ? {
+        d: common_vendor.f(common_vendor.unref(cart_data), (item, index, i0) => {
           return common_vendor.e({
             a: item.select
           }, item.select ? {
@@ -99,21 +112,22 @@ const _sfc_main = {
             l: common_vendor.o(($event) => plUs(index, item._id), index),
             m: index
           });
-        }),
-        d: common_vendor.unref(cart_data).length == 0
-      }, common_vendor.unref(cart_data).length == 0 ? {} : {}, {
-        e: common_vendor.unref(totalPrice).sele
+        })
+      } : {}, {
+        e: !common_vendor.unref(exist) || common_vendor.unref(cart_data).length == 0
+      }, !common_vendor.unref(exist) || common_vendor.unref(cart_data).length == 0 ? {} : {}, {
+        f: common_vendor.unref(totalPrice).sele
       }, common_vendor.unref(totalPrice).sele ? {
-        f: common_vendor.o(cancelSelect),
-        g: common_vendor.o(cancelSelect)
+        g: common_vendor.o(cancelSelect),
+        h: common_vendor.o(cancelSelect)
       } : {
-        h: common_vendor.o(selectAll),
-        i: common_vendor.o(selectAll)
+        i: common_vendor.o(selectAll),
+        j: common_vendor.o(selectAll)
       }, {
-        j: common_vendor.t(common_vendor.unref(totalPrice).price),
-        k: common_vendor.t(manage.value == "管理" ? "结算" : "删除"),
-        l: common_vendor.n(common_vendor.unref(totalPrice).price <= 0 ? "prevent_btn" : ""),
-        m: common_vendor.o(($event) => getInfo(manage.value))
+        k: common_vendor.t(common_vendor.unref(totalPrice).price),
+        l: common_vendor.t(manage.value == "管理" ? "结算" : "删除"),
+        m: common_vendor.n(common_vendor.unref(totalPrice).price <= 0 ? "prevent_btn" : ""),
+        n: common_vendor.o(($event) => getInfo(manage.value))
       });
     };
   }

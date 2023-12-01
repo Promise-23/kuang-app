@@ -29,7 +29,7 @@
 	</view>
 	<!-- 九宫格 -->
 	<view class="Gong-ge" :style=" 'top:' + profit_top + 'px;' ">
-		<view v-for="(item,index) in plate" :key="index" @click="jump(index)">
+		<view v-for="(item,index) in plate" :key="index" @click="jump(item.id)">
 			<image :src="item.image" mode="aspectFit"></image>
 			<text>{{item.name}}</text>
 		</view>
@@ -49,28 +49,39 @@
 		// 九宫格的数据
 		plate:[
 			{
+				id: 'hengfu',
 				image:'/static/detail/hengfu.svg',
 				name:'横幅管理'
 			},
 			{
+				id: 'miaosha',
 				image:'/static/detail/miaosha.svg',
 				name:'秒杀管理'
 			},
 			{
+				id: 'shangpin',
 				image:'/static/detail/shangpin.svg',
 				name:'商品管理'
 			},
 			{
+				id: 'dingdan',
 				image:'/static/detail/dingdan.svg',
 				name:'订单管理'
 			},
 			{
+				id: 'fenlei',
 				image:'/static/detail/fenlei.svg',
 				name:'分类管理'
 			},
 			{
+				id: 'coupon',
 				image:'/static/detail/coupon.svg',
 				name:'卡券管理'
+			},
+			{
+				id: 'jifen',
+				image:'/static/detail/jifen-shop.svg',
+				name:'积分商城'
 			}
 		]
 	})
@@ -101,36 +112,41 @@
 		})
 	}
 	// 页面跳转
-	function jump(index){
-		switch(index){
-			case 0:
+	function jump(id){
+		switch(id){
+			case 'hengfu':
 			wx.navigateTo({
 				url:'/pages/banner-amdin/banner'
 			})
 			break;
-			case 1:
+			case 'miaosha':
 			wx.navigateTo({
 				url:'/pages/seckill-admin/seckill'
 			})
 			break;
-			case 2:
+			case 'shangpin':
 			wx.switchTab({
 				url:'/pages/commodity/commodity'
 			})
 			break;
-			case 3:
+			case 'dingdan':
 			wx.switchTab({
 				url:'/pages/order/order'
 			})
 			break;
-			case 4:
+			case 'fenlei':
 			wx.navigateTo({
 				url:'/pages/sort-admin/sort'
 			})
 			break;
-			case 5:
+			case 'coupon':
 			wx.navigateTo({
 				url:'/pages/coupon-manage/coupon'
+			})
+			break;
+			case 'jifen':
+			wx.navigateTo({
+				url:'/pages/jifen-shop/index'
 			})
 		}
 	}
