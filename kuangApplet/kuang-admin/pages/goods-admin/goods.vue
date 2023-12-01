@@ -248,10 +248,8 @@
 	async function database(){
 		wx.showLoading({title: '上传中',mask:true})
 		// 1.上传横幅
-		console.log('上传横幅', cover.sto_image)
 		let res_banner = await new Upload().multi(cover.sto_image,'image')
 		// 2.上传详情图
-		console.log('上传详情图', detail.sto_detail)
 		let res_detail = await new Upload().multi(detail.sto_detail,'image')
 		// 3.短视频，存在短视频再上传
 		console.log('短视频，存在短视频再上传', video.sto_video)

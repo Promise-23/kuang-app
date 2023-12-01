@@ -6,6 +6,10 @@ const AccConfig_init = require("../../Acc-config/init.js");
 const _sfc_main = {
   __name: "gifts",
   setup(__props) {
+    const id = common_vendor.ref();
+    common_vendor.onLoad((event) => {
+      id.value = event.id;
+    });
     const priceinv = common_vendor.reactive({ price: "", stock: "" });
     const { price, stock } = common_vendor.toRefs(priceinv);
     function juMp() {
@@ -52,7 +56,31 @@ const _sfc_main = {
       let DB = await AccConfig_init.inIt();
       const res = await DB.database().collection("gifts_sort").field({ _openid: false }).get();
       sortdata.sortArray = res.data;
+      console.log("编辑积分商品", id.value);
+      if (id.value) {
+        queryEditGood(id.value);
+      }
     });
+    async function queryEditGood(id2) {
+      let DB = await AccConfig_init.inIt();
+      const res = await DB.database().collection("gifts").where({ _id: id2 }).get();
+      console.log("queryEditGood", res.data[0]);
+      const currGood = res.data[0] || {};
+      const { goods_title, goods_banner, goods_cover, video_url, category, goods_price, stock: stock2, sku, goods_details } = currGood;
+      cover.goods_title = goods_title;
+      cover.sto_image = goods_banner;
+      cover.sto_image[0].image = goods_cover;
+      video.sto_video = video_url;
+      sortdata.sort_value = category;
+      priceinv.price = goods_price;
+      priceinv.stock = stock2;
+      detail.sto_detail = goods_details;
+      if (sku) {
+        const sku_data = await DB.database().collection("sku_data").where({ sku_id: id2 }).get();
+        console.log("当前商品sku", sku_data.data);
+        specs.specs_data = sku_data.data[0].sku ?? [];
+      }
+    }
     const sortdata = common_vendor.reactive({
       sortArray: [],
       sort_value: "",
@@ -109,6 +137,7 @@ const _sfc_main = {
       common_vendor.wx$1.showLoading({ title: "上传中", mask: true });
       let res_banner = await new AccConfig_media.Upload().multi(cover.sto_image, "image");
       let res_detail = await new AccConfig_media.Upload().multi(detail.sto_detail, "image");
+      console.log("短视频，存在短视频再上传", video.sto_video);
       let res_video = video.sto_video == "" ? "" : await new AccConfig_media.Upload().cloud(video.sto_video);
       let obj = {
         goods_title: cover.goods_title,
@@ -126,13 +155,24 @@ const _sfc_main = {
       };
       try {
         let DB = await AccConfig_init.inIt();
-        const res = await DB.database().collection("gifts").add({ data: obj });
-        if (specs.specs_data.length > 0) {
-          await DB.database().collection("sku_data").add({ data: { sku_id: res._id, sku: specs.specs_data } });
+        if (id.value) {
+          const res = await DB.database().collection("gifts").doc(id.value).update({ data: obj });
+          if (specs.specs_data.length > 0) {
+            await DB.database().collection("sku_data").where({ sku_id: res._id }).update({ data: { sku: specs.specs_data } });
+          }
+          new AccConfig_media.Feedback("编辑成功", "success").toast();
+        } else {
+          const res = await DB.database().collection("gifts").add({ data: obj });
+          if (specs.specs_data.length > 0) {
+            await DB.database().collection("sku_data").add({ data: { sku_id: res._id, sku: specs.specs_data } });
+          }
+          const _ = DB.database().command;
+          await DB.database().collection("gifts_sort").doc(sortdata.sort_id).update({ data: { quantity: _.inc(1) } });
+          new AccConfig_media.Feedback("上传成功", "success").toast();
         }
-        const _ = DB.database().command;
-        await DB.database().collection("gifts_sort").doc(sortdata.sort_id).update({ data: { quantity: _.inc(1) } });
-        new AccConfig_media.Feedback("上传成功", "success").toast();
+        common_vendor.wx$1.navigateBack({
+          delta: 1
+        });
       } catch (e) {
         console.log(e);
         new AccConfig_media.Feedback("提交失败").toast();

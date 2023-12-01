@@ -49,8 +49,8 @@
 	display: flex;
 	justify-content: flex-end;
 }
-.Com-price view text.data-v-b20c2d25:nth-child(2){
-	margin-left: 50rpx;
+.Com-price view text.data-v-b20c2d25{
+	margin-left: 10rpx;
 }
 .Com-title.data-v-b20c2d25{
 	font-weight: bold;
