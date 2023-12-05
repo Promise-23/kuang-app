@@ -16,7 +16,10 @@
 				<view class="Com-price">
 					<text class="Com-title over-text">{{item.goods_title}}</text>
 					<text class="stock-view">库存 {{item.stock}}</text>
-					<text class="Real-price">¥{{item.goods_price}}</text>
+					<view class="Real-price">
+						<image src="/static/img/integral.png" mode="aspectFill"></image>
+						<text>{{item.goods_price}}</text>
+					</view>
 					<view class="Button-rig">
 						<text class="shelf-true" v-if="item.shelves" @click="shelf(item._id,index)">下架</text>
 						<text class="shelf-false" v-else>已下架</text>
@@ -223,9 +226,18 @@
 	font-size: 26rpx;
 }
 .Real-price{
+	display: flex;
+	align-items: center;
+	justify-content: flex-start !important;
 	color: #b1865b;
 	font-weight: bold;
 }
+
+.Real-price image{
+	width: 40rpx;
+	height: 40rpx;
+}
+
 .Button-rig{
 	padding-top: 20rpx;
 }

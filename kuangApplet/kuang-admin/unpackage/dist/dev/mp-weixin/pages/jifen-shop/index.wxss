@@ -61,8 +61,15 @@
 	font-size: 26rpx;
 }
 .Real-price.data-v-b20c2d25{
+	display: flex;
+	align-items: center;
+	justify-content: flex-start !important;
 	color: #b1865b;
 	font-weight: bold;
+}
+.Real-price image.data-v-b20c2d25{
+	width: 40rpx;
+	height: 40rpx;
 }
 .Button-rig.data-v-b20c2d25{
 	padding-top: 20rpx;

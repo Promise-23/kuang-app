@@ -91,13 +91,17 @@
 </template>
 
 <script setup>
-	import {watch,reactive,ref, toRefs,onMounted} from 'vue'
+	import {watch,reactive,ref, toRefs,onMounted, computed} from 'vue'
 	import {onReachBottom,onLoad} from '@dcloudio/uni-app'
 	
 	const id = ref()
 	//加载的时候接收传递的参数
 	onLoad((event)=>{
 		id.value = event.id
+	})
+	
+	const isEdit = computed(() => {
+		return id.value && id.value !== 'undefined'
 	})
 	
 	// 价格和库存
@@ -162,8 +166,7 @@
 		let DB = await inIt()
 		const res = await DB.database().collection('goods_sort').field({_openid:false}).get()
 		sortdata.sortArray = res.data
-		console.log('编辑商品', id.value)
-		if(id.value){
+		if(isEdit.value){
 			queryEditGood(id.value)
 		}
 	})
@@ -270,7 +273,7 @@
 		}
 		try{
 			let DB = await inIt()
-			if(id.value){
+			if(isEdit.value){
 				// 编辑
 				const res = await DB.database().collection('goods').doc(id.value).update({data:obj})
 				// 获取商品的_id。上传sku

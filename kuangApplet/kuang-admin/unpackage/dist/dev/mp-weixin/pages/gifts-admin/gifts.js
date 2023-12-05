@@ -15,9 +15,12 @@ const _sfc_main = {
     function juMp() {
       let arr = JSON.stringify(specs.specs_data);
       common_vendor.wx$1.navigateTo({
-        url: "/pages/specs/specs?sku=" + arr
+        url: "/pages/specs/specs?sku=" + arr + "&type=gift"
       });
     }
+    const isEdit = common_vendor.computed(() => {
+      return id.value && id.value !== "undefined";
+    });
     const specs = common_vendor.reactive({ specs_data: [] });
     common_vendor.watch(AccConfig_answer.sku_val, (newVal, oldVal) => {
       specs.specs_data = newVal;
@@ -56,8 +59,7 @@ const _sfc_main = {
       let DB = await AccConfig_init.inIt();
       const res = await DB.database().collection("gifts_sort").field({ _openid: false }).get();
       sortdata.sortArray = res.data;
-      console.log("编辑积分商品", id.value);
-      if (id.value) {
+      if (isEdit.value) {
         queryEditGood(id.value);
       }
     });
@@ -155,7 +157,7 @@ const _sfc_main = {
       };
       try {
         let DB = await AccConfig_init.inIt();
-        if (id.value) {
+        if (isEdit.value) {
           const res = await DB.database().collection("gifts").doc(id.value).update({ data: obj });
           if (specs.specs_data.length > 0) {
             await DB.database().collection("sku_data").where({ sku_id: res._id }).update({ data: { sku: specs.specs_data } });
@@ -179,11 +181,12 @@ const _sfc_main = {
       }
     }
     return (_ctx, _cache) => {
+      var _a, _b;
       return common_vendor.e({
         a: cover.goods_title,
         b: common_vendor.o(($event) => cover.goods_title = $event.detail.value),
-        c: cover.sto_image.length > 0
-      }, cover.sto_image.length > 0 ? {
+        c: ((_a = cover == null ? void 0 : cover.sto_image) == null ? void 0 : _a.length) > 0
+      }, ((_b = cover == null ? void 0 : cover.sto_image) == null ? void 0 : _b.length) > 0 ? {
         d: common_vendor.f(cover.sto_image, (item, index, i0) => {
           return {
             a: item.image,

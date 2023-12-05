@@ -26,7 +26,7 @@
 		<view class="edit entry">
 			<text>价格</text>
 			<input type="number" v-model="item.price" placeholder="请输入价格" placeholder-class="I-style" cursor-spacing="50">
-			<text>元</text>
+			<text>{{ type == 'gift' ? '积分' : '元'}}</text>
 		</view>
 		<view class="edit entry">
 			<text>库存</text>
@@ -233,7 +233,10 @@
 	}
 	
 	import {onLoad} from '@dcloudio/uni-app'
+	const type = ref()
 	onLoad((event)=>{
+		type.value = event.type
+		
 		let Arr = JSON.parse(event.sku)
 		if(Arr.length <= 0)return false
 		// 把数据传给弹窗里的属性

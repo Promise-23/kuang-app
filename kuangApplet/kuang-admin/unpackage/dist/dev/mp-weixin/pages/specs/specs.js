@@ -139,7 +139,9 @@ const _sfc_main = {
     function cancel() {
       common_vendor.wx$1.navigateBack({ delta: 1 });
     }
+    const type = common_vendor.ref();
     common_vendor.onLoad((event) => {
+      type.value = event.type;
       let Arr = JSON.parse(event.sku);
       if (Arr.length <= 0)
         return false;
@@ -205,10 +207,11 @@ const _sfc_main = {
           });
         }),
         e: sku_data.sku.length > 1,
-        f: common_vendor.o(newSpecs),
-        g: common_vendor.o(($event) => show.value = false),
-        h: common_vendor.o(subMit),
-        i: common_vendor.f(Sto_att.attobj, (item, index, i0) => {
+        f: common_vendor.t(type.value == "gift" ? "积分" : "元"),
+        g: common_vendor.o(newSpecs),
+        h: common_vendor.o(($event) => show.value = false),
+        i: common_vendor.o(subMit),
+        j: common_vendor.f(Sto_att.attobj, (item, index, i0) => {
           return {
             a: common_vendor.t(item.title),
             b: item.att,
@@ -216,9 +219,9 @@ const _sfc_main = {
             d: index
           };
         }),
-        j: show.value,
-        k: common_vendor.o(cancel),
-        l: common_vendor.o(preserve)
+        k: show.value,
+        l: common_vendor.o(cancel),
+        m: common_vendor.o(preserve)
       };
     };
   }

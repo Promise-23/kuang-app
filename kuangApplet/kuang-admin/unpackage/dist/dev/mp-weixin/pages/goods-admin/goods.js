@@ -10,6 +10,9 @@ const _sfc_main = {
     common_vendor.onLoad((event) => {
       id.value = event.id;
     });
+    const isEdit = common_vendor.computed(() => {
+      return id.value && id.value !== "undefined";
+    });
     const priceinv = common_vendor.reactive({ price: "", stock: "" });
     const { price, stock } = common_vendor.toRefs(priceinv);
     function juMp() {
@@ -56,8 +59,7 @@ const _sfc_main = {
       let DB = await AccConfig_init.inIt();
       const res = await DB.database().collection("goods_sort").field({ _openid: false }).get();
       sortdata.sortArray = res.data;
-      console.log("编辑商品", id.value);
-      if (id.value) {
+      if (isEdit.value) {
         queryEditGood(id.value);
       }
     });
@@ -155,7 +157,7 @@ const _sfc_main = {
       };
       try {
         let DB = await AccConfig_init.inIt();
-        if (id.value) {
+        if (isEdit.value) {
           const res = await DB.database().collection("goods").doc(id.value).update({ data: obj });
           if (specs.specs_data.length > 0) {
             await DB.database().collection("sku_data").where({ sku_id: res._id }).update({ data: { sku: specs.specs_data } });

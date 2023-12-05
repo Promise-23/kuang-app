@@ -3,7 +3,7 @@
 	<view class="goods-top">
 		<view><input type="text" v-model="cover.goods_title" placeholder="请输入商品标题" placeholder-class="pl-text"/></view>
 		<view class="goods-image">
-			<view class="upload-Image" v-if="cover.sto_image.length > 0" v-for="(item,index) in cover.sto_image" :key="index">
+			<view class="upload-Image" v-if="cover?.sto_image?.length > 0" v-for="(item,index) in cover.sto_image" :key="index">
 				<image :src="item.image" mode="aspectFill" @click="preView(item.image)"></image>
 				<image src="/static/detail/shanchu-goods.svg" mode="widthFix" @click="deleteImg(index)"></image>
 			</view>
@@ -36,7 +36,7 @@
 		<view>
 			<text>价格</text>
 			<input type="number" v-model="price" :disabled="specs.specs_data.length > 0 ? true : false" placeholder="请输入价格" placeholder-class="I-style" cursor-spacing="50">
-			<text>元</text>
+			<text>积分</text>
 		</view>
 		<view>
 			<text>库存</text>
@@ -91,7 +91,7 @@
 </template>
 
 <script setup>
-	import {watch,reactive,ref, toRefs,onMounted} from 'vue'
+	import {watch,reactive,ref, toRefs,onMounted, computed} from 'vue'
 	import {onReachBottom,onLoad} from '@dcloudio/uni-app'
 	
 	const id = ref()
@@ -108,10 +108,13 @@
 	function juMp(){
 		let arr = JSON.stringify(specs.specs_data)
 		wx.navigateTo({
-			url:'/pages/specs/specs?sku=' + arr
+			url:'/pages/specs/specs?sku=' + arr + '&type=gift'
 		})
 	}
 	
+	const isEdit = computed(() => {
+		return id.value && id.value !== 'undefined'
+	})
 	// 监听创建规格后返回上一页面的值
 	import {sku_val} from '@/Acc-config/answer.js'
 	const specs = reactive({specs_data:[]})
@@ -162,8 +165,7 @@
 		let DB = await inIt()
 		const res = await DB.database().collection('gifts_sort').field({_openid:false}).get()
 		sortdata.sortArray = res.data
-		console.log('编辑积分商品', id.value)
-		if(id.value){
+		if(isEdit.value){
 			queryEditGood(id.value)
 		}
 	})
@@ -270,7 +272,7 @@
 		}
 		try{
 			let DB = await inIt()
-			if(id.value){
+			if(isEdit.value){
 				// 编辑
 				const res = await DB.database().collection('gifts').doc(id.value).update({data:obj})
 				// 获取商品的_id。上传sku
