@@ -37,11 +37,11 @@ const _sfc_main = {
     function modIfy(item, id) {
       AccConfig_answer.modify.data = item;
       AccConfig_answer.modify.id = id;
-      AccConfig_answer.show.value = true;
+      AccConfig_answer.address_show.show = true;
       AccConfig_answer.deci.value = "001";
     }
     function newAddress() {
-      AccConfig_answer.show.value = true;
+      AccConfig_answer.address_show.show = true;
       AccConfig_answer.deci.value = "002";
     }
     async function setUp(id, index) {

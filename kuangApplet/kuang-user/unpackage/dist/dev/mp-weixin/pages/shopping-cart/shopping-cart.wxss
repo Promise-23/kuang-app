@@ -83,11 +83,11 @@ page{background-color: #fafafa;}
 }
 .SH-total{
 	flex: 1;
-	color: #dd4055;
+	color: #ff4b70;
 	font-weight: bold;
 }
 .SH-settle{
-	background-color: #ea445a;
+	background-color: #FF5500;
 	padding: 20rpx 90rpx;
 	border-radius: 10rpx;
 	color: #FFFFFF;

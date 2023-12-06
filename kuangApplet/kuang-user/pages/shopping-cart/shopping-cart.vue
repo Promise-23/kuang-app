@@ -2,7 +2,7 @@
 	<view class="Manage" @click="manAge">{{manage}}</view>
 	<view v-if="exist" class="SH-view" v-for="(item,index) in cart_data" :key="index">
 		<view class="SH-icon">
-			<icon type="success" color="#ea445a" v-if="item.select" @click="seLect(index,item.select)"></icon>
+			<icon type="success" color="#FF5500" v-if="item.select" @click="seLect(index,item.select)"></icon>
 			<icon type="circle" v-else @click="seLect(index,item.select)"></icon>
 		</view>
 		<view class="SH-img">
@@ -31,12 +31,12 @@
 	<view class="SH-bottom">
 		<!-- 取消全选 -->
 		<block v-if="totalPrice.sele">
-			<icon type="success" color="#ea445a" @click="cancelSelect"></icon>
+			<icon type="success" color="#FF5500" @click="cancelSelect"></icon>
 			<text class="space" @click="cancelSelect">全选</text>
 		</block>
 		<!-- 全选 -->
 		<block v-else>
-			<icon type="circle" color="#ea445a" @click="selectAll"></icon>
+			<icon type="circle" color="#FF5500" @click="selectAll"></icon>
 			<text class="space" @click="selectAll">全选</text>
 		</block>
 		<text class="cut-apart"></text>
@@ -233,11 +233,11 @@ page{background-color: #fafafa;}
 }
 .SH-total{
 	flex: 1;
-	color: #dd4055;
+	color: #ff4b70;
 	font-weight: bold;
 }
 .SH-settle{
-	background-color: #ea445a;
+	background-color: #FF5500;
 	padding: 20rpx 90rpx;
 	border-radius: 10rpx;
 	color: #FFFFFF;

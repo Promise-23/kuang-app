@@ -67,12 +67,12 @@
 		const res_sort = await DB.database().collection('goods_sort').where({quantity:_.gt(0)}).field({sort_name:true}).get()
 		console.log(res_sort)
 		// 请求商品数据
-		const res_goods = await DB.database().collection('goods').where({category:res_sort.data[0].sort_name}).limit(10).field(field_obj).get()
+		const res_goods = await DB.database().collection('goods').where({category:res_sort.data[0]?.sort_name}).limit(10).field(field_obj).get()
 		console.log(res_goods)
 		data.sort = res_sort.data
 		data.goods = res_goods.data
-		data.sort_name = res_sort.data[0].sort_name
-		data.sort_id = res_sort.data[0]._id
+		data.sort_name = res_sort.data[0]?.sort_name
+		data.sort_id = res_sort.data[0]?._id
 		data.num = 0
 		page_n.value = 0
 	}

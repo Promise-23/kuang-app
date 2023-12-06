@@ -56,19 +56,19 @@
 	display: flex;
 	align-items: center;
 }
-.goCenter.data-v-c24c50e2{
+.go-center.data-v-c24c50e2{
 	box-sizing: border-box;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	font-size: 10px;
-	background-color: #e05e4d;
+	background-color: #FF5500;
 	padding: 6rpx 8rpx 6rpx 10rpx;
 	border-radius: 15rpx;
 	color: #FFFFFF;
 	margin-left: 20rpx;
 }
-.goCenter image.data-v-c24c50e2{
+.go-center image.data-v-c24c50e2{
 	padding: 0 !important;
 	height: 30rpx !important;
 	width: 30rpx !important;
@@ -94,7 +94,7 @@
 	bottom: -20rpx;
 }
 .tab-view .active.data-v-c24c50e2{
-	background-color: #e05e4d;
+	background-color: rgba(255, 85,0, 1);
 }
 .coupons.data-v-c24c50e2{
 	height: 60vh;
@@ -132,7 +132,7 @@
 .coupon-info .type.data-v-c24c50e2{
 	width: -webkit-max-content;
 	width: max-content;
-	background-color: #e05e4d;
+	background-color: #FF5500;
 	font-size: 10px;
 	padding: 6rpx 12rpx;
 	border-radius: 20rpx;
@@ -166,7 +166,7 @@
 	font-size: 10px;
 }
 .coupon-info .remark .get.data-v-c24c50e2{
-	background-color: #e05e4d;
+	background-color: #FF5500;
 	font-size: 10px;
 	padding: 6rpx 20rpx;
 	border-radius: 20rpx;

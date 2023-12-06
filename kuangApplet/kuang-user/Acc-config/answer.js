@@ -19,7 +19,8 @@ let comment_show = reactive({show:false,num:1,goods_id:''})
 let sku_popup = reactive({show:false,judge:''})//judge判断是点击加购还是立即购买
 
 // 收货地址页面，父组件调用子组件弹窗
-let show = ref(false)
+// let show = ref(false)
+let address_show = reactive({show:false})
 
 // 收货地址页面，父组件用户修改地址传值到子组件
 let modify = reactive({data:[],id:''})
@@ -40,4 +41,4 @@ let myCoupons = reactive({data: [], hasCouponId: []})
 let myIntegral = reactive({data: [], count: 0})
 
 
-export {search_data, login_user,comment_show,sku_popup,show,modify,deci,new_address,eav_index, myCoupons, myIntegral}
+export {search_data, login_user,comment_show,sku_popup,address_show,modify,deci,new_address,eav_index, myCoupons, myIntegral}

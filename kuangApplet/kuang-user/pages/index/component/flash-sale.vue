@@ -1,5 +1,5 @@
 <template>
-	<view class="flash-view">
+	<view class="flash-view" v-show="seckill.length > 0">
 		<view class="count-down">限时优惠</view>
 		<view class="flex-view">
 			<view class="commodity" v-for="(item,index) in seckill" :key="index" @click="juMp(item.goods_id,item.video_url)">

@@ -7,6 +7,10 @@ const _sfc_main = {
   emits: ["upLoad"],
   setup(__props, { emit: emits }) {
     const db = common_vendor.wx$1.cloud.database();
+    const customStyle = common_vendor.ref("border-radius: 10px 10px 0 0");
+    function clickoverlay() {
+      AccConfig_answer.address_show.show = false;
+    }
     const data = common_vendor.reactive({
       result: {
         name: "",
@@ -54,7 +58,7 @@ const _sfc_main = {
         } else {
           await db.collection("re_address").doc(_id2).update({ data: data.result });
         }
-        AccConfig_answer.show.value = false;
+        show.value = false;
         emits("upLoad");
         emPty();
       } catch (e) {
@@ -77,7 +81,7 @@ const _sfc_main = {
     });
     return (_ctx, _cache) => {
       return {
-        a: common_vendor.o(($event) => AccConfig_answer.show.value = false),
+        a: common_vendor.o(($event) => common_vendor.unref(AccConfig_answer.address_show).show = false),
         b: common_vendor.unref(result).name,
         c: common_vendor.o(($event) => common_vendor.unref(result).name = $event.detail.value),
         d: common_vendor.unref(result).mobile,
@@ -88,7 +92,9 @@ const _sfc_main = {
         i: common_vendor.o(($event) => common_vendor.unref(result).address = $event.detail.value),
         j: common_vendor.t(common_vendor.unref(_id) == "" ? "保存" : "修改"),
         k: common_vendor.o(($event) => subMit(common_vendor.unref(_id))),
-        l: common_vendor.unref(AccConfig_answer.show)
+        l: customStyle.value,
+        m: common_vendor.unref(AccConfig_answer.address_show).show,
+        n: common_vendor.o(clickoverlay)
       };
     };
   }

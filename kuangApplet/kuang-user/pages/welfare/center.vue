@@ -86,7 +86,7 @@
 .content .tag{
 	padding: 3rpx 10rpx;
 	background-color: pink;
-	color: #d81e06;
+	color: #FF5500;
 	font-size: 10px;
 	border-radius: 14rpx;
 	margin-right: 20rpx;

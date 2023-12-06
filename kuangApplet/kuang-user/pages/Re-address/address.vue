@@ -28,14 +28,14 @@
 	<!-- 没有数据的提示 -->
 	<view class="Tips" v-if="address.length == 0">你还没有收货地址</view>
 	<view style="height: 300rpx;"></view>
-	<view class="New-address" @click="newAddress">+ 新建地址</view>
+	<view class="New-address common-button" @click="newAddress">+ 新建地址</view>
 	<!-- 弹窗 -->
 	<Address @upLoad="upLoad"></Address>
 </template>
 
 <script setup>
 	import Address from './component/new-address.vue'
-	import {show,new_address} from '@/Acc-config/answer.js'
+	import {address_show,new_address} from '@/Acc-config/answer.js'
 	import {onMounted,reactive,toRefs} from 'vue'
 	import {Plublic} from '@/Acc-config/public.js'
 	const db = wx.cloud.database()
@@ -72,12 +72,12 @@
 	function modIfy(item,id){
 		modify.data = item
 		modify.id = id
-		show.value = true
+		address_show.show = true
 		deci.value = '001'//'001'是修改
 	}
 	// 调用弹窗新建地址
 	function newAddress(){
-		show.value = true
+		address_show.show = true
 		deci.value = '002'
 	}
 	

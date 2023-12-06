@@ -9,7 +9,7 @@
 		</view>
 		<!-- 右边 -->
 		<view class="sort-right">
-			<view class="Title" v-if="sort_list.length > 0">{{sort_list[select].sort_name}}</view>
+			<view class="Title" v-if="sort_list.length > 0">{{sort_list[select]?.sort_name}}</view>
 			<view class="Commodity" v-for="(item,index) in sotr_goods" :key="index" @click="juMp(item._id)">
 				<view class="Com-image">
 					<image :src="item.goods_cover" mode="aspectFill"></image>
@@ -42,7 +42,7 @@
 	let OBJ = {goods_cover:true,goods_price:true,goods_title:true}
 	async function getSort(){
 		const res_sort = await db.collection('goods_sort').where({quantity:_.gt(0)}).get()
-		const res_goods= await db.collection('goods').where({category:res_sort.data[0].sort_name}).field(OBJ).limit(10).get()
+		const res_goods= await db.collection('goods').where({category:res_sort.data[0]?.sort_name}).field(OBJ).limit(10).get()
 		data.sort_list = res_sort.data
 		data.sotr_goods = res_goods.data
 	}
@@ -64,7 +64,7 @@
 		loading.value = true
 		page_n.value++
 		let sk = page_n.value * 10
-		const res_goods = await db.collection('goods').where({category:data.sort_list[select.value].sort_name}).field(OBJ).limit(10).skip(sk).get()
+		const res_goods = await db.collection('goods').where({category:data.sort_list[select.value]?.sort_name}).field(OBJ).limit(10).skip(sk).get()
 		data.sotr_goods = [...data.sotr_goods,...res_goods.data]
 		loading.value = false
 	})

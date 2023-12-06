@@ -30,12 +30,12 @@ page{background-color: #f6f6f6;}
 	position: relative;
 }
 .tab-view text:nth-child(2){
-	width: 30rpx;
-	height: 10rpx;
+	width: 50rpx;
+	height: 8rpx;
 	border-radius: 10rpx;
 	position: absolute;
 	bottom: 0;
 }
 .active{
-	background-color: #f67319;
+	background-color: rgba(255, 85,0, 1);
 }

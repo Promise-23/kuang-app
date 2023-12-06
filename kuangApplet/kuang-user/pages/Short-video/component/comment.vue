@@ -1,5 +1,5 @@
 <template>
-	<page-container :show="comment_show.show" position="bottom" bindenter="onEnter">
+	<page-container :show="comment_show.show" position="bottom" bindenter="onEnter" :custom-style="customStyle" @clickoverlay="clickoverlay">
 		<view class="space-view">
 			<view class="chacha" @click="comment_show.show = false">
 				<image src="/static/detail/guanbi.svg" mode="aspectFit"></image>
@@ -46,6 +46,12 @@
 	import moment from 'moment'
 	moment.locale('zh-cn');
 	const db = wx.cloud.database()
+	
+	const customStyle = ref('border-radius: 10px 10px 0 0')
+	
+	function clickoverlay(){
+		comment_show.show = false
+	}
 	
 	// 监听父组件传值拉起评论框，请求数据
 	watch(comment_show,(newVal,oldVal)=>{

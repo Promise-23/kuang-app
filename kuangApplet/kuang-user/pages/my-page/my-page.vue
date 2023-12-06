@@ -312,7 +312,7 @@
 	/* background-image: linear-gradient(to bottom right, #EEDABC 0%, #987952 100%, #022F2C 100%); */
 	position: relative;
 	border-radius: 16rpx;
-	box-shadow: 6px 6px 5px rgba(0,0,0,0.2);;
+	box-shadow: 6px 6px 5px rgba(0,0,0,0.2);
 }
 .user-info {
 	display: flex;

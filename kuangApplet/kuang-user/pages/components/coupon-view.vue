@@ -6,7 +6,7 @@
 			<view class="title">
 				<view class="left">
 					<text>优惠券</text>
-					<view class="goCenter" @click="goCenter">
+					<view class="go-center" @click="goCenter">
 						<text>领券</text>
 						<image src="/static/svg/right-btn-fill.svg" mode="aspectFit"></image>
 					</view>
@@ -157,20 +157,20 @@
 	align-items: center;
 }
 
-.goCenter{
+.go-center{
 	box-sizing: border-box;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	font-size: 10px;
-	background-color: #e05e4d;
+	background-color: #FF5500;
 	padding: 6rpx 8rpx 6rpx 10rpx;
 	border-radius: 15rpx;
 	color: #FFFFFF;
 	margin-left: 20rpx;
 }
 
-.goCenter image{
+.go-center image{
 	padding: 0 !important;
 	height: 30rpx !important;
 	width: 30rpx !important;
@@ -198,7 +198,7 @@
 	bottom: -20rpx;
 }
 .tab-view .active{
-	background-color: #e05e4d;
+	background-color: rgba(255, 85,0, 1);
 }
 
 .coupons{
@@ -237,7 +237,7 @@
 }
 .coupon-info .type{
 	width: max-content;
-	background-color: #e05e4d;
+	background-color: #FF5500;
 	font-size: 10px;
 	padding: 6rpx 12rpx;
 	border-radius: 20rpx;
@@ -276,7 +276,7 @@
 }
 
 .coupon-info .remark .get{
-	background-color: #e05e4d;
+	background-color: #FF5500;
 	font-size: 10px;
 	padding: 6rpx 20rpx;
 	border-radius: 20rpx;

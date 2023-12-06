@@ -96,15 +96,15 @@ const _sfc_main = {
     }
     return (_ctx, _cache) => {
       return common_vendor.e({
-        a: common_vendor.unref(AccConfig_placeOrder.ORDER).nu_sh_cart > 0
-      }, common_vendor.unref(AccConfig_placeOrder.ORDER).nu_sh_cart > 0 ? {
-        b: common_vendor.t(common_vendor.unref(AccConfig_placeOrder.ORDER).nu_sh_cart)
-      } : {}, {
-        c: common_vendor.o(goCart),
-        d: common_vendor.unref(COLL) <= 0
+        a: common_vendor.unref(COLL) <= 0
       }, common_vendor.unref(COLL) <= 0 ? {} : {}, {
-        e: common_vendor.t(common_vendor.unref(COLL) > 0 ? "已收藏" : "收藏"),
-        f: common_vendor.o(($event) => toCollect(common_vendor.unref(COLL))),
+        b: common_vendor.t(common_vendor.unref(COLL) > 0 ? "已收藏" : "收藏"),
+        c: common_vendor.o(($event) => toCollect(common_vendor.unref(COLL))),
+        d: common_vendor.unref(AccConfig_placeOrder.ORDER).nu_sh_cart > 0
+      }, common_vendor.unref(AccConfig_placeOrder.ORDER).nu_sh_cart > 0 ? {
+        e: common_vendor.t(common_vendor.unref(AccConfig_placeOrder.ORDER).nu_sh_cart)
+      } : {}, {
+        f: common_vendor.o(goCart),
         g: common_vendor.unref(whether)
       }, common_vendor.unref(whether) ? {
         h: common_vendor.o(($event) => purChase("j_sho", __props.sku_data))

@@ -1,6 +1,6 @@
 <template>
 	<!-- 公用的sku规格选择弹窗 -->
-	<page-container :show="sku_popup.show" position="bottom" bindenter="onEnter">
+	<page-container :custom-style="customStyle" :show="sku_popup.show" position="bottom" bindenter="onEnter" @clickoverlay="clickoverlay">
 		<view class="space-view">
 			<!-- 展示已选的规格：图片，价格等-->
 			<view class="space-price">
@@ -9,7 +9,7 @@
 				</view>
 				<view class="space-text">
 					<view class="space-text-price">
-						<text>{{goods.goods_price}}</text>
+						<text>¥{{goods.goods_price}}</text>
 						<text v-if="ORDER.exist">秒杀价: ¥{{ORDER.order.goods_price}}</text>
 					</view>
 					<text class="space-text-stock">库存{{goods.stock}}</text>
@@ -61,10 +61,10 @@
 				</view>
 			</view>
 			<!-- 给一个防止超出页面的区域被按钮给盖住 -->
-			<view style="height: 300rpx;"></view>
+			<view style="height: 200rpx;"></view>
 			<!-- 底部按钮 -->
 			<view class="space-botton">
-				<view @click="subMit(sku_popup.judge)">{{sku_popup.judge == 'j_sho' ? '加入购物车' : '立即购买'}}</view>
+				<view class="common-button" @click="subMit(sku_popup.judge)">{{sku_popup.judge == 'j_sho' ? '加入购物车' : '立即购买'}}</view>
 			</view>
 		</view>
 	</page-container>
@@ -77,6 +77,7 @@
 	import {defineProps,watch,reactive,toRefs,toRaw,nextTick,ref} from 'vue'
 	import {ORDER,SHCART} from '../../Acc-config/place-order.js'
 	
+	const customStyle = ref('border-radius: 10px 10px 0 0')
 	const props = defineProps({sku_data:Array,goods:Object})
 	const skudata = reactive({goods:{},new_sku:[],all_sku:[],sku_length:0,
 	sku_sort:{}
@@ -253,14 +254,9 @@
 		}
 	}
 
-
-
-
-
-
-
-
-
+	function clickoverlay(){
+		sku_popup.show = false
+	}
 </script>
 
 <style scoped>
@@ -298,6 +294,7 @@
 .space-text-price{
 	display: flex;
 	align-items: center;
+	font-weight: bold;
 }
 .space-text-price text:nth-child(1){
 	color: #e9445a;
@@ -345,7 +342,7 @@
 	background-color: #f8f8f8;
 	padding: 10rpx 20rpx;
 	margin: 0 20rpx 20rpx 0;
-	border-radius: 8rpx;
+	border-radius: 10rpx;
 }
 .Pur-quantity image{
 	width: 50rpx;
@@ -377,15 +374,13 @@
 	height: 80rpx;
 	text-align: center;
 	line-height: 80rpx;
-	color: #FFFFFF;
-	background-color: #e9445a;
 	margin: 10rpx 20rpx;
-	border-radius: 6rpx;
+	font-size: 36rpx;
 }
 
 /* 点击后加上新样式 */
 .new_style{
-	background-color: #e9445a !important;
+	background-color: rgba(255, 85,0, 1) !important;
 	color: #FFFFFF;
 }
 

@@ -11,6 +11,10 @@ const _sfc_main = {
   setup(__props) {
     common_vendor.hooks.locale("zh-cn");
     const db = common_vendor.wx$1.cloud.database();
+    const customStyle = common_vendor.ref("border-radius: 10px 10px 0 0");
+    function clickoverlay() {
+      AccConfig_answer.comment_show.show = false;
+    }
     common_vendor.watch(AccConfig_answer.comment_show, (newVal, oldVal) => {
       if (newVal.show && AccConfig_answer.comment_show.num == 2) {
         relation.goods_id = AccConfig_answer.comment_show.goods_id;
@@ -88,7 +92,9 @@ const _sfc_main = {
         f: common_vendor.unref(content),
         g: common_vendor.o(($event) => common_vendor.isRef(content) ? content.value = $event.detail.value : null),
         h: common_vendor.o(sEnd),
-        i: common_vendor.unref(AccConfig_answer.comment_show).show
+        i: common_vendor.unref(AccConfig_answer.comment_show).show,
+        j: customStyle.value,
+        k: common_vendor.o(clickoverlay)
       });
     };
   }

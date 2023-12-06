@@ -91,8 +91,9 @@ const _sfc_main = {
     });
     const { sortArray, sort_value } = common_vendor.toRefs(sortdata);
     function changeEnd(e) {
-      sortdata.sort_value = sortdata.sortArray[e.detail.value].sort_name;
-      sortdata.sort_id = sortdata.sortArray[e.detail.value]._id;
+      var _a, _b;
+      sortdata.sort_value = (_a = sortdata.sortArray[e.detail.value]) == null ? void 0 : _a.sort_name;
+      sortdata.sort_id = (_b = sortdata.sortArray[e.detail.value]) == null ? void 0 : _b._id;
     }
     const detail = common_vendor.reactive({ sto_detail: [] });
     async function upDetail() {
@@ -136,6 +137,7 @@ const _sfc_main = {
       }
     }
     async function database() {
+      var _a;
       common_vendor.wx$1.showLoading({ title: "上传中", mask: true });
       let res_banner = await new AccConfig_media.Upload().multi(cover.sto_image, "image");
       let res_detail = await new AccConfig_media.Upload().multi(detail.sto_detail, "image");
@@ -159,8 +161,14 @@ const _sfc_main = {
         let DB = await AccConfig_init.inIt();
         if (isEdit.value) {
           const res = await DB.database().collection("goods").doc(id.value).update({ data: obj });
-          if (specs.specs_data.length > 0) {
-            await DB.database().collection("sku_data").where({ sku_id: res._id }).update({ data: { sku: specs.specs_data } });
+          const sku_res = await DB.database().collection("sku_data").where({ sku_id: id.value }).get();
+          console.log("查询是否存在sku", sku_res);
+          if (((_a = specs.specs_data) == null ? void 0 : _a.length) > 0) {
+            if (sku_res.data.length > 0) {
+              await DB.database().collection("sku_data").where({ sku_id: id.value }).update({ data: { sku: specs.specs_data } });
+            } else {
+              await DB.database().collection("sku_data").add({ data: { sku_id: id.value, sku: specs.specs_data } });
+            }
           }
           new AccConfig_media.Feedback("编辑成功", "success").toast();
         } else {
@@ -169,6 +177,7 @@ const _sfc_main = {
             await DB.database().collection("sku_data").add({ data: { sku_id: res._id, sku: specs.specs_data } });
           }
           const _ = DB.database().command;
+          console.log("对选择的分类下的数量", sortdata.sort_id);
           await DB.database().collection("goods_sort").doc(sortdata.sort_id).update({ data: { quantity: _.inc(1) } });
           new AccConfig_media.Feedback("上传成功", "success").toast();
         }

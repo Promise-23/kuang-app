@@ -189,6 +189,7 @@
 		
 		if(sku){
 			// sku的数据
+			console.log('id', id);
 			const sku_data = await DB.database().collection('sku_data').where({sku_id:id}).get()
 			console.log('当前商品sku', sku_data.data)
 			specs.specs_data = sku_data.data[0].sku ?? []
@@ -275,14 +276,23 @@
 			if(isEdit.value){
 				// 编辑
 				const res = await DB.database().collection('gifts').doc(id.value).update({data:obj})
+				console.log('更新商品规格', res)
+				// 查询是否存在sku
+				const sku_res = await DB.database().collection('sku_data').where({sku_id:id.value }).get()
+				console.log('查询是否存在sku', sku_res)
 				// 获取商品的_id。上传sku
-				if(specs.specs_data.length > 0){
-					await DB.database().collection('sku_data').where({sku_id:res._id }).update({data:{sku:specs.specs_data}})
+				if(specs.specs_data?.length > 0){
+					if(sku_res.data.length > 0){
+						await DB.database().collection('sku_data').where({sku_id:id.value }).update({data:{sku:specs.specs_data}})
+					}else{
+						await DB.database().collection('sku_data').add({data:{sku_id:id.value,sku:specs.specs_data}})
+					}
 				}
 				new Feedback('编辑成功','success').toast()
 			}else{
 				// 新增
 				const res = await DB.database().collection('gifts').add({data:obj})
+				console.log('新增商品', res);
 				// 获取商品的_id。上传sku
 				if(specs.specs_data.length > 0){
 					await DB.database().collection('sku_data').add({data:{sku_id:res._id,sku:specs.specs_data}})

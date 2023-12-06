@@ -78,6 +78,7 @@ const _sfc_main = {
       priceinv.stock = stock2;
       detail.sto_detail = goods_details;
       if (sku) {
+        console.log("id", id2);
         const sku_data = await DB.database().collection("sku_data").where({ sku_id: id2 }).get();
         console.log("当前商品sku", sku_data.data);
         specs.specs_data = sku_data.data[0].sku ?? [];
@@ -136,6 +137,7 @@ const _sfc_main = {
       }
     }
     async function database() {
+      var _a;
       common_vendor.wx$1.showLoading({ title: "上传中", mask: true });
       let res_banner = await new AccConfig_media.Upload().multi(cover.sto_image, "image");
       let res_detail = await new AccConfig_media.Upload().multi(detail.sto_detail, "image");
@@ -159,12 +161,20 @@ const _sfc_main = {
         let DB = await AccConfig_init.inIt();
         if (isEdit.value) {
           const res = await DB.database().collection("gifts").doc(id.value).update({ data: obj });
-          if (specs.specs_data.length > 0) {
-            await DB.database().collection("sku_data").where({ sku_id: res._id }).update({ data: { sku: specs.specs_data } });
+          console.log("更新商品规格", res);
+          const sku_res = await DB.database().collection("sku_data").where({ sku_id: id.value }).get();
+          console.log("查询是否存在sku", sku_res);
+          if (((_a = specs.specs_data) == null ? void 0 : _a.length) > 0) {
+            if (sku_res.data.length > 0) {
+              await DB.database().collection("sku_data").where({ sku_id: id.value }).update({ data: { sku: specs.specs_data } });
+            } else {
+              await DB.database().collection("sku_data").add({ data: { sku_id: id.value, sku: specs.specs_data } });
+            }
           }
           new AccConfig_media.Feedback("编辑成功", "success").toast();
         } else {
           const res = await DB.database().collection("gifts").add({ data: obj });
+          console.log("新增商品", res);
           if (specs.specs_data.length > 0) {
             await DB.database().collection("sku_data").add({ data: { sku_id: res._id, sku: specs.specs_data } });
           }

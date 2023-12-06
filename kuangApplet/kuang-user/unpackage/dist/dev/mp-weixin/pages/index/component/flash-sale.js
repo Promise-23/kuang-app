@@ -27,7 +27,8 @@ const _sfc_main = {
             e: index,
             f: common_vendor.o(($event) => juMp(item.goods_id, item.video_url), index)
           };
-        })
+        }),
+        b: __props.seckill.length > 0
       };
     };
   }

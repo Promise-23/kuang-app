@@ -1,9 +1,9 @@
 <template>
-	<page-container :show="show" position="bottom" bindenter="onEnter">
+	<page-container :custom-style="customStyle" :show="address_show.show" @clickoverlay="clickoverlay" position="bottom" bindenter="onEnter">
 		<view class="space-view">
 			<view class="address-title">
 				<text>新建收货地址</text>
-				<icon class="icon-small" type="cancel" size="23" @click="show = false"></icon>
+				<icon class="icon-small" type="cancel" size="23" @click="address_show.show = false"></icon>
 			</view>
 			<view class="address-input">
 				<text>收货人</text>
@@ -26,7 +26,7 @@
 				<text>详细地址</text>
 				<input type="text" v-model="result.address">
 			</view>
-			<view class="New-address" @click="subMit(_id)">
+			<view class="New-address common-button" @click="subMit(_id)">
 				{{_id == '' ? '保存' : '修改'}}
 			</view>
 		</view>
@@ -35,10 +35,15 @@
 
 <script setup>
 	function onEnter(){}
-	import {show,modify,deci} from '@/Acc-config/answer.js'
-	import {onMounted,reactive,toRefs,defineEmits,watch} from 'vue'
+	import {address_show,modify,deci} from '@/Acc-config/answer.js'
+	import {onMounted,reactive,toRefs,defineEmits,watch, ref} from 'vue'
 	const db = wx.cloud.database()
 	import {Plublic} from '@/Acc-config/public.js'
+	
+	const customStyle = ref('border-radius: 10px 10px 0 0')
+	function clickoverlay(){
+		address_show.show = false
+	}
 	
 	// 输入框的值
 	const data = reactive({

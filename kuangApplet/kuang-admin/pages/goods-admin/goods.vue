@@ -203,8 +203,8 @@
 	const {sortArray,sort_value} = toRefs(sortdata)
 	
 	function changeEnd(e){
-		sortdata.sort_value = sortdata.sortArray[e.detail.value].sort_name
-		sortdata.sort_id = sortdata.sortArray[e.detail.value]._id
+		sortdata.sort_value = sortdata.sortArray[e.detail.value]?.sort_name
+		sortdata.sort_id = sortdata.sortArray[e.detail.value]?._id
 	}
 	
 	// 上传详情图
@@ -276,9 +276,16 @@
 			if(isEdit.value){
 				// 编辑
 				const res = await DB.database().collection('goods').doc(id.value).update({data:obj})
+				// 查询是否存在sku
+				const sku_res = await DB.database().collection('sku_data').where({sku_id:id.value }).get()
+				console.log('查询是否存在sku', sku_res)
 				// 获取商品的_id。上传sku
-				if(specs.specs_data.length > 0){
-					await DB.database().collection('sku_data').where({sku_id:res._id }).update({data:{sku:specs.specs_data}})
+				if(specs.specs_data?.length > 0){
+					if(sku_res.data.length > 0){
+						await DB.database().collection('sku_data').where({sku_id:id.value }).update({data:{sku:specs.specs_data}})
+					}else{
+						await DB.database().collection('sku_data').add({data:{sku_id:id.value,sku:specs.specs_data}})
+					}
 				}
 				new Feedback('编辑成功','success').toast()
 			}else{
@@ -290,6 +297,7 @@
 				}
 				// 对选择的分类下的数量++
 				const _ = DB.database().command
+				console.log('对选择的分类下的数量', sortdata.sort_id)
 				await DB.database().collection('goods_sort').doc(sortdata.sort_id).update({data:{quantity:_.inc(1)}})
 				new Feedback('上传成功','success').toast()
 			}

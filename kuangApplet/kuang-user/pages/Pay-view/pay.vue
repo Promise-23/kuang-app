@@ -72,7 +72,7 @@
 	<view style="300rpx"></view>
 	<view class="set-accounts">
 		<view>¥{{total_price}}</view>
-		<view @click="subMit">提交订单</view>
+		<view @click="subMit" class="common-button">提交订单</view>
 	</view>
 	<coupon-view :show="showCouponModal" :enableCoupons="couponsInfo.enable" :disableCoupons="couponsInfo.disable" @close="cancelCoupon" @setSelectedCoupon="setSelectedCoupon"/>
 </template>
@@ -376,7 +376,7 @@
 	width: 200rpx;
 	height: 200rpx;
 	margin-right: 20rpx;
-	border-radius: 6rpx;
+	border-radius: 10rpx;
 }
 .pay-goods-title{
 	overflow: hidden;
@@ -392,9 +392,10 @@
 	font-size: 28rpx;
 	color: #a4a4a4;
 	margin-top: 20rpx;
+	border-radius: 10rpx;
 }
 .pay-goods-price{
-	padding-top: 50rpx;
+	padding-top: 40rpx;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -406,12 +407,18 @@
 	display: block;
 	margin: 0 !important;
 }
+
+.pay-goods-price>text{
+	color: #fc324a;
+	margin-right: 40rpx;
+}
+
 .pay-goods-price view{
 	display: flex;
-	align-items: center;
 }
+
 .pay-goods-price view text{
-	padding: 0 40rpx;
+	padding: 0 20rpx;
 }
 
 /*资产*/
@@ -451,15 +458,14 @@
 	font-weight: bold;
 }
 .set-accounts view:nth-child(2){
-	background-color: #ea445a;
+	background-color: #FF5500;
 	color: #FFFFFF;
 	font-size: 35rpx;
 	padding: 15rpx 35rpx;
-	border-radius: 10rpx;
 }
 
 .hascount{
-	color: #ea445a;
+	color: #FF5500;
 	margin-right: 5rpx;
 	font-size: 14px;
 	margin-left: 20rpx;

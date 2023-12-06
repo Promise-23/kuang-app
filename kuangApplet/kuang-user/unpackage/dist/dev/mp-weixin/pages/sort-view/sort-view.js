@@ -16,8 +16,9 @@ const _sfc_main = {
     const { sort_list, sotr_goods } = common_vendor.toRefs(data);
     let OBJ = { goods_cover: true, goods_price: true, goods_title: true };
     async function getSort() {
+      var _a;
       const res_sort = await db.collection("goods_sort").where({ quantity: _.gt(0) }).get();
-      const res_goods = await db.collection("goods").where({ category: res_sort.data[0].sort_name }).field(OBJ).limit(10).get();
+      const res_goods = await db.collection("goods").where({ category: (_a = res_sort.data[0]) == null ? void 0 : _a.sort_name }).field(OBJ).limit(10).get();
       data.sort_list = res_sort.data;
       data.sotr_goods = res_goods.data;
     }
@@ -31,10 +32,11 @@ const _sfc_main = {
     let loading = common_vendor.ref(false);
     let page_n = common_vendor.ref(0);
     common_vendor.onReachBottom(async () => {
+      var _a;
       loading.value = true;
       page_n.value++;
       let sk = page_n.value * 10;
-      const res_goods = await db.collection("goods").where({ category: data.sort_list[select.value].sort_name }).field(OBJ).limit(10).skip(sk).get();
+      const res_goods = await db.collection("goods").where({ category: (_a = data.sort_list[select.value]) == null ? void 0 : _a.sort_name }).field(OBJ).limit(10).skip(sk).get();
       data.sotr_goods = [...data.sotr_goods, ...res_goods.data];
       loading.value = false;
     });
@@ -44,6 +46,7 @@ const _sfc_main = {
       });
     }
     return (_ctx, _cache) => {
+      var _a;
       return common_vendor.e({
         a: common_vendor.f(common_vendor.unref(sort_list), (item, index, i0) => {
           return {
@@ -55,7 +58,7 @@ const _sfc_main = {
         }),
         b: common_vendor.unref(sort_list).length > 0
       }, common_vendor.unref(sort_list).length > 0 ? {
-        c: common_vendor.t(common_vendor.unref(sort_list)[select.value].sort_name)
+        c: common_vendor.t((_a = common_vendor.unref(sort_list)[select.value]) == null ? void 0 : _a.sort_name)
       } : {}, {
         d: common_vendor.f(common_vendor.unref(sotr_goods), (item, index, i0) => {
           return {

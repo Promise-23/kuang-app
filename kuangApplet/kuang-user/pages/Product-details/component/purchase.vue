@@ -6,17 +6,19 @@
 				<text>分享</text>
 			</button>
 		</view>
-		<view class="flex-left shopping-amount" @click="goCart">
-			<image src="/static/detail/gouwuche.svg" mode="aspectFit"></image>
-			<text>购物车</text>
-			<text class="amount" v-if="ORDER.nu_sh_cart > 0">{{ORDER.nu_sh_cart}}</text>
-		</view>
 		<view class="flex-left" @click="toCollect(COLL)">
 			<image src="/static/detail/shoucang.svg" mode="aspectFit" v-if="COLL <= 0"></image>
 			<image src="/static/detail/yishoucang.svg" mode="aspectFit" v-else></image>
 			<text>{{COLL > 0 ? '已收藏' : '收藏'}}</text>
 		</view>
-		<view v-if="whether" class="flex-right shopping-cart" @click="purChase('j_sho',sku_data)">加入购物车</view>
+		<view class="flex-left shopping-amount" @click="goCart">
+			<image src="/static/detail/gouwuche.svg" mode="aspectFit"></image>
+			<text>购物车</text>
+			<text class="amount" v-if="ORDER.nu_sh_cart > 0">{{ORDER.nu_sh_cart}}</text>
+		</view>
+		<view v-if="whether" class="flex-right shopping-cart" @click="purChase('j_sho',sku_data)">
+			<image src="/static/svg/add_cart.svg" mode="aspectFit"></image>
+		</view>
 		<view v-if="whether" class="flex-right buy" @click="purChase('j_pur',sku_data)">立即购买</view>
 		<!-- 库存不足 商品已下架 -->
 		<view v-else class="flex-right buy">{{tips}}</view>
@@ -130,7 +132,7 @@
 .purchase{
 	height: 100rpx;
 	background-color: #fefefe;
-	border-top: 1rpx solid #e3e3e4;
+	/* border-top: 1rpx solid #e3e3e4; */
 	position: fixed;
 	bottom: 0;
 	left: 0;
@@ -138,7 +140,9 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding-bottom:68rpx;
+	padding:60rpx 0;
+	border-radius: 50rpx 50rpx 0 0;
+	box-shadow: 6px 6px 5px rgba(0,0,0,0.2);
 }
 .purchase image{
 	width: 40rpx;
@@ -163,20 +167,29 @@
 	color: #8a8b90 !important;
 }
 .flex-right{
-	flex: 2;
 	text-align: center;
-	height: 100rpx;
-	line-height: 100rpx;
+	height: 80rpx;
+	line-height: 80rpx;
 }
 .shopping-cart{
-	background-color: #fdf5f7;
-	color: #ec697f;
-	font-weight: bold;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 80rpx;
+	/* padding: 0 50rpx; */
+	margin-left: 20rpx;
+	background-color: #FF5500;
+	border-radius: 50rpx;
+	box-shadow: 1px 1px 1px rgba(255, 85,0, 0.2);
 }
 .buy{
-	background-color: #e9445a;
+	flex: 4;
+	background-color: #FF5500;
 	color: #fefefe;
 	font-weight: bold;
+	margin: 0 20rpx;
+	border-radius: 50rpx;
+	box-shadow: 2px 1px 2px rgba(255, 85, 0, 0.2);
 }
 .shopping-amount{
 	position: relative;
@@ -185,7 +198,7 @@
 	position: absolute;
 	right: 0;
 	top: -4rpx;
-	background-color: #e9445a;
+	background-color: #FF5500;
 	color: #FFFFFF;
 	width: 40rpx;
 	height: 30rpx;

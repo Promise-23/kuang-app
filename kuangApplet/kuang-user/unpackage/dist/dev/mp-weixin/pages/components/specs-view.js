@@ -8,6 +8,7 @@ const _sfc_main = {
   props: { sku_data: Array, goods: Object },
   setup(__props) {
     const props = __props;
+    const customStyle = common_vendor.ref("border-radius: 10px 10px 0 0");
     const skudata = common_vendor.reactive({
       goods: {},
       new_sku: [],
@@ -166,6 +167,9 @@ const _sfc_main = {
         }
       }
     }
+    function clickoverlay() {
+      AccConfig_answer.sku_popup.show = false;
+    }
     return (_ctx, _cache) => {
       return common_vendor.e({
         a: common_vendor.unref(goods).goods_cover,
@@ -233,7 +237,9 @@ const _sfc_main = {
         q: common_vendor.o(plUs),
         r: common_vendor.t(common_vendor.unref(AccConfig_answer.sku_popup).judge == "j_sho" ? "加入购物车" : "立即购买"),
         s: common_vendor.o(($event) => subMit(common_vendor.unref(AccConfig_answer.sku_popup).judge)),
-        t: common_vendor.unref(AccConfig_answer.sku_popup).show
+        t: customStyle.value,
+        v: common_vendor.unref(AccConfig_answer.sku_popup).show,
+        w: common_vendor.o(clickoverlay)
       });
     };
   }
