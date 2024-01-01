@@ -33,5 +33,5 @@ const _sfc_main = {
     };
   }
 };
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-000992ed"], ["__file", "E:/Project/kuang-app/kuangApplet/kuang-user/pages/index/component/flash-sale.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-000992ed"], ["__file", "D:/hujie/Applet-new/kuang-app/kuangApplet/kuang-user/pages/index/component/flash-sale.vue"]]);
 wx.createComponent(Component);

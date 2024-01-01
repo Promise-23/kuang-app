@@ -57,10 +57,10 @@
 	const {tab_name,S_height,S_top,S_width,Custom_height,being,styleOpacity,trigger} = toRefs(search_data)
 	onMounted(()=>{
 		const but_data = wx.getMenuButtonBoundingClientRect()
-		search_data.S_height = but_data.height + 5
+		search_data.S_height = but_data.height 
 		search_data.S_top = but_data.top
 		search_data.S_width = but_data.width
-		search_data.Custom_height = but_data.height + but_data.top + 5
+		search_data.Custom_height = but_data.height + but_data.top 
 	})
 	
 	// 获取轮播，评价，详情每个组件的高度
@@ -214,6 +214,7 @@ page{background-color: #f6f6f6;}
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
+	margin-bottom: 5px;
 }
 .tab-jiantou{
 	padding: 30rpx 20rpx;

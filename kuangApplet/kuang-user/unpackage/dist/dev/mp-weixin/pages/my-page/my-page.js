@@ -149,6 +149,15 @@ const _sfc_main = {
         AccConfig_answer.login_user.show = true;
       }
     }
+    function goGiftsCenter() {
+      if (user.exist) {
+        common_vendor.wx$1.navigateTo({
+          url: "/pages/gifts/center"
+        });
+      } else {
+        AccConfig_answer.login_user.show = true;
+      }
+    }
     async function getCoupons(coupon) {
       var _a;
       const res = await db.collection("coupon_detail").where({ used: false }).get();
@@ -227,10 +236,11 @@ const _sfc_main = {
         }),
         p: common_vendor.o(myCollect),
         q: common_vendor.o(getInfo),
-        r: common_vendor.o(goWelfare)
+        r: common_vendor.o(goWelfare),
+        s: common_vendor.o(goGiftsCenter)
       });
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-d9593e3f"], ["__file", "E:/Project/kuang-app/kuangApplet/kuang-user/pages/my-page/my-page.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-d9593e3f"], ["__file", "D:/hujie/Applet-new/kuang-app/kuangApplet/kuang-user/pages/my-page/my-page.vue"]]);
 wx.createPage(MiniProgramPage);

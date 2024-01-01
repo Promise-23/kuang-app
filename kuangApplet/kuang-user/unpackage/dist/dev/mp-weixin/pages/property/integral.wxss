@@ -3,7 +3,7 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	height:300rpx;
+	height:260rpx;
 	width: calc(100% - 140rpx);
 	padding: 40rpx;
 	margin: 0 auto;
@@ -19,7 +19,16 @@
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 }
-.card .integral .label.data-v-d1726e80{
+.card .integral .label.data-v-d1726e80 {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.btn.data-v-d1726e80{
+	display: flex;
+	align-items: center;
+}
+.label .left.data-v-d1726e80{
 	display: flex;
 	align-items: center;
 }
@@ -33,9 +42,26 @@
 	font-weight: 600;
 }
 .card .desc.data-v-d1726e80{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	font-size: 12px;
 	white-space: pre-line;
 	letter-spacing: 1px;
+}
+.card .desc .text.data-v-d1726e80{
+	display: flex;
+	flex-direction: column;
+}
+.card .desc .bill.data-v-d1726e80{
+	padding: 8rpx 16rpx;
+	background: linear-gradient(to bottom right, #EEDABC 0%, #987952 100%);
+	border-radius: 30rpx;
+	font-size: 10px;
+}
+.bill text.data-v-d1726e80{
+	color: #fff !important;
+	-webkit-text-fill-color: unset !important
 }
 .details.data-v-d1726e80{
 	width: calc(100% - 60rpx);

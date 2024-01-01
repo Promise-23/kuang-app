@@ -17,7 +17,8 @@
     "pages/property/integral",
     "pages/property/coupon",
     "pages/property/kcoin",
-    "pages/welfare/center"
+    "pages/welfare/center",
+    "pages/gifts/center"
   ],
   "window": {
     "navigationBarTextStyle": "black",

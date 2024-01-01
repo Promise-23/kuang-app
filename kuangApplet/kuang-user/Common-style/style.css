@@ -130,3 +130,17 @@
 	font-weight: bold;
 	border-radius: 50rpx;
 }
+
+/* 按钮样式 */
+.card .btn{
+	padding: 8rpx 16rpx;
+	background: linear-gradient(to bottom right, #EEDABC 0%, #987952 100%);
+	border-radius: 30rpx;
+	font-size: 10px;
+}
+
+.card .btn text{
+	color: #fff !important;
+	-webkit-text-fill-color: unset !important
+}
+

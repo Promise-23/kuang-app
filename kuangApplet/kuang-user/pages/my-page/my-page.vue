@@ -79,6 +79,11 @@
 			<text>领券中心</text>
 			<image src="/static/detail/xiangyou-jiantou.svg" mode="aspectFit" class="my-other-deta"></image>
 		</view>
+		<view @click="goGiftsCenter">
+			<image src="/static/detail/gifts-center.svg" mode="aspectFit" ></image>
+			<text>积分商城</text>
+			<image src="/static/detail/xiangyou-jiantou.svg" mode="aspectFit" class="my-other-deta"></image>
+		</view>
 <!-- 		<view>
 			<image src="/static/detail/yijianfankui.svg" mode="aspectFit"></image>
 			<text>意见反馈(开发中)</text>
@@ -252,6 +257,17 @@
 		if(user.exist){
 			wx.navigateTo({
 				url:'/pages/welfare/center'
+			})
+		}else{
+			login_user.show = true
+		}
+	}
+	
+	// 领券中心
+	function goGiftsCenter(){
+		if(user.exist){
+			wx.navigateTo({
+				url:'/pages/gifts/center'
 			})
 		}else{
 			login_user.show = true
@@ -483,9 +499,11 @@
 	align-items: center;
 	padding: 30rpx;
 }
-.my-other view:nth-child(2){
+.my-other > view{
 	border-bottom: 1rpx solid #e0e0e0;
-	border-top: 1rpx solid #e0e0e0;
+}
+.my-other > view:last-child{
+	border-bottom: none;
 }
 .my-other text{
 	flex: 1;

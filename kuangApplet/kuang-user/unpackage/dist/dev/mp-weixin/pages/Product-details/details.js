@@ -30,10 +30,10 @@ const _sfc_main = {
     const { tab_name, S_height, S_top, S_width, Custom_height, being, styleOpacity, trigger } = common_vendor.toRefs(search_data);
     common_vendor.onMounted(() => {
       const but_data = common_vendor.wx$1.getMenuButtonBoundingClientRect();
-      search_data.S_height = but_data.height + 5;
+      search_data.S_height = but_data.height;
       search_data.S_top = but_data.top;
       search_data.S_width = but_data.width;
-      search_data.Custom_height = but_data.height + but_data.top + 5;
+      search_data.Custom_height = but_data.height + but_data.top;
     });
     let heightset = common_vendor.reactive({ hei: [] });
     function viewheight() {
@@ -188,6 +188,6 @@ const _sfc_main = {
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "E:/Project/kuang-app/kuangApplet/kuang-user/pages/Product-details/details.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/hujie/Applet-new/kuang-app/kuangApplet/kuang-user/pages/Product-details/details.vue"]]);
 _sfc_main.__runtimeHooks = 3;
 wx.createPage(MiniProgramPage);

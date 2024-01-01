@@ -15,6 +15,7 @@
 .details-img{
 	background-color: #FFFFFF;
 	margin: 20rpx 0;
+	padding-bottom: 200rpx;
 }
 .details-img .img-box{
 	display: flex;

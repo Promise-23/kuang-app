@@ -168,9 +168,11 @@
 	align-items: center;
 	padding: 30rpx;
 }
-.my-other view.data-v-d9593e3f:nth-child(2){
+.my-other > view.data-v-d9593e3f{
 	border-bottom: 1rpx solid #e0e0e0;
-	border-top: 1rpx solid #e0e0e0;
+}
+.my-other > view.data-v-d9593e3f:last-child{
+	border-bottom: none;
 }
 .my-other text.data-v-d9593e3f{
 	flex: 1;

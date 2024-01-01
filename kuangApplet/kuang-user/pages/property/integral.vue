@@ -2,15 +2,26 @@
 	<view class="card">
 		<view class="integral">
 			<view class="label">
-				<image src="/static/img/integral.png" mode="aspectFit"></image>
-				<text>积分余额</text>
+				<view class="left">
+					<image src="/static/img/integral.png" mode="aspectFit"></image>
+					<text>积分余额</text>
+				</view>
+				<!-- <view class="right btn">
+					<text>赚积分</text>
+				</view> -->
 			</view>
 			<view class="num">
 				<text>{{ count || 0}}</text>
 			</view>
 		</view>
 		<view class="desc">
-			<text>积分商城正在优化中...\n更多功能敬请期待。。。</text>
+			<view class="text">
+				<text>购物、邀请注册获取积分</text>
+				<text>更多积分活动持续推送中...</text>
+			</view>
+			<view class="bill" @click="goGiftsCenter">
+				<text>花积分</text>
+			</view>
 		</view>
 	</view>
 	<view class="details">
@@ -50,6 +61,13 @@
 	// 	console.log('integralDetail', res.data)
 	// 	data.integral_detail = res.data
 	// }
+	
+	// 领券中心
+	function goGiftsCenter(){
+		wx.navigateTo({
+			url:'/pages/gifts/center'
+		})
+	}
 </script>
 
 <style scoped>
@@ -57,7 +75,7 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	height:300rpx;
+	height:260rpx;
 	width: calc(100% - 140rpx);
 	padding: 40rpx;
 	margin: 0 auto;
@@ -75,7 +93,18 @@
 	-webkit-text-fill-color: transparent;  
 }
 
-.card .integral .label{
+.card .integral .label {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.btn{
+	display: flex;
+	align-items: center;
+}
+
+.label .left{
 	display: flex;
 	align-items: center;
 }
@@ -92,9 +121,28 @@
 }
 
 .card .desc{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	font-size: 12px;
 	white-space: pre-line;
 	letter-spacing: 1px;
+}
+
+.card .desc .text{
+	display: flex;
+	flex-direction: column;
+}
+
+.card .desc .bill{
+	padding: 8rpx 16rpx;
+	background: linear-gradient(to bottom right, #EEDABC 0%, #987952 100%);
+	border-radius: 30rpx;
+	font-size: 10px;
+}
+.bill text{
+	color: #fff !important;
+	-webkit-text-fill-color: unset !important
 }
 
 .details{

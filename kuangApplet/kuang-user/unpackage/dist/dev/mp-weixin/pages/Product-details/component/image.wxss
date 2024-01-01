@@ -2,6 +2,7 @@
 .details-img.data-v-359d0f06{
 	background-color: #FFFFFF;
 	margin: 20rpx 0;
+	padding-bottom: 200rpx;
 }
 .details-img .img-box.data-v-359d0f06{
 	display: flex;

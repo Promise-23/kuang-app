@@ -119,6 +119,13 @@
 				"navigationBarTitleText": "领券中心",
 				"navigationBarBackgroundColor": "#fefefe"
 			}
+		},
+		{
+			"path": "pages/gifts/center",
+			"style": {
+				"navigationBarTitleText": "积分商城",
+				"navigationBarBackgroundColor": "#fefefe"
+			}
 		}
 	],
 	"globalStyle": {

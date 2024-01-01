@@ -1,0 +1,83 @@
+
+page{background-color: #f4f4f4;}
+.card{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height:200rpx;
+	width: calc(100% - 140rpx);
+	padding: 40rpx;
+	margin: 0 auto;
+	margin-top: 20rpx;
+	background-image: linear-gradient(to bottom right, #000 0%, #575757 90%, #575757 100%);
+	/* border: 1px solid rgba(0,0,0,0.1); */
+	position: relative;
+	border-radius: 16rpx;
+	box-shadow: 6px 6px 5px rgba(0,0,0,0.2);
+}
+.card text{
+	background: linear-gradient(to bottom right, #EEDABC 0%, #987952 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+.card .integral .label{
+	display: flex;
+	align-items: center;
+}
+.card .integral image{
+	width: 50rpx;
+	height: 50rpx;
+	margin-right: 16rpx;
+}
+.card .integral .num{
+	font-size: 40px;
+	font-weight: 600;
+}
+.card .desc{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 12px;
+	white-space: pre-line;
+	letter-spacing: 1px;
+}
+.card .desc .bill{
+	padding: 8rpx 16rpx;
+	background: linear-gradient(to bottom right, #EEDABC 0%, #987952 100%);
+	border-radius: 30rpx;
+	font-size: 10px;
+}
+.bill text{
+	color: #fff !important;
+	-webkit-text-fill-color: unset !important
+}
+.panel{
+	width: calc(100% - 60rpx);
+	margin: 0 auto;
+	margin-top: 20rpx;
+	font-size: 12px;
+	font-weight: bold;
+}
+.instruct-view {
+	display: flex;
+	width: 100%;
+	overflow-x: auto;
+}
+.instruct{
+	margin-right: 30rpx;
+}
+.instruct{
+	position: relative;
+	padding-bottom: 16rpx;
+}
+.instruct.active::after{
+	position: absolute;
+	bottom: 0;
+	content: '';
+	display: block;
+	height: 2px;
+	width: 80%;
+	margin: 0 10%;
+	background-color: red;
+	transition: all 1s;
+}

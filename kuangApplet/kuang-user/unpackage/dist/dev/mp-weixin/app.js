@@ -20,6 +20,7 @@ if (!Math) {
   "./pages/property/coupon.js";
   "./pages/property/kcoin.js";
   "./pages/welfare/center.js";
+  "./pages/gifts/center.js";
 }
 const _sfc_main = {
   onLaunch: function() {
@@ -29,7 +30,7 @@ const _sfc_main = {
     });
   }
 };
-const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "E:/Project/kuang-app/kuangApplet/kuang-user/App.vue"]]);
+const App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/hujie/Applet-new/kuang-app/kuangApplet/kuang-user/App.vue"]]);
 function createApp() {
   const app = common_vendor.createSSRApp(App);
   return {
