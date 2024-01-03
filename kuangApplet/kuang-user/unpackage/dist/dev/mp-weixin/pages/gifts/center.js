@@ -1,41 +1,45 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
 const AccConfig_answer = require("../../Acc-config/answer.js");
-if (!Math) {
-  (Card + BackTop)();
+if (!Array) {
+  const _component_brand_icon = common_vendor.resolveComponent("brand-icon");
+  _component_brand_icon();
 }
-const Card = () => "../Common-component/Card-goods.js";
+if (!Math) {
+  BackTop();
+}
 const BackTop = () => "../Common-component/UI/BackTop.js";
 const _sfc_main = {
   __name: "center",
   setup(__props) {
     const db = common_vendor.wx$1.cloud.database();
+    const _ = db.command;
     common_vendor.onMounted(() => {
       goods();
     });
-    const result = common_vendor.reactive({ sort: [], card: [] });
-    const { sort, seckill, card } = common_vendor.toRefs(result);
+    const result = common_vendor.reactive({ sort: [], cards: [[]] });
+    const { sort, cards } = common_vendor.toRefs(result);
     const active = common_vendor.ref(0);
     async function goods() {
-      const sort2 = await db.collection("gifts_sort").get();
-      const card2 = await db.collection("gifts").where({ shelves: true }).limit(10).field({ goods_cover: true, goods_price: true, goods_title: true, sold: true, video_url: true }).orderBy("sold", "desc").get();
-      Promise.all([sort2, card2]).then((res) => {
-        result.sort = res[0].data;
-        result.card = res[1].data;
+      common_vendor.wx$1.showLoading();
+      const sort2 = await db.collection("goods_sort").where({ quantity: _.gt(0) }).get();
+      result.sort = sort2.data;
+      const resArr = [];
+      result.sort.forEach((item) => {
+        const card = db.collection("goods").where({ shelves: true, category: item.sort_name }).limit(10).field({ goods_cover: true, goods_price: true, goods_title: true, sold: true, video_url: true }).orderBy("sold", "desc").get();
+        resArr.push(card);
+      });
+      console.log("resArr", resArr);
+      Promise.all(resArr).then((res) => {
+        common_vendor.wx$1.hideLoading();
+        result.cards = res.map((r) => r.data);
+        console.log("result", result);
       }).catch((err) => {
         console.log(err);
       });
     }
-    let loading = common_vendor.ref(false);
-    let page_n = common_vendor.ref(0);
-    common_vendor.onReachBottom(async () => {
-      loading.value = true;
-      page_n.value++;
-      let sk = page_n.value * 10;
-      const res_goods = await db.collection("gifts").where({ shelves: true }).limit(10).skip(sk).field({ goods_cover: true, goods_price: true, goods_title: true, sold: true, video_url: true }).orderBy("sold", "desc").get();
-      result.card = [...result.card, ...res_goods.data];
-      loading.value = false;
-    });
+    common_vendor.ref(false);
+    common_vendor.ref(0);
     function goDetail(type) {
       const url = `/pages/property/integral`;
       console.log("goDetail", url);
@@ -45,6 +49,22 @@ const _sfc_main = {
     }
     function handleChangeTab(index) {
       active.value = index;
+    }
+    function juMp(goods_id, video_url) {
+      if (video_url == "") {
+        console.log("跳转详情页");
+        common_vendor.wx$1.navigateTo({
+          url: `/pages/Product-details/details?goods_id=${goods_id}&type=gift`
+        });
+      } else {
+        common_vendor.wx$1.navigateTo({
+          url: `/pages/Short-video/video?goods_id=${goods_id}&type=gift`
+        });
+      }
+    }
+    function swiperFun(e) {
+      active.value = e.detail.current;
+      console.log("active", active.value);
     }
     return (_ctx, _cache) => {
       return {
@@ -58,20 +78,30 @@ const _sfc_main = {
             d: index
           };
         }),
-        d: common_vendor.f(common_vendor.unref(card), (item, index, i0) => {
-          return {
-            a: "78ff92d2-0-" + i0,
-            b: common_vendor.o(($event) => _ctx.juMp(item.goods_id, item.video_url), index),
-            c: index
-          };
+        d: common_vendor.f(common_vendor.unref(cards), (card, i, i0) => {
+          return common_vendor.e({
+            a: common_vendor.f(card, (item, index, i1) => {
+              return {
+                a: item.goods_cover,
+                b: "21f13641-0-" + i0 + "-" + i1,
+                c: common_vendor.t(item.goods_title),
+                d: common_vendor.t(item.goods_price),
+                e: common_vendor.t(item.sold),
+                f: index,
+                g: common_vendor.o(($event) => juMp(item._id, item.video_url), index)
+              };
+            }),
+            b: card.length == 0
+          }, card.length == 0 ? {} : {}, {
+            c: i,
+            d: i
+          });
         }),
-        e: common_vendor.p({
-          card: common_vendor.unref(card)
-        }),
-        f: common_vendor.o((...args) => _ctx.swiperFun && _ctx.swiperFun(...args))
+        e: active.value,
+        f: common_vendor.o(swiperFun)
       };
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/hujie/Applet-new/kuang-app/kuangApplet/kuang-user/pages/gifts/center.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "E:/Project/kuang-app/kuangApplet/kuang-user/pages/gifts/center.vue"]]);
 wx.createPage(MiniProgramPage);

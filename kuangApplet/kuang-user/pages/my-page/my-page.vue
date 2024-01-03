@@ -265,13 +265,16 @@
 	
 	// 领券中心
 	function goGiftsCenter(){
-		if(user.exist){
-			wx.navigateTo({
-				url:'/pages/gifts/center'
-			})
-		}else{
-			login_user.show = true
-		}
+		// if(user.exist){
+		// 	wx.navigateTo({
+		// 		url:'/pages/gifts/center'
+		// 	})
+		// }else{
+		// 	login_user.show = true
+		// }
+		wx.navigateTo({
+			url:'/pages/gifts/center'
+		})
 	}
 	
 	// 获取当前可用优惠券

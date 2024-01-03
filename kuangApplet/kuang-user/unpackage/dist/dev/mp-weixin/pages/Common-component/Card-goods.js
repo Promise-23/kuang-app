@@ -37,5 +37,5 @@ const _sfc_main = {
     };
   }
 };
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-f18c2880"], ["__file", "D:/hujie/Applet-new/kuang-app/kuangApplet/kuang-user/pages/Common-component/Card-goods.vue"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-f18c2880"], ["__file", "E:/Project/kuang-app/kuangApplet/kuang-user/pages/Common-component/Card-goods.vue"]]);
 wx.createComponent(Component);

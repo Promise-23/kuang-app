@@ -76,6 +76,7 @@ const _sfc_main = {
     });
     const db = common_vendor.wx$1.cloud.database();
     const result = common_vendor.reactive({
+      type: "",
       goods_id: "",
       goods: [],
       collection: 0,
@@ -86,8 +87,9 @@ const _sfc_main = {
       eav_num: 0,
       eav_data: []
     });
-    const { goods_id, goods, seckill, eav_num, eav_data, collection, sku_data } = common_vendor.toRefs(result);
+    const { type, goods_id, goods, seckill, eav_num, eav_data, collection, sku_data } = common_vendor.toRefs(result);
     common_vendor.onLoad((event) => {
+      result.type = event.type;
       result.goods_id = event.goods_id;
       const goods2 = db.collection("goods").doc(event.goods_id).get();
       const collect = db.collection("collect_goods").where({ goods_id: event.goods_id }).get();
@@ -165,22 +167,24 @@ const _sfc_main = {
           seckill: common_vendor.unref(seckill)
         })
       } : {}, {
-        k: common_vendor.p({
+        k: !common_vendor.unref(type),
+        l: common_vendor.p({
           id: "select",
           eav_num: common_vendor.unref(eav_num),
           eav_data: common_vendor.unref(eav_data)
         }),
-        l: common_vendor.p({
+        m: common_vendor.p({
           id: "select",
           goods_details: common_vendor.unref(goods).goods_details
         }),
-        m: common_vendor.p({
+        n: common_vendor.p({
+          type: common_vendor.unref(type),
           goods_id: common_vendor.unref(goods_id),
           collection: common_vendor.unref(collection),
           sku_data: common_vendor.unref(sku_data),
           goods: common_vendor.unref(goods)
         }),
-        n: common_vendor.p({
+        o: common_vendor.p({
           sku_data: common_vendor.unref(sku_data),
           goods: common_vendor.unref(goods)
         })
@@ -188,6 +192,6 @@ const _sfc_main = {
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "D:/hujie/Applet-new/kuang-app/kuangApplet/kuang-user/pages/Product-details/details.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "E:/Project/kuang-app/kuangApplet/kuang-user/pages/Product-details/details.vue"]]);
 _sfc_main.__runtimeHooks = 3;
 wx.createPage(MiniProgramPage);

@@ -2,7 +2,6 @@
   "navigationBarTitleText": "积分商城",
   "navigationBarBackgroundColor": "#fefefe",
   "usingComponents": {
-    "card": "../Common-component/Card-goods",
     "back-top": "../Common-component/UI/BackTop"
   }
 }

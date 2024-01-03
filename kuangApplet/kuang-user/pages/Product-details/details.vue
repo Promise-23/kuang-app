@@ -18,11 +18,11 @@
 	<!-- 轮播 -->
 	<Swipers v-if="goods" id="select" class="swiper" :goods="goods" :seckill="seckill"/>
 	<!-- 评价 -->
-	<Eva id="select" class="eva" :eav_num="eav_num" :eav_data="eav_data"/>
+	<Eva v-show="!type" id="select" class="eva" :eav_num="eav_num" :eav_data="eav_data"/>
 	<!-- 详情 -->
 	<Img id="select" class="img" :goods_details="goods.goods_details"/>
 	<!-- 底部操作 -->
-	<Purchase :goods_id="goods_id" :collection="collection"
+	<Purchase :type="type" :goods_id="goods_id" :collection="collection"
 	:sku_data="sku_data" :goods="goods"
 	></Purchase>
 	<!-- 登陆弹窗 -->
@@ -112,6 +112,7 @@
 	// 请求数据，传值
 	const db = wx.cloud.database()
 	const result = reactive({
+		type: '',
 		goods_id:'',
 		goods:[],
 		collection:0,
@@ -123,9 +124,10 @@
 		eav_data:[]
 	})
 	
-	const {goods_id,goods,seckill,eav_num,eav_data,collection,sku_data} = toRefs(result)
+	const {type, goods_id,goods,seckill,eav_num,eav_data,collection,sku_data} = toRefs(result)
 	onLoad((event)=>{
 		// console.log(event)
+		result.type = event.type
 		result.goods_id = event.goods_id
 		// 获取商品数据
 		const goods = db.collection('goods').doc(event.goods_id).get()

@@ -131,5 +131,5 @@ const _sfc_main = {
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-b20c2d25"], ["__file", "D:/hujie/Applet-new/kuang-app/kuangApplet/kuang-admin/pages/jifen-shop/index.vue"]]);
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-b20c2d25"], ["__file", "E:/Project/kuang-app/kuangApplet/kuang-admin/pages/jifen-shop/index.vue"]]);
 wx.createPage(MiniProgramPage);

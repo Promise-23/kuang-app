@@ -1,5 +1,6 @@
 {
   "navigationStyle": "custom",
+  "scrollIndicator": "none",
   "usingComponents": {
     "swiper": "./component/swiper",
     "flash": "./component/flash-sale",

@@ -47,6 +47,7 @@
 	text-align: center;
 	padding-top: 100rpx;
 	color: #cccccc;
+	width: 100%;
 }
 
 /* loading设置的高度 */
@@ -144,3 +145,9 @@
 	-webkit-text-fill-color: unset !important
 }
 
+/* 隐藏所有滚动条 */
+::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+}
