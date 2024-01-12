@@ -1,24 +1,6 @@
 <template>
-	<!-- 导航栏 -->
-	<view class="search-back" :style="{opacity:styleOpacity}" v-show="being">
-		<view :style=" 'height:' + S_top + 'px;' "></view>
-		<view class="search-input" :style="['height:' + S_height + 'px;','padding-right:' + S_width + 'px;']">
-			<view class="tab-jiantou" @click="goTo">
-				<image src="/static/detail/video-fanhui.svg" mode="widthFix"></image>
-			</view>
-			<view class="tab-view" v-for="(item,index) in tab_name" :key="index"
-			:style=" 'height:' + S_height + 'px;' "
-			@click="swItch(index)"
-			>
-				<text>{{item}}</text>
-				<text :class="{active : index == trigger}"></text>
-			</view>
-		</view>
-	</view>
 	<!-- 轮播 -->
 	<Swipers v-if="goods" id="select" class="swiper" :goods="goods" :seckill="seckill"/>
-	<!-- 评价 -->
-	<Eva id="select" class="eva" :eav_num="eav_num" :eav_data="eav_data"/>
 	<!-- 详情 -->
 	<Img id="select" class="img" :goods_details="goods.goods_details"/>
 	<!-- 底部操作 -->
@@ -40,12 +22,12 @@
 	import Img from './component/image.vue'
 	import Purchase from './component/purchase.vue'
 	import Login from '../components/login-view.vue'
-	import Specs from '../components/specs-view.vue'
+	import Specs from '../components/specs-gift-view.vue'
 	import BackTop from '../Common-component/UI/BackTop.vue'
 	
 	// 与顶部导航栏相关的
 	const search_data = reactive({
-		tab_name:['商品','评价','详情'],
+		tab_name:['商品','详情'],
 		S_height:0,
 		S_top:0,
 		S_width:0,
@@ -70,14 +52,14 @@
 		query.selectAll('#select').boundingClientRect()
 		query.exec(res=>{
 			heightset.hei.push(res[0][0].height - search_data.Custom_height)
-			heightset.hei.push(heightset.hei[0] + res[0][1].height + 20)
-			heightset.hei.push(heightset.hei[1] + res[0][2].height + 20)
+			heightset.hei.push(heightset.hei[1] + res[0][1].height + 20)
 		})
 	}
 	
 	import {onLoad,onShareAppMessage,onPageScroll} from '@dcloudio/uni-app'
 	// 滚动监听
 	onPageScroll((e)=>{
+		console.log('onPageScroll', e)
 		search_data.styleOpacity = e.scrollTop / 300
 		search_data.being = e.scrollTop === 0 ? false : true
 		let scrollTop = e.scrollTop
@@ -183,7 +165,7 @@
 	onShareAppMessage(()=>{
 		return{
 			title:result.goods.goods_title,
-			path:`/pages/Product-details/details?goods_id=${result.goods_id}`,
+			path:`/pages/Gift-details/details?goods_id=${result.goods_id}`,
 			imageUrl:result.goods.goods_cover
 		}
 	})

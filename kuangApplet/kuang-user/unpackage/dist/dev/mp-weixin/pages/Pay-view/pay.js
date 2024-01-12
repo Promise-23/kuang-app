@@ -28,12 +28,13 @@ const _sfc_main = {
     common_vendor.watch(AccConfig_answer.new_address, (newVal, oldVal) => {
       re_data.address = [newVal.data];
     });
-    const or_data = common_vendor.reactive({ order: [], type: "", total_price: 0 });
-    const { order, type, total_price } = common_vendor.toRefs(or_data);
+    const or_data = common_vendor.reactive({ order: [], type: "", total_price: 0, orderType: "" });
+    const { order, type, total_price, orderType } = common_vendor.toRefs(or_data);
     common_vendor.onLoad((event) => {
       const data = JSON.parse(event.order);
       or_data.order = data;
       or_data.type = event.type;
+      or_data.orderType = event.orderType;
       calcPrice();
     });
     function calcPrice() {
@@ -74,23 +75,27 @@ const _sfc_main = {
       let query_time = common_vendor.hooks().utcOffset(8).format("YYYY-MM-DD");
       or_data.order.forEach((item) => item.order_number = AccConfig_orde_number.coDe());
       let out_trade_no = AccConfig_orde_number.outTradeno();
-      try {
-        var payment = await new AccConfig_wxPay.Wxpay().pLace(or_data.total_price, out_trade_no);
-        const can_res = await new AccConfig_wxPay.Wxpay().suBmit(or_data.order, payment.result, re_data.address, time, query_time, out_trade_no);
-        result.out_trade_no = out_trade_no;
-        result.or_data = or_data.order;
-        console.log("payment.result", payment.result);
-        const pay = await new AccConfig_wxPay.Wxpay().payMent(payment.result);
-      } catch (err) {
-        if (err && err.errMsg == "requestPayment:fail cancel") {
-          if (or_data.type == "cart") {
-            await new AccConfig_wxPay.Wxpay().deleteCart(or_data.order);
+      if (orderType.value == "gift") {
+        console.log("积分兑换生成订单");
+      } else {
+        try {
+          var payment = await new AccConfig_wxPay.Wxpay().pLace(or_data.total_price, out_trade_no);
+          const can_res = await new AccConfig_wxPay.Wxpay().suBmit(or_data.order, payment.result, re_data.address, time, query_time, out_trade_no);
+          result.out_trade_no = out_trade_no;
+          result.or_data = or_data.order;
+          console.log("payment.result", payment.result);
+          const pay = await new AccConfig_wxPay.Wxpay().payMent(payment.result);
+        } catch (err) {
+          if (err && err.errMsg == "requestPayment:fail cancel") {
+            if (or_data.type == "cart") {
+              await new AccConfig_wxPay.Wxpay().deleteCart(or_data.order);
+            }
+            common_vendor.wx$1.hideLoading();
+            common_vendor.wx$1.redirectTo({ url: "/pages/All-orders/order" });
+          } else {
+            new AccConfig_public.Plublic().toast("支付发生错误");
+            await db.collection("order_data").where({ out_trade_no }).remove();
           }
-          common_vendor.wx$1.hideLoading();
-          common_vendor.wx$1.redirectTo({ url: "/pages/All-orders/order" });
-        } else {
-          new AccConfig_public.Plublic().toast("支付发生错误");
-          await db.collection("order_data").where({ out_trade_no }).remove();
         }
       }
     }
@@ -216,7 +221,7 @@ const _sfc_main = {
               };
             })
           } : {}, {
-            e: common_vendor.t(item.goods_price)
+            e: common_vendor.t(common_vendor.unref(orderType) == "gift" ? `${item.goods_price}积分` : `¥${item.goods_price}`)
           }, common_vendor.unref(type) != "direct" ? {
             f: common_vendor.t(item.buy_amount)
           } : {
@@ -229,17 +234,22 @@ const _sfc_main = {
           });
         }),
         e: common_vendor.unref(type) != "direct",
-        f: common_vendor.t(couponsInfo.enable.length),
-        g: !selectedCoupon.value && couponsInfo.enable.length > 0,
-        h: !selectedCoupon.value && couponsInfo.enable.length == 0,
-        i: common_vendor.t(`-￥${((_a = selectedCoupon.value) == null ? void 0 : _a.price) ?? 0}`),
-        j: selectedCoupon.value,
-        k: common_vendor.o(showCoupon),
-        l: common_vendor.t(common_vendor.unref(total_price)),
-        m: common_vendor.o(subMit),
-        n: common_vendor.o(cancelCoupon),
-        o: common_vendor.o(setSelectedCoupon),
-        p: common_vendor.p({
+        f: common_vendor.unref(orderType) == "gift"
+      }, common_vendor.unref(orderType) == "gift" ? {
+        g: common_vendor.t(common_vendor.unref(AccConfig_answer.myIntegral).count || 0)
+      } : {
+        h: common_vendor.t(couponsInfo.enable.length),
+        i: !selectedCoupon.value && couponsInfo.enable.length > 0,
+        j: !selectedCoupon.value && couponsInfo.enable.length == 0,
+        k: common_vendor.t(`-￥${((_a = selectedCoupon.value) == null ? void 0 : _a.price) ?? 0}`),
+        l: selectedCoupon.value,
+        m: common_vendor.o(showCoupon)
+      }, {
+        n: common_vendor.t(common_vendor.unref(orderType) == "gift" ? `${common_vendor.unref(total_price)}积分` : `¥${common_vendor.unref(total_price)}`),
+        o: common_vendor.o(subMit),
+        p: common_vendor.o(cancelCoupon),
+        q: common_vendor.o(setSelectedCoupon),
+        r: common_vendor.p({
           show: showCouponModal.value,
           enableCoupons: couponsInfo.enable,
           disableCoupons: couponsInfo.disable

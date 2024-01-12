@@ -39,6 +39,12 @@
 			}
 		},
 		{
+			"path": "pages/Gift-details/details",
+			"style": {
+				"navigationBarTitleText": "积分商品详情"
+			}
+		},
+		{
 			"path": "pages/Eva-details/details",
 			"style": {
 				"navigationBarTitleText": "评价",

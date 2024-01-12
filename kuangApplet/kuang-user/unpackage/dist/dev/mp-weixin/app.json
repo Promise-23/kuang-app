@@ -6,6 +6,7 @@
     "pages/shopping-cart/shopping-cart",
     "pages/sort-view/sort-view",
     "pages/Product-details/details",
+    "pages/Gift-details/details",
     "pages/Eva-details/details",
     "pages/All-orders/order",
     "pages/Order-tracking/tracking",

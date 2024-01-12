@@ -1,0 +1,107 @@
+
+.imageurl.data-v-4c8ec04c {
+	width: 100%;
+	margin: 0 auto;
+	height: 700rpx !important;
+}
+.swiper-view.data-v-4c8ec04c {
+	/* margin:0 20rpx; */
+	height: 700rpx !important;
+	position: relative;
+	border-radius: 10px;
+	overflow: hidden;
+}
+.swiper-item.data-v-4c8ec04c{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: calc(100% - 20rpx);
+	margin-right: 20rpx;
+	border-radius: 10px;
+	overflow: hidden;
+}
+swiper.data-v-4c8ec04c{
+	height: 700rpx !important;
+}
+.point.data-v-4c8ec04c{
+	position: absolute;
+	bottom: 20rpx;
+	right: 40rpx;
+	background-color: #333333;
+	opacity: 0.5;
+	color: #FFFFFF;
+	font-size: 25rpx;
+	width: 100rpx;
+	height: 50rpx;
+	border-radius: 50rpx;
+	line-height: 50rpx;
+	text-align: center;
+}
+/* 价格 */
+.price-view.data-v-4c8ec04c{
+	background-color: #FFFFFF;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 20rpx;
+	height: 100rpx;
+}
+.price-view view.data-v-4c8ec04c:nth-child(1){
+	color: #e9445a;
+	font-size: 40rpx;
+	font-weight: bold;
+}
+.price-view view.data-v-4c8ec04c:nth-child(2){
+	color: #b1b2b5;
+}
+/* 秒杀 */
+.seckill.data-v-4c8ec04c{
+	background-color: #e74e64;
+	padding: 10rpx 20rpx;
+	color: #ffffff;
+}
+.seckill-flex.data-v-4c8ec04c{
+	display: flex;
+	align-items: center;
+}
+.seckill-Center.data-v-4c8ec04c{
+	flex: 1;
+	padding: 0 20rpx;
+}
+.seckill-top.data-v-4c8ec04c{
+	padding-bottom: 10rpx;
+	font-size: 25rpx;
+}
+.seckill-top text.data-v-4c8ec04c:nth-child(1){
+	background-color: #f6d3db;
+	padding: 5rpx 15rpx;
+	color: #ea4163;
+	border-radius: 5rpx;
+}
+.price-spike.data-v-4c8ec04c{
+	font-size: 35rpx;
+	font-weight: bold;
+}
+.ori-price.data-v-4c8ec04c{
+	text-decoration: line-through;
+	color: #f1b0be;
+}
+.se-time.data-v-4c8ec04c{
+	display: flex;
+	align-items: center;
+}
+.se-time text.data-v-4c8ec04c{
+	margin-left: 10rpx;
+}
+.se-time text.data-v-4c8ec04c:nth-child(odd){
+	background-color: #eb6578;
+	padding: 2rpx 10rpx;
+	border-radius: 10rpx;
+}
+/* 标题 */
+.detail-title.data-v-4c8ec04c{
+	padding: 20rpx;
+	line-height: 1.5;
+	background-color: #FFFFFF;
+	margin: 20rpx 0;
+}

@@ -40,7 +40,7 @@
 									<text>{{item.goods_price}}</text>
 									<image src="/static/img/integral.png" mode="aspectFit"></image>
 								</view>
-								<text>已售{{item.sold}}</text>
+								<text>已兑{{item.sold}}</text>
 							</view>
 						</view>
 					</view>
@@ -130,11 +130,11 @@
 		if(video_url == ''){
 			console.log('跳转详情页')
 			wx.navigateTo({
-				url:`/pages/Product-details/details?goods_id=${goods_id}&type=gift`
+				url:`/pages/Gift-details/details?goods_id=${goods_id}`
 			})
 		}else{
 			wx.navigateTo({
-				url:`/pages/Short-video/video?goods_id=${goods_id}&type=gift`
+				url:`/pages/Short-video/video?goods_id=${goods_id}`
 			})
 		}
 	}

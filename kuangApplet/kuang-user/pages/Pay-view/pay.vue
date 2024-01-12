@@ -33,7 +33,7 @@
 			<text class="pay-goods-title">{{item.goods_title}}</text>
 			<text class="pay-goods-specs" v-if="item.specs.length > 0" v-for="(item_a,index_a) in item.specs" :key="index_a">{{item_a.att_val}}</text>
 			<view class="pay-goods-price">
-				<text>¥{{item.goods_price}}</text>
+				<text>{{orderType == 'gift' ? `${item.goods_price}积分` : `¥${item.goods_price}`}}</text>
 				<text v-if="type != 'direct'">x{{item.buy_amount}}</text>
 				<view v-else>
 					<image src="/static/detail/jianshao.png" mode="aspectFit" @click="reDuce" :class="[item.buy_amount == 1 ? 'prevent_style' : '']"></image>
@@ -45,7 +45,13 @@
 	</view>
 	<!-- 优惠券、K币 可用于抵扣金额-->
 	<view class="card propertys">
-		<view class="line">
+		<view v-if="orderType == 'gift'" class="line">
+			<text>剩余积分</text>
+			<view class="right">
+				<text>{{ myIntegral.count || 0}}</text>
+			</view>
+		</view>
+		<view v-else class="line">
 			<text>优惠券</text>
 			<view class="right" @click="showCoupon">
 				<view v-show='!selectedCoupon && couponsInfo.enable.length > 0'>
@@ -71,7 +77,7 @@
 	<!-- 支付按钮 -->
 	<view style="300rpx"></view>
 	<view class="set-accounts">
-		<view>¥{{total_price}}</view>
+		<view>{{ orderType == 'gift' ? `${total_price}积分` : `¥${total_price}` }}</view>
 		<view @click="subMit" class="common-button">提交订单</view>
 	</view>
 	<coupon-view :show="showCouponModal" :enableCoupons="couponsInfo.enable" :disableCoupons="couponsInfo.disable" @close="cancelCoupon" @setSelectedCoupon="setSelectedCoupon"/>
@@ -82,6 +88,7 @@
 	import {onMounted,reactive,toRefs,watch,onBeforeUnmount} from 'vue'
 	import couponView from '../components/coupon-view.vue'
 	import moment from 'moment'
+	import { myIntegral } from '../../Acc-config/answer.js'
 	moment.locale('zh-cn');
 	const db = wx.cloud.database()
 	
@@ -108,13 +115,14 @@
 	
 	// 接收上个页面传来的值
 	import {onLoad} from '@dcloudio/uni-app'
-	const or_data = reactive({order:[],type:'',total_price:0})
-	const {order,type,total_price} = toRefs(or_data)
+	const or_data = reactive({order:[],type:'',total_price:0, orderType: ''})
+	const {order,type,total_price, orderType} = toRefs(or_data)
 	onLoad((event)=>{
 		const data = JSON.parse(event.order)
 		// console.log(data)
 		or_data.order = data
 		or_data.type = event.type
+		or_data.orderType = event.orderType
 		calcPrice()
 	})
 	
@@ -168,34 +176,39 @@
 		// 对每个商品生成订单编号
 		or_data.order.forEach(item=>item.order_number = coDe())
 		let out_trade_no = outTradeno()
-		try{
-			// 1.统一下单
-			var payment = await new Wxpay().pLace(or_data.total_price,out_trade_no)
-			// console.log(payment)
-			// 2.提交订单到数据库
-			const can_res = await new Wxpay().suBmit(or_data.order,payment.result,re_data.address,time,query_time,out_trade_no)
-			// console.log(can_res)
-			result.out_trade_no = out_trade_no
-			result.or_data = or_data.order
-			// 3.发起支付
-			console.log('payment.result', payment.result)
-			const pay = await new Wxpay().payMent(payment.result)
-			// console.log(pay)
-		}catch(err){
-			if(err && err.errMsg == "requestPayment:fail cancel"){
-				// 取消支付
-				if(or_data.type == 'cart'){
-					let cart = await new Wxpay().deleteCart(or_data.order)
+		if(orderType.value == 'gift'){
+			console.log('积分兑换生成订单')
+		}else{
+			try{
+				// 1.统一下单
+				var payment = await new Wxpay().pLace(or_data.total_price,out_trade_no)
+				// console.log(payment)
+				// 2.提交订单到数据库
+				const can_res = await new Wxpay().suBmit(or_data.order,payment.result,re_data.address,time,query_time,out_trade_no)
+				// console.log(can_res)
+				result.out_trade_no = out_trade_no
+				result.or_data = or_data.order
+				// 3.发起支付
+				console.log('payment.result', payment.result)
+				const pay = await new Wxpay().payMent(payment.result)
+				// console.log(pay)
+			}catch(err){
+				if(err && err.errMsg == "requestPayment:fail cancel"){
+					// 取消支付
+					if(or_data.type == 'cart'){
+						let cart = await new Wxpay().deleteCart(or_data.order)
+					}
+					// 跳转订单界面
+					wx.hideLoading()
+					wx.redirectTo({url:'/pages/All-orders/order'})
+				}else{
+					// 支付发生错误
+					new Plublic().toast('支付发生错误')
+					await db.collection('order_data').where({out_trade_no}).remove()
 				}
-				// 跳转订单界面
-				wx.hideLoading()
-				wx.redirectTo({url:'/pages/All-orders/order'})
-			}else{
-				// 支付发生错误
-				new Plublic().toast('支付发生错误')
-				await db.collection('order_data').where({out_trade_no}).remove()
 			}
 		}
+		
 	}
 	
 	onBeforeUnmount(()=>{watcher.close()})
@@ -469,5 +482,10 @@
 	margin-right: 5rpx;
 	font-size: 14px;
 	margin-left: 20rpx;
+}
+.propertys .right{
+	color: #FF5500;
+	font-size: 14px;
+	font-weight: 600;
 }
 </style>

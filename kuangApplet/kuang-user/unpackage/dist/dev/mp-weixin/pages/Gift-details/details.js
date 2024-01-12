@@ -3,20 +3,19 @@ const common_vendor = require("../../common/vendor.js");
 const AccConfig_placeOrder = require("../../Acc-config/place-order.js");
 const AccConfig_answer = require("../../Acc-config/answer.js");
 if (!Math) {
-  (Swipers + Eva + Img + Purchase + Login + Specs + BackTop)();
+  (Swipers + Img + Purchase + Login + Specs + BackTop)();
 }
 const Swipers = () => "./component/swiper.js";
-const Eva = () => "./component/evaluate.js";
 const Img = () => "./component/image.js";
 const Purchase = () => "./component/purchase.js";
 const Login = () => "../components/login-view.js";
-const Specs = () => "../components/specs-view.js";
+const Specs = () => "../components/specs-gift-view.js";
 const BackTop = () => "../Common-component/UI/BackTop.js";
 const _sfc_main = {
   __name: "details",
   setup(__props) {
     const search_data = common_vendor.reactive({
-      tab_name: ["商品", "评价", "详情"],
+      tab_name: ["商品", "详情"],
       S_height: 0,
       S_top: 0,
       S_width: 0,
@@ -27,7 +26,7 @@ const _sfc_main = {
       //tab透明度
       trigger: 0
     });
-    const { tab_name, S_height, S_top, S_width, Custom_height, being, styleOpacity, trigger } = common_vendor.toRefs(search_data);
+    common_vendor.toRefs(search_data);
     common_vendor.onMounted(() => {
       const but_data = common_vendor.wx$1.getMenuButtonBoundingClientRect();
       search_data.S_height = but_data.height;
@@ -41,11 +40,11 @@ const _sfc_main = {
       query.selectAll("#select").boundingClientRect();
       query.exec((res) => {
         heightset.hei.push(res[0][0].height - search_data.Custom_height);
-        heightset.hei.push(heightset.hei[0] + res[0][1].height + 20);
-        heightset.hei.push(heightset.hei[1] + res[0][2].height + 20);
+        heightset.hei.push(heightset.hei[1] + res[0][1].height + 20);
       });
     }
     common_vendor.onPageScroll((e) => {
+      console.log("onPageScroll", e);
       search_data.styleOpacity = e.scrollTop / 300;
       search_data.being = e.scrollTop === 0 ? false : true;
       let scrollTop = e.scrollTop;
@@ -55,21 +54,6 @@ const _sfc_main = {
         search_data.trigger -= 1;
       }
     });
-    function swItch(index) {
-      const cls = index == 0 ? ".swiper" : index == 1 ? ".eva" : ".img";
-      const query = common_vendor.wx$1.createSelectorQuery();
-      query.select(cls).boundingClientRect();
-      query.selectViewport().scrollOffset();
-      query.exec((res) => {
-        common_vendor.wx$1.pageScrollTo({
-          scrollTop: res[0].top + res[1].scrollTop - search_data.Custom_height,
-          duration: 300
-        });
-        setTimeout(() => {
-          search_data.trigger = index;
-        }, 500);
-      });
-    }
     common_vendor.onBeforeUnmount(() => {
       AccConfig_placeOrder.ORDER.order.specs = [];
       AccConfig_placeOrder.ORDER.order.SPECE_STR = "";
@@ -130,57 +114,31 @@ const _sfc_main = {
     common_vendor.onShareAppMessage(() => {
       return {
         title: result.goods.goods_title,
-        path: `/pages/Product-details/details?goods_id=${result.goods_id}`,
+        path: `/pages/Gift-details/details?goods_id=${result.goods_id}`,
         imageUrl: result.goods.goods_cover
       };
     });
-    function goTo() {
-      console.log("跳转首页");
-      common_vendor.wx$1.switchTab({
-        url: "/pages/index/index"
-      });
-    }
     return (_ctx, _cache) => {
       return common_vendor.e({
-        a: common_vendor.s("height:" + common_vendor.unref(S_top) + "px;"),
-        b: common_vendor.o(goTo),
-        c: common_vendor.f(common_vendor.unref(tab_name), (item, index, i0) => {
-          return {
-            a: common_vendor.t(item),
-            b: index == common_vendor.unref(trigger) ? 1 : "",
-            c: index,
-            d: common_vendor.o(($event) => swItch(index), index)
-          };
-        }),
-        d: common_vendor.s("height:" + common_vendor.unref(S_height) + "px;"),
-        e: common_vendor.s("height:" + common_vendor.unref(S_height) + "px;"),
-        f: common_vendor.s("padding-right:" + common_vendor.unref(S_width) + "px;"),
-        g: common_vendor.unref(styleOpacity),
-        h: common_vendor.unref(being),
-        i: common_vendor.unref(goods)
+        a: common_vendor.unref(goods)
       }, common_vendor.unref(goods) ? {
-        j: common_vendor.p({
+        b: common_vendor.p({
           id: "select",
           goods: common_vendor.unref(goods),
           seckill: common_vendor.unref(seckill)
         })
       } : {}, {
-        k: common_vendor.p({
-          id: "select",
-          eav_num: common_vendor.unref(eav_num),
-          eav_data: common_vendor.unref(eav_data)
-        }),
-        l: common_vendor.p({
+        c: common_vendor.p({
           id: "select",
           goods_details: common_vendor.unref(goods).goods_details
         }),
-        m: common_vendor.p({
+        d: common_vendor.p({
           goods_id: common_vendor.unref(goods_id),
           collection: common_vendor.unref(collection),
           sku_data: common_vendor.unref(sku_data),
           goods: common_vendor.unref(goods)
         }),
-        n: common_vendor.p({
+        e: common_vendor.p({
           sku_data: common_vendor.unref(sku_data),
           goods: common_vendor.unref(goods)
         })
@@ -188,6 +146,5 @@ const _sfc_main = {
     };
   }
 };
-const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "E:/Project/kuang-app/kuangApplet/kuang-user/pages/Product-details/details.vue"]]);
-_sfc_main.__runtimeHooks = 3;
+const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "E:/Project/kuang-app/kuangApplet/kuang-user/pages/Gift-details/details.vue"]]);
 wx.createPage(MiniProgramPage);

@@ -148,3 +148,8 @@ page{
 	font-size: 14px;
 	margin-left: 20rpx;
 }
+.propertys .right.data-v-b018696c{
+	color: #FF5500;
+	font-size: 14px;
+	font-weight: 600;
+}

@@ -8,6 +8,7 @@ if (!Math) {
   "./pages/shopping-cart/shopping-cart.js";
   "./pages/sort-view/sort-view.js";
   "./pages/Product-details/details.js";
+  "./pages/Gift-details/details.js";
   "./pages/Eva-details/details.js";
   "./pages/All-orders/order.js";
   "./pages/Order-tracking/tracking.js";

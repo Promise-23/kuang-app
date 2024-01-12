@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "积分商品详情",
+  "usingComponents": {
+    "swipers": "./component/swiper",
+    "img": "./component/image",
+    "purchase": "./component/purchase",
+    "login": "../components/login-view",
+    "specs": "../components/specs-gift-view",
+    "back-top": "../Common-component/UI/BackTop"
+  }
+}
